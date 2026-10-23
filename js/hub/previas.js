@@ -367,4 +367,101 @@ export const PREVIAS = {
     ctx.ellipse(cx - raio * 0.55, cy - raio * 0.45, raio * 0.18, raio * 0.08, -0.5, 0, TAU);
     ctx.fill();
   },
+
+  spinner(ctx, l, a, t, [c1, c2]) {
+    degrade(ctx, l, a, '#1d1638', '#07060f');
+    const cx = l / 2;
+    const cy = a / 2;
+    const r = Math.min(l, a) * 0.36;
+    const angulo = t * 9;
+    // Rastro de luz nas pontas
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round';
+    for (let i = 0; i < 3; i++) {
+      const base = angulo + (i / 3) * TAU;
+      for (let k = 0; k < 10; k++) {
+        ctx.strokeStyle = c1;
+        ctx.globalAlpha = (1 - k / 10) * 0.35;
+        ctx.lineWidth = r * 0.26 * (1 - k / 12);
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.62, base - (k + 1) * 0.12, base - k * 0.12);
+        ctx.stroke();
+      }
+    }
+    ctx.restore();
+    // Corpo
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angulo);
+    const corpo = ctx.createRadialGradient(-r * 0.3, -r * 0.3, r * 0.05, 0, 0, r);
+    corpo.addColorStop(0, '#ffffff');
+    corpo.addColorStop(0.45, '#9aa6bd');
+    corpo.addColorStop(1, c2);
+    ctx.fillStyle = corpo;
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 0.36, 0, TAU);
+    for (let i = 0; i < 3; i++) {
+      const ang = (i / 3) * TAU;
+      ctx.moveTo(Math.cos(ang) * r * 0.62 + r * 0.31, Math.sin(ang) * r * 0.62);
+      ctx.arc(Math.cos(ang) * r * 0.62, Math.sin(ang) * r * 0.62, r * 0.31, 0, TAU);
+    }
+    ctx.fill();
+    ctx.lineWidth = r * 0.3;
+    ctx.strokeStyle = corpo;
+    ctx.beginPath();
+    for (let i = 0; i < 3; i++) {
+      const ang = (i / 3) * TAU;
+      ctx.moveTo(0, 0);
+      ctx.lineTo(Math.cos(ang) * r * 0.62, Math.sin(ang) * r * 0.62);
+    }
+    ctx.stroke();
+    ctx.fillStyle = '#20242e';
+    for (let i = 0; i < 3; i++) {
+      const ang = (i / 3) * TAU;
+      ctx.beginPath();
+      ctx.arc(Math.cos(ang) * r * 0.62, Math.sin(ang) * r * 0.62, r * 0.17, 0, TAU);
+      ctx.fill();
+    }
+    ctx.fillStyle = '#e8edf7';
+    ctx.beginPath();
+    ctx.arc(0, 0, r * 0.22, 0, TAU);
+    ctx.fill();
+    ctx.restore();
+    brilhoCanto(ctx, l, a);
+  },
+
+  popit(ctx, l, a, t) {
+    degrade(ctx, l, a, '#2b1f4a', '#0c0818');
+    const cores = ['#ff4d6d', '#ff8c42', '#ffd23f', '#5ddc5a', '#2ec4f0', '#a05cff'];
+    const lado = Math.min(l, a) * 0.78;
+    const x0 = l / 2 - lado / 2;
+    const y0 = a / 2 - lado / 2;
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(x0, y0, lado, lado, lado * 0.16);
+    ctx.clip();
+    cores.forEach((cor, i) => {
+      ctx.fillStyle = cor;
+      ctx.fillRect(x0, y0 + (i * lado) / 6, lado, lado / 6 + 1);
+    });
+    const r = lado / 15;
+    const ordem = Math.floor((t * 4) % 30);
+    for (let linha = 0; linha < 6; linha++) {
+      for (let coluna = 0; coluna < 5; coluna++) {
+        const x = x0 + lado * 0.14 + coluna * lado * 0.18;
+        const y = y0 + lado / 12 + linha * (lado / 6);
+        const apertada = linha * 5 + coluna < ordem;
+        const grad = ctx.createRadialGradient(x - r * 0.4, y - r * 0.4, 0, x, y, r);
+        grad.addColorStop(0, apertada ? 'rgba(0,0,0,0.25)' : 'rgba(255,255,255,0.65)');
+        grad.addColorStop(1, apertada ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.25)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, TAU);
+        ctx.fill();
+      }
+    }
+    ctx.restore();
+    brilhoCanto(ctx, l, a);
+  },
 };

@@ -586,6 +586,42 @@ class MotorAudio {
     return this.#asmr;
   }
 
+  /**
+   * Tom contínuo controlável (zumbido de rolamento, motor, vento cantando...).
+   * Devolve { freq(hz), volume(v), parar() }. Começa em silêncio.
+   */
+  iniciarTom({ tipo = 'triangle', freq = 110, filtro = 1800, canal = 'efeitos' } = {}) {
+    if (!this.ativo) return { freq() {}, volume() {}, parar() {} };
+    const c = this.ctx;
+    const osc = c.createOscillator();
+    osc.type = tipo;
+    osc.frequency.value = freq;
+    const f = c.createBiquadFilter();
+    f.type = 'lowpass';
+    f.frequency.value = filtro;
+    const ganho = c.createGain();
+    ganho.gain.value = 0;
+    osc.connect(f).connect(ganho).connect(this.#destinoCanal(canal));
+    osc.start();
+    let parado = false;
+    return {
+      freq: (hz, suavidade = 0.08) => {
+        if (!parado) osc.frequency.setTargetAtTime(Math.max(1, hz), c.currentTime, suavidade);
+      },
+      volume: (v, suavidade = 0.08) => {
+        if (!parado) ganho.gain.setTargetAtTime(Math.max(0, v), c.currentTime, suavidade);
+      },
+      parar: () => {
+        if (parado) return;
+        parado = true;
+        const t = c.currentTime;
+        ganho.gain.cancelScheduledValues(t);
+        ganho.gain.setTargetAtTime(0, t, 0.1);
+        osc.stop(t + 0.6);
+      },
+    };
+  }
+
   /* ---------- Som contínuo do redemoinho ---------- */
 
   /** Zumbido grave que cresce com a força. Devolve { atualizar(forca), parar() }. */

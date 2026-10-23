@@ -176,6 +176,40 @@ export const EXPERIENCIAS = [
       return apertos ? `${apertos} apertões` : 'Squish!';
     },
   },
+  {
+    id: 'fidget-spinner',
+    palavras: ['spinner', 'girar', 'rpm', 'rolamento', 'fidget'],
+    nome: 'Fidget Spinner',
+    descricao: 'Gire, segure e solte. Inércia de verdade e contador de RPM.',
+    categoria: 'Fidget Toys',
+    icone: 'spinner',
+    cores: ['#bfe4ff', '#8b5cff'],
+    disponivel: true,
+    previa: 'spinner',
+    carregar: () => import('./fidget-spinner/index.js'),
+    estatistica: (p) => {
+      const rpm = p.recorde('fidget-spinner', 'rpm');
+      return rpm ? `Recorde: ${rpm.toLocaleString('pt-BR')} RPM` : 'Quantas voltas?';
+    },
+  },
+  {
+    id: 'pop-it',
+    palavras: ['pop it', 'popit', 'silicone', 'apertar', 'bolinhas', 'polvo'],
+    nome: 'Pop It',
+    descricao: 'Aperte todas as bolinhas e vire a placa. Coração, estrela, polvo.',
+    categoria: 'Fidget Toys',
+    icone: 'popit',
+    cores: ['#ffd23f', '#ff4d6d'],
+    disponivel: true,
+    previa: 'popit',
+    carregar: () => import('./pop-it/index.js'),
+    estatistica: (p) => {
+      const viradas = p.contador('popit:virada');
+      const apertos = p.contador('popit:aperto');
+      if (viradas) return `${viradas} ${viradas === 1 ? 'virada' : 'viradas'}`;
+      return apertos ? `${apertos} pops` : 'Pop, pop, vira!';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

@@ -26,6 +26,8 @@ export const MODELOS_MISSAO = [
   { id: 'slime-apertar', texto: 'Aperte o Slime 30 vezes', evento: 'slime:aperto', meta: 30, xp: 50, icone: 'gosma', cor: '#7bff4a', requer: 'slime' },
   { id: 'bolha-folha', texto: 'Complete uma folha inteira de Plástico-Bolha', evento: 'bolha:folha', meta: 1, xp: 80, icone: 'bolhas', cor: '#9fd8ff', requer: 'plastico-bolha' },
   { id: 'relampago-dificil', texto: 'Jogue 2 partidas de Relâmpago no Difícil', evento: 'relampago:partida-dificil', meta: 2, xp: 80, icone: 'raio', cor: '#ff7a18', requer: 'microgames' },
+  { id: 'spinner-voltas', texto: 'Dê 500 voltas no Fidget Spinner', evento: 'spinner:volta', meta: 500, xp: 60, icone: 'spinner', cor: '#bfe4ff', requer: 'fidget-spinner' },
+  { id: 'popit-viradas', texto: 'Vire a placa do Pop It 2 vezes', evento: 'popit:virada', meta: 2, xp: 70, icone: 'popit', cor: '#ffd23f', requer: 'pop-it' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -46,5 +48,8 @@ export const XP_POR_EVENTO = {
   'bolha:folha': 15,
   'respira:ciclo': 3,
   'slime:aperto': 0.3,
+  'spinner:volta': 0.02,
+  'popit:aperto': 0.15,
+  'popit:virada': 8,
   tempo: 0.2,
 };
