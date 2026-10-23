@@ -1,0 +1,20 @@
+/* ==========================================================================
+   Slime
+   ========================================================================== */
+
+.slime { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.slime__palco {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+
+.slime__palco:active { cursor: grabbing; }
+.slime__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--amarelo); }
+
+.slime__canvas { width: 100%; height: 100%; }
+
+.slime__doca { width: auto; max-width: calc(100% - 24px); }

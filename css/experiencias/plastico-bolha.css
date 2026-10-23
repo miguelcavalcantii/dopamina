@@ -1,0 +1,17 @@
+/* ==========================================================================
+   Plástico-Bolha
+   ========================================================================== */
+
+.bolha { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.bolha__palco {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  touch-action: none;
+  outline: none;
+}
+
+.bolha__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--amarelo); }
+
+.bolha__canvas { width: 100%; height: 100%; }

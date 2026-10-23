@@ -1,0 +1,38 @@
+/**
+ * Lista de conquistas. `condicao` recebe uma visão do progresso:
+ * { contador(ev), distintos(ev), recorde(exp, chave), nivel, missoesConcluidas, missoesHoje }
+ */
+
+export const CONQUISTAS = [
+  { id: 'primeira-gota', nome: 'Primeira Gota', descricao: 'Solte sua primeira gota no Vidro Líquido', icone: 'gota', cor: '#22e4ff', condicao: (v) => v.contador('vidro:gota-grande') >= 1 },
+  { id: 'tempestade', nome: 'Tempestade', descricao: 'Solte 200 gotas grandes', icone: 'chuva', cor: '#3a7bff', condicao: (v) => v.contador('vidro:gota-grande') >= 200 },
+  { id: 'turista', nome: 'Turista Aquático', descricao: 'Visite os 5 temas do Vidro Líquido', icone: 'brilho', cor: '#ffd60a', condicao: (v) => v.distintos('vidro:tema') >= 5 },
+  { id: 'experimentador', nome: 'Experimentador', descricao: 'Use os 6 modos do Vidro Líquido', icone: 'alvo', cor: '#a3ff12', condicao: (v) => v.distintos('vidro:modo') >= 6 },
+  { id: 'mestre-zen', nome: 'Mestre Zen', descricao: 'Passe 5 minutos no modo Acalmar', icone: 'lua', cor: '#b18cff', condicao: (v) => v.contador('vidro:acalmar-segundos') >= 300 },
+  { id: 'estoura-tudo', nome: 'Estoura-Tudo', descricao: 'Estoure 150 bolhas', icone: 'bolha', cor: '#3cffb4', condicao: (v) => v.contador('vidro:bolha') >= 150 },
+  { id: 'combo-liquido', nome: 'Combo Líquido', descricao: 'Faça um combo de 5 bolhas', icone: 'raio', cor: '#ff2e97', condicao: (v) => v.recorde('vidro-liquido', 'combo') >= 5 },
+  { id: 'furacao', nome: 'Furacão', descricao: 'Crie 10 redemoinhos', icone: 'espiral', cor: '#00f0ff', condicao: (v) => v.contador('vidro:redemoinho') >= 10 },
+  { id: 'artista', nome: 'Artista Líquido', descricao: 'Pinte a água por 3 minutos', icone: 'pincel', cor: '#ff5dc8', condicao: (v) => v.contador('vidro:tinta-segundos') >= 180 },
+  { id: 'reflexo', nome: 'Reflexo Rápido', descricao: 'Vença seu primeiro microgame', icone: 'raio', cor: '#ffd60a', condicao: (v) => v.contador('relampago:vitoria') >= 1 },
+  { id: 'em-chamas', nome: 'Em Chamas', descricao: 'Faça uma sequência de 8 vitórias no Relâmpago', icone: 'fogos', cor: '#ff7a18', condicao: (v) => v.recorde('microgames', 'sequencia') >= 8 },
+  { id: 'velocista', nome: 'Velocista', descricao: 'Chegue à rodada 20 no Relâmpago', icone: 'corrida', cor: '#ff2e97', condicao: (v) => v.recorde('microgames', 'rodada') >= 20 },
+  { id: 'mil-pontos', nome: 'Placar Brilhante', descricao: 'Faça 3.000 pontos numa partida de Relâmpago', icone: 'trofeu', cor: '#a3ff12', condicao: (v) => v.recorde('microgames', 'pontos') >= 3000 },
+  { id: 'centena', nome: 'Centena', descricao: 'Vença 100 microgames no total', icone: 'estrela', cor: '#22e4ff', condicao: (v) => v.contador('relampago:vitoria') >= 100 },
+  { id: 'piloto', nome: 'Piloto Neon', descricao: 'Corra 1.000 m numa só corrida', icone: 'corrida', cor: '#00f0ff', condicao: (v) => v.recorde('corrida-neon', 'distancia') >= 1000 },
+  { id: 'combo-orbes', nome: 'Ímã Humano', descricao: 'Faça um combo de 40 orbes na Corrida Neon', icone: 'espiral', cor: '#ff2bd6', condicao: (v) => v.recorde('corrida-neon', 'combo') >= 40 },
+  { id: 'maestro', nome: 'Maestro', descricao: 'Toque as 3 músicas do Ritmo', icone: 'musica', cor: '#a3ff12', condicao: (v) => v.distintos('ritmo:musica') >= 3 },
+  { id: 'nota-s', nome: 'Nota S', descricao: 'Tire nota S numa música do Ritmo', icone: 'coroa', cor: '#ffd60a', condicao: (v) => v.contador('ritmo:nota-s') >= 1 },
+  { id: 'pirotecnico', nome: 'Pirotécnico', descricao: 'Lance 300 fogos de artifício', icone: 'fogos', cor: '#ff7a18', condicao: (v) => v.contador('fogos:lancado') >= 300 },
+  { id: 'grand-finale', nome: 'Grand Finale', descricao: 'Faça um grand finale nos Fogos', icone: 'brilho', cor: '#ff2e97', condicao: (v) => v.contador('fogos:finale') >= 1 },
+  { id: 'escultor', nome: 'Escultor de Areia', descricao: 'Forme as 5 figuras na Areia Mágica', icone: 'particulas', cor: '#ffb703', condicao: (v) => v.distintos('areia:forma') >= 5 },
+  { id: 'mandala', nome: 'Mandala', descricao: 'Salve um desenho do Caleidoscópio', icone: 'flor', cor: '#c77dff', condicao: (v) => v.contador('caleido:salvo') >= 1 },
+  { id: 'mil-bolhas', nome: 'Mil Bolhas', descricao: 'Estoure 1.000 bolhas no Plástico-Bolha', icone: 'bolhas', cor: '#3cffb4', condicao: (v) => v.contador('bolha:estouro') >= 1000 },
+  { id: 'respiro-fundo', nome: 'Respiro Fundo', descricao: 'Complete uma sessão no Respira', icone: 'respirar', cor: '#b18cff', condicao: (v) => v.contador('respira:sessao') >= 1 },
+  { id: 'amigo-slime', nome: 'Amigo Gosmento', descricao: 'Aperte o Slime 100 vezes', icone: 'gosma', cor: '#7bff4a', condicao: (v) => v.contador('slime:aperto') >= 100 },
+  { id: 'explorador', nome: 'Explorador', descricao: 'Abra todas as 10 experiências', icone: 'bussola', cor: '#22e4ff', condicao: (v) => v.distintos('experiencia:abrir') >= 10 },
+  { id: 'missao-cumprida', nome: 'Missão Cumprida', descricao: 'Complete uma missão diária', icone: 'check', cor: '#a3ff12', condicao: (v) => v.missoesConcluidas >= 1 },
+  { id: 'dia-perfeito', nome: 'Dia Perfeito', descricao: 'Complete as 3 missões de um dia', icone: 'trofeu', cor: '#ffd60a', condicao: (v) => v.missoesHoje >= 3 },
+  { id: 'faisca', nome: 'Faísca', descricao: 'Chegue ao nível 5', icone: 'estrela', cor: '#ff7a18', condicao: (v) => v.nivel >= 5 },
+  { id: 'supernova', nome: 'Supernova', descricao: 'Chegue ao nível 10', icone: 'coroa', cor: '#ff2e97', condicao: (v) => v.nivel >= 10 },
+  { id: 'maratonista', nome: 'Maratonista', descricao: 'Divirta-se por 30 minutos no total', icone: 'relogio', cor: '#22e4ff', condicao: (v) => v.contador('tempo') >= 1800 },
+];

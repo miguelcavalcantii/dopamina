@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070718">
+  <meta name="description" content="Dopamina: um hub de experiências interativas, coloridas e sonoras para relaxar e se divertir, pensado para cérebros com TDAH.">
+  <title>Dopamina · doses de cor, som e movimento</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff2e97'/%3E%3Cstop offset='1' stop-color='%2322e4ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%23070718'/%3E%3Cpath d='M32 10c9 11.8 15 20 15 27a15 15 0 0 1-30 0c0-7 6-15.2 15-27z' fill='url(%23g)'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/hub.css">
+  <link rel="stylesheet" href="css/experiencia.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body data-tela="hub">
+  <a class="pular" href="#grade-experiencias">Pular para as experiências</a>
+
+  <div class="fundo-aurora" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+
+  <header class="barra">
+    <a class="barra__voltar pilula vidro-fosco" href="#/" aria-label="Voltar ao hub (Esc)">
+      <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      <span>Hub</span>
+    </a>
+    <span class="barra__marca" aria-hidden="true">DOPAMINA</span>
+    <span class="barra__titulo" id="titulo-experiencia"></span>
+    <div class="barra__direita">
+      <div class="chip-nivel pilula vidro-fosco" id="chip-nivel">
+        <span data-lv>LV 1</span>
+        <span class="chip-nivel__barra"><span></span></span>
+      </div>
+      <div class="controle-som pilula vidro-fosco">
+        <button type="button" class="botao-icone" id="botao-mudo" aria-pressed="false" aria-label="Silenciar"></button>
+        <input type="range" class="deslizador" id="volume" min="0" max="100" value="70" aria-label="Volume geral">
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="tela-hub" class="hub" aria-label="Início"></section>
+    <section id="tela-experiencia" class="experiencia" hidden aria-labelledby="titulo-experiencia">
+      <div id="palco-experiencia" class="experiencia__palco" tabindex="-1"></div>
+    </section>
+  </main>
+
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+  <div class="cortina" aria-hidden="true"><span class="cortina__titulo"></span></div>
+
+  <noscript><p class="sem-js">O Dopamina precisa de JavaScript ligado para funcionar.</p></noscript>
+</body>
+</html>

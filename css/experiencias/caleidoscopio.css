@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Caleidoscópio
+   ========================================================================== */
+
+.caleido {
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  background: radial-gradient(circle at 50% 50%, #1d0b44, #0a0618 70%);
+}
+
+.caleido__palco {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
+}
+
+.caleido__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--amarelo); }
+
+.caleido__tela,
+.caleido__guias {
+  position: absolute;
+  transform-origin: 50% 50%;
+}
+
+.caleido__guias { pointer-events: none; }
+
+.caleido .doca .chip[data-simetria] { min-width: 44px; justify-content: center; font-family: var(--fonte-titulo); }

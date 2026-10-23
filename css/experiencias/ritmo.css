@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Ritmo
+   ========================================================================== */
+
+.ritmo { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.ritmo__palco {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+  outline: none;
+}
+
+.ritmo__canvas { width: 100%; height: 100%; }
+
+.ritmo__musicas { flex-direction: column; width: 100%; }
+
+.ritmo__musica {
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 52px;
+  text-align: left;
+}
+.ritmo__musica b { font-family: var(--fonte-titulo); font-weight: 400; margin-right: 6px; }
+.ritmo__musica .icone:last-of-type { width: 1em; height: 1em; vertical-align: -2px; }

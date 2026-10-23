@@ -1,0 +1,17 @@
+/* ==========================================================================
+   Areia Mágica
+   ========================================================================== */
+
+.areia { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.areia__palco {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
+}
+
+.areia__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--amarelo); }
+
+.areia__canvas { width: 100%; height: 100%; }
