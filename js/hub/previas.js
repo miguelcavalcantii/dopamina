@@ -772,4 +772,38 @@ export const PREVIAS = {
     ctx.arc(bx, by, 6, 0, TAU);
     ctx.fill();
   },
+
+  orbitando(ctx, l, a, t) {
+    degrade(ctx, l, a, '#0b0620', '#03020c');
+    const cx = l / 2;
+    const cy = a / 2;
+    const sol = ctx.createRadialGradient(cx, cy, 0, cx, cy, a * 0.3);
+    sol.addColorStop(0, '#fff7d6');
+    sol.addColorStop(0.15, '#ffb020');
+    sol.addColorStop(1, 'rgba(255,176,32,0)');
+    ctx.fillStyle = sol;
+    ctx.fillRect(0, 0, l, a);
+    const planetas = [[0.2, 1.4, '#7fd4ff', 5], [0.32, 0.9, '#ff9ec7', 7], [0.44, 0.55, '#a8ff9e', 6]];
+    for (const [r, vel, cor, tam] of planetas) {
+      const raio = Math.min(l, a) * r * 1.1;
+      ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, raio, raio * 0.6, 0, 0, TAU);
+      ctx.stroke();
+      // Rastro
+      for (let k = 0; k < 14; k++) {
+        const ang = t * vel - k * 0.06;
+        ctx.fillStyle = cor;
+        ctx.globalAlpha = (1 - k / 14) * 0.4;
+        ctx.beginPath();
+        ctx.arc(cx + Math.cos(ang) * raio, cy + Math.sin(ang) * raio * 0.6, tam * 0.5, 0, TAU);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = cor;
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(t * vel) * raio, cy + Math.sin(t * vel) * raio * 0.6, tam, 0, TAU);
+      ctx.fill();
+    }
+  },
 };

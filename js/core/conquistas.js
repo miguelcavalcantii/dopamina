@@ -49,6 +49,8 @@ export const CONQUISTAS = [
   { id: 'botanico', nome: 'Botânico Noturno', descricao: 'Plante os 4 tipos do jardim', icone: 'flor', cor: '#b18cff', condicao: (v) => v.distintos('jardim:planta') >= 4 },
   { id: 'multibola', nome: 'Caos Cromado', descricao: 'Ative a multibola no Pinball', icone: 'pinball', cor: '#ff2e97', condicao: (v) => v.contador('pinball:multibola') >= 1 },
   { id: 'mago-pinball', nome: 'Mago do Pinball', descricao: 'Faça 250.000 pontos numa partida de Pinball', icone: 'coroa', cor: '#ffd60a', condicao: (v) => v.recorde('pinball', 'pontos') >= 250000 },
+  { id: 'sistema-solar', nome: 'Sistema Solar', descricao: 'Mantenha 8 planetas em órbita ao mesmo tempo', icone: 'planeta', cor: '#ffb020', condicao: (v) => v.recorde('orbitando', 'orbitas') >= 8 },
+  { id: 'devorador', nome: 'Devorador de Mundos', descricao: 'Um buraco negro engole 15 corpos', icone: 'espiral', cor: '#8b5cff', condicao: (v) => v.recorde('orbitando', 'engolidos') >= 15 },
   { id: 'explorador', nome: 'Explorador', descricao: 'Abra todas as 10 experiências', icone: 'bussola', cor: '#22e4ff', condicao: (v) => v.distintos('experiencia:abrir') >= 10 },
   { id: 'missao-cumprida', nome: 'Missão Cumprida', descricao: 'Complete uma missão diária', icone: 'check', cor: '#a3ff12', condicao: (v) => v.missoesConcluidas >= 1 },
   { id: 'dia-perfeito', nome: 'Dia Perfeito', descricao: 'Complete as 3 missões de um dia', icone: 'trofeu', cor: '#ffd60a', condicao: (v) => v.missoesHoje >= 3 },

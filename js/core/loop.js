@@ -13,7 +13,14 @@ function quadro(agora) {
   // Delta em segundos, limitado para evitar saltos depois de travadas
   const dt = ultimoInstante ? Math.min((agora - ultimoInstante) / 1000, 0.05) : 1 / 60;
   ultimoInstante = agora;
-  for (const funcao of assinantes) funcao(dt, agora / 1000);
+  for (const funcao of assinantes) {
+    // Um erro numa animação não pode parar todas as outras (nem o próximo quadro)
+    try {
+      funcao(dt, agora / 1000);
+    } catch (erro) {
+      console.error('Erro num quadro de animação:', erro);
+    }
+  }
   if (!assinantes.size) ultimoInstante = 0;
   agendar();
 }

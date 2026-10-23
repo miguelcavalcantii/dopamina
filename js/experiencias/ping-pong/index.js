@@ -78,8 +78,9 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     const s = Math.sin(camera.inclinacao);
     const yv = dy * c + dz * s;
     const zv = -dy * s + dz * c;
-    const f = camera.foco / zv;
-    return { x: tela.l / 2 + dx * f, y: tela.a * 0.42 - yv * f, escala: f };
+    // Atrás (ou rente) da câmera não dá para projetar: marca como invisível
+    const f = camera.foco / Math.max(zv, 0.15);
+    return { x: tela.l / 2 + dx * f, y: tela.a * 0.42 - yv * f, escala: f, visivel: zv > 0.15 };
   }
 
   /** Ponto da tela → ponto no plano z = zPlano (para a raquete ficar sob o ponteiro). */
@@ -625,6 +626,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     if (!movimentoReduzido()) {
       bola.rastro.forEach((p, i) => {
         const q = projetar(p.x, p.y, p.z);
+        if (!q.visivel) return;
         g.fillStyle = `rgba(255,190,90,${(i / bola.rastro.length) * 0.3})`;
         g.beginPath();
         g.arc(q.x, q.y, RAIO_BOLA * q.escala * (0.5 + i / bola.rastro.length * 0.5), 0, Math.PI * 2);
@@ -632,6 +634,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
       });
     }
     const p = projetar(bola.x, bola.y, bola.z);
+    if (!p.visivel) return;
     const r = Math.max(2.5, RAIO_BOLA * p.escala);
     const grad = g.createRadialGradient(p.x - r * 0.35, p.y - r * 0.35, r * 0.1, p.x, p.y, r);
     grad.addColorStop(0, '#ffffff');

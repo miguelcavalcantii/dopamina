@@ -326,6 +326,22 @@ export const EXPERIENCIAS = [
       return recorde ? `Recorde: ${recorde.toLocaleString('pt-BR')}` : 'Bola na mesa!';
     },
   },
+  {
+    id: 'orbitando',
+    palavras: ['espaco', 'planeta', 'estrela', 'buraco negro', 'gravidade', 'orbita', 'cometa', 'galaxia'],
+    nome: 'Orbitando',
+    descricao: 'Lance planetas, estrelas e buracos negros. A gravidade faz o resto.',
+    categoria: 'Relaxar',
+    icone: 'planeta',
+    cores: ['#ffb020', '#8b5cff'],
+    disponivel: true,
+    previa: 'orbitando',
+    carregar: () => import('./orbitando/index.js'),
+    estatistica: (p) => {
+      const orbitas = p.recorde('orbitando', 'orbitas');
+      return orbitas ? `${orbitas} planetas em órbita` : 'Seu próprio sistema solar';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);
