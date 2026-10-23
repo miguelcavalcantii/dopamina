@@ -43,3 +43,8 @@ que eu faria e a resposta que adotei em cada uma. Tudo pode ser trocado depois (
    Orbitando, Quebra-Cristais.
 6. **ASMR:** Areia cinética, Sabonete e espuma, Chuva na janela, Mesa de sons, Tinta grossa.
 7. Cada novidade entra no sistema de XP, missões e conquistas. Teste no navegador ao fim de cada etapa.
+
+## Situação
+
+Tudo da lista acima foi feito, uma etapa por commit (veja `git log`). Detalhes e números de cada escolha em
+`DECISOES.md`; origem e licença de cada som em `CREDITOS.md`.

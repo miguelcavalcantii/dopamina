@@ -105,6 +105,52 @@ O plano completo e as perguntas que eu teria feito estão em `PLANO.md`.
   soltar com impulso continua; soltar devagar encaixa no lado mais perto (passou de 42%, completa). Clássico tem cores
   por face; Neon, Pastel e Alumínio têm uma cor por cubinho.
 
+### Jogos e experiências novas
+- **Empinar Pipa**: segurar = puxar a linha (ganha vento aparente e sobe; recolhe só 45 px/s); soltar = a linha sai
+  sozinha se estiver esticada. O ponteiro guia para os lados (setas no teclado). O vento muda a cada 5 a 11 s, com
+  rajadas. Desafio de 90 s: estrela dourada vale 1, rosa vale 3; 3 batidas em pássaros ou pipas encerram.
+- **Ping Pong**: mesa oficial em metros e física com 4 subpassos. O golpe *mira* um ponto do outro lado: o movimento
+  da raquete define ritmo, direção e efeito, e topspin e efeito lateral curvam a bola. A bola precisa quicar do seu
+  lado antes do golpe. Partida até 11, com 2 de vantagem e saque alternando a cada 2. CPU em Fácil, Médio e Difícil.
+  2 jogadores: A/D (+W forte) contra ←/→ (+↑), com a altura da raquete automática.
+- **Jardim Bioluminescente**: até 90 plantas (a mais antiga murcha). Notas em pentatônica de lá menor, da esquerda
+  para a direita. Clique no céu = semente que cai. "Música" liga o ambiente cósmico.
+- **Pinball Neon**: 3 bolas, 6 s de "bola salva" depois de cada lançamento. Lançamento fraco volta para a mola.
+  3 pistas do topo = multiplicador +1 (até 5x); 3 alvos = trava; 2 travas = multibola (+2 bolas). Rampa:
+  1.500 x combo. Trilha eletrônica de 124 bpm no volume de Música. Teclas: ←/Z, →/M, espaço segura e solta.
+- **Slime** (melhorado): Camaleão gira a cor conforme a energia do movimento (até 150°). Com dois slimes, o slime
+  segurado é carregado junto; encostar a menos de 62% da soma dos raios funde os dois. A mistura avança sozinha e
+  mais rápido quando você amassa. "Separar" divide com as cores já misturadas. Bolhinhas soam ao soltar bem esticado.
+- **Orbitando**: gravidade N corpos (G = 4500, amortecimento 12 px, 4 subpassos, até 70 corpos). Clique = órbita
+  circular; arrastar = lançar, com a velocidade igual a 1,6x o arrasto. "Em órbita" conta planetas com energia
+  orbital negativa há mais de 6 s.
+- **Quebra-Cristais**: 8x8, 6 cristais e 90 s. Pontos = 10 por cristal (40 por especial criado) x nível da cascata.
+  A nota sobe na escala a cada nível de combo.
+
+### ASMR
+- **Comum a todas**: volume próprio de cada experiência, que se soma ao volume ASMR das Configurações. "Só a tela"
+  esconde barra e controles e deixa um olhinho para voltar; o Esc também volta, sem sair da experiência.
+- **Areia Cinética**: corte com faca (o sulco mostra a cor de dentro), 4 forminhas e rolo para alisar. 5 areias.
+- **Sabonete e Espuma**: Cortar, Raspar (cachinhos), Espuma e Apertar. 5 sabonetes; o Mel é de glicerina translúcida.
+- **Chuva na Janela**: gotas são lentes da cena (padrão de canvas por gota, mistura aditiva). O dedo desembaça.
+  Trovões a cada 18 a 45 s, com clarão de no máximo 8%. O site acha sozinho os 4 trechos mais altos da gravação para
+  usar como trovoadas.
+- **Mesa de Sons**: começa com chuva ligada na primeira visita. Timer de 15, 30 ou 60 min abaixa o volume no
+  último minuto. O estado (sons e volumes) fica salvo.
+- **Tinta Grossa**: a espátula é um "borrar" que vai descarregando; os montinhos não têm sombra projetada (ela seria
+  arrastada e escureceria tudo).
+
+### Sons e canais
+- **Canal ASMR**: gravações do Plástico-Bolha e de toda a seção ASMR. Nos Fidget Toys e jogos, as gravações tocam
+  no canal **Efeitos** (são parte da brincadeira). A trilha do Pinball usa o canal Música; as trilhas antigas da
+  Corrida e do Ritmo continuam em Efeitos, para não mudar o equilíbrio que já existia.
+- **Total**: 44 gravações CC0 do Freesound, cerca de 22 MB, carregadas só quando a experiência abre (`CREDITOS.md`).
+
+### XP, missões e conquistas
+- Todas as 16 novidades (e o Slime) ganharam eventos de XP, pelo menos 1 missão e 1 ou 2 conquistas. Agora são
+  42 modelos de missão e 62 conquistas. "Explorador" virou "abra 10 experiências"; novas: "Grande Explorador"
+  (todas as 26) e "Um Pouco de Tudo" (uma de cada seção).
+
 ## Não testado / limites conhecidos
 
 - **Som**: não consigo ouvir. Todos os sons foram escritos e o código roda sem erros, mas volume e timbre
@@ -112,3 +158,11 @@ O plano completo e as perguntas que eu teria feito estão em `PLANO.md`.
 - **Celular real**: testei o layout em 390 px de largura (sem rolagem horizontal), mas não em aparelho com toque
   de verdade (multitoque do Slime, gestos da Corrida).
 - **Renderizador reserva do Vidro (sem WebGL2)**: escrito, não exercitado.
+- **Grande atualização: "sensação" de jogo**: durante o trabalho o Chrome deixou a janela em segundo plano rodando
+  a ~2 quadros por segundo. Por isso testei abertura, cliques, regras e visual de todas as 26 experiências (todas
+  abrem sem erro no console), mas não consegui sentir em tempo real a dificuldade e o ritmo da Pipa, do Ping Pong,
+  do Pinball e do Quebra-Cristais. Os números para ajustar estão no topo de cada arquivo.
+- **Sons gravados**: escolhi pela descrição e pela duração e recortei automaticamente, mas não ouvi. Se algum trecho
+  soar mal (um clique com ruído, por exemplo), dá para trocar o arquivo em `assets/sons/` mantendo o nome.
+- **Celular**: conferi o layout em 390 px (hub, configurações, teclado, interruptores, mesa de sons, pinball), mas
+  não num aparelho de verdade.

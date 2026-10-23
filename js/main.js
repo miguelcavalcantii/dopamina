@@ -171,6 +171,7 @@ async function abrirExperiencia(definicao, params) {
     const instancia = await modulo.montar(raiz, { audio, progresso, aoQuadro, params, definicao });
     atual = { id: definicao.id, instancia };
     progresso.registrar('experiencia:abrir', 1, definicao.id);
+    progresso.registrar('secao:visitada', 0, definicao.categoria);
   } catch (erro) {
     console.error(erro);
     palco.replaceChildren();
