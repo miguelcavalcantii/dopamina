@@ -4,12 +4,12 @@
  * (riscos de chuva, brasas, ondas, vaga-lumes, vapor). Misturas prontas e um timer
  * que abaixa tudo devagar até desligar (bom para dormir).
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { htmlControlesAsmr, ligarControlesAsmr } from '../../core/asmr.js';
-import { atualizarDeslizador } from '../../core/ui.js';
-import { aleatorio, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { htmlControlesAsmr, ligarControlesAsmr } from '../../core/asmr.js?v=202610231621';
+import { atualizarDeslizador } from '../../core/ui.js?v=202610231621';
+import { aleatorio, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const som = (nome) => new URL(`../../../assets/sons/asmr/${nome}.mp3`, import.meta.url);
@@ -31,7 +31,7 @@ const MISTURAS = [
 const TIMERS = [0, 15, 30, 60];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/mesa-sons.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/mesa-sons.css?v=202610231621', import.meta.url));
 
   const salvo = ler('mesa-sons', {});
   const estado = Object.fromEntries(CANAIS.map((c) => [c.id, { ligado: false, volume: 0.6, ...(salvo.canais?.[c.id] ?? {}) }]));

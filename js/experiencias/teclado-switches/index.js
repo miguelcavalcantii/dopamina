@@ -4,10 +4,10 @@
  * Cada toque sorteia um trecho diferente das gravações; a volta da tecla toca mais leve.
  * Ao lado, um testador mostra o switch por dentro e a curva de força do tipo escolhido.
  */
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { criarBanco } from '../../core/amostras.js';
-import { carregarEstilo, clamp } from '../../core/util.js';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { criarBanco } from '../../core/amostras.js?v=202610231621';
+import { carregarEstilo, clamp } from '../../core/util.js?v=202610231621';
 
 const SWITCHES = [
   { id: 'clicky', nome: 'Clicky', cor: '#2e7bff', descricao: 'Clique alto e nítido (tipo Blue)', arquivo: 'teclado-clicky', forca: 'M4 52 L40 44 Q48 40 52 18 L56 50 L96 38' },
@@ -31,7 +31,7 @@ const TECLAS = [
 ];
 
 export async function montar(raiz, { audio, progresso }) {
-  await carregarEstilo(new URL('../../../css/experiencias/teclado-switches.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/teclado-switches.css?v=202610231621', import.meta.url));
 
   const config = { switch: 'clicky', estilo: 'retro', rgb: true, ...ler('teclado-config', {}) };
   const salvar = () => gravar('teclado-config', config);

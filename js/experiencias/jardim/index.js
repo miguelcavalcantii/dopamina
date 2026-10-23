@@ -5,10 +5,10 @@
  * soltarem esporos de luz; vaga-lumes seguem o cursor. Cada planta toca uma nota
  * suave ao crescer (escala pentatônica: mais grave à esquerda, mais aguda à direita).
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, geradorComSemente, movimentoReduzido, perfilLeve } from '../../core/util.js';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, geradorComSemente, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const MAX_PLANTAS = 90;
@@ -23,7 +23,7 @@ const TIPOS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/jardim.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/jardim.css?v=202610231621', import.meta.url));
 
   const config = { tipo: 'aleatoria', musica: true, ...ler('jardim-config', {}) };
   const salvar = () => gravar('jardim-config', config);

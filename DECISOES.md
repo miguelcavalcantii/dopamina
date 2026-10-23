@@ -8,6 +8,9 @@ Qualquer uma pode ser trocada; indico onde mexer.
 - **Servidor local**: módulos ES não funcionam abrindo o `index.html` direto. Para desenvolver uso um servidor
   estático sem cache (o `http.server` padrão do Python deixa o Chrome guardar JS antigo). Qualquer servidor
   estático serve em produção.
+- **Publicar**: antes de cada envio, rode `python ferramentas/versionar.py`. Ele carimba `?v=<data-hora>` em todas
+  as importações de JS e CSS. Sem isso, o GitHub Pages deixa o navegador usar arquivos guardados por 10 minutos (ou
+  mais), e quem já visitou o site continua vendo a versão antiga.
 - **Progresso**: tudo fica no `localStorage` deste navegador (chaves `dopamina:*`). Não há conta nem nuvem.
 - **XP e níveis**: nível N→N+1 custa `80 + 40·(N−1)` XP (`js/core/progresso.js`). XP por ação em
   `js/core/missoes.js` (`XP_POR_EVENTO`); bônus ao fim das partidas proporcional aos pontos.

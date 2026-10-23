@@ -6,10 +6,10 @@
  * com uma explosão; buracos negros engolem tudo. Planetas recebem luz do lado da
  * estrela mais forte; cometas ganham cauda apontando para longe dela.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const G = 4500;
@@ -31,7 +31,7 @@ const CORES_PLANETA = [
 const CORES_ESTRELA = [['#fff7d6', '#ffb020'], ['#e8f4ff', '#5b9bff'], ['#ffe2d6', '#ff5a36']];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/orbitando.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/orbitando.css?v=202610231621', import.meta.url));
 
   const config = { ferramenta: 'planeta', musica: true, rastros: true, ...ler('orbitando-config', {}) };
   const salvar = () => gravar('orbitando-config', config);

@@ -6,10 +6,10 @@
  * Partidas de 90 segundos. Parado por 5 s, uma jogada possível pisca; sem jogadas,
  * o tabuleiro se reembaralha.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { icone } from '../../core/icones.js';
-import { criarPainelJogo } from '../../core/painel-jogo.js';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido } from '../../core/util.js';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const N = 8;
@@ -27,7 +27,7 @@ const CRISTAIS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/quebra-cristais.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/quebra-cristais.css?v=202610231621', import.meta.url));
 
   raiz.classList.add('cristais');
   raiz.innerHTML = `

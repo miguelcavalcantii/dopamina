@@ -3,13 +3,13 @@
  * (nível, missões, conquistas) e as experiências em seções por categoria,
  * com busca, filtros e favoritos. Cada card tem uma prévia animada.
  */
-import { EXPERIENCIAS, CATEGORIAS } from '../experiencias/registro.js';
-import { PREVIAS } from './previas.js';
-import { CONQUISTAS } from '../core/conquistas.js';
-import { aoQuadro } from '../core/loop.js';
-import { criarCanvasResponsivo } from '../core/canvas.js';
-import { icone } from '../core/icones.js';
-import { formatarTempo, movimentoReduzido, semHover } from '../core/util.js';
+import { EXPERIENCIAS, CATEGORIAS } from '../experiencias/registro.js?v=202610231621';
+import { PREVIAS } from './previas.js?v=202610231621';
+import { CONQUISTAS } from '../core/conquistas.js?v=202610231621';
+import { aoQuadro } from '../core/loop.js?v=202610231621';
+import { criarCanvasResponsivo } from '../core/canvas.js?v=202610231621';
+import { icone } from '../core/icones.js?v=202610231621';
+import { formatarTempo, movimentoReduzido, semHover } from '../core/util.js?v=202610231621';
 
 /** Texto sem acentos e em minúsculas, para a busca achar "musica" em "Música". */
 const normalizar = (texto) => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();

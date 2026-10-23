@@ -2,15 +2,15 @@
  * Ponto de entrada: liga o áudio, o progresso, o hub e o roteamento por hash.
  * Rotas: "#/" (hub) e "#/x/<id>" (experiência), com transição em cortina circular.
  */
-import { audio } from './core/audio.js';
-import { progresso } from './core/progresso.js';
-import { preferencias } from './core/preferencias.js';
-import { criarConfiguracoes } from './core/configuracoes.js';
-import { aoQuadro } from './core/loop.js';
-import { mostrarToast, ligarControlesSom, ligarChipNivel } from './core/ui.js';
-import { escolher, movimentoReduzido } from './core/util.js';
-import { EXPERIENCIAS, obterExperiencia } from './experiencias/registro.js';
-import { criarHub } from './hub/hub.js';
+import { audio } from './core/audio.js?v=202610231621';
+import { progresso } from './core/progresso.js?v=202610231621';
+import { preferencias } from './core/preferencias.js?v=202610231621';
+import { criarConfiguracoes } from './core/configuracoes.js?v=202610231621';
+import { aoQuadro } from './core/loop.js?v=202610231621';
+import { mostrarToast, ligarControlesSom, ligarChipNivel } from './core/ui.js?v=202610231621';
+import { escolher, movimentoReduzido } from './core/util.js?v=202610231621';
+import { EXPERIENCIAS, obterExperiencia } from './experiencias/registro.js?v=202610231621';
+import { criarHub } from './hub/hub.js?v=202610231621';
 
 const telaHub = document.getElementById('tela-hub');
 const telaExperiencia = document.getElementById('tela-experiencia');

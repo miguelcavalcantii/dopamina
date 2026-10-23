@@ -3,10 +3,10 @@
  * em degradê de cores com brilho. Desenhar toca notas: perto do centro é agudo, longe é grave.
  * Extras: desenho automático, desvanecer, girar a tela, limpar e salvar como imagem.
  */
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, movimentoReduzido } from '../../core/util.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { atualizarDeslizador } from '../../core/ui.js';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { atualizarDeslizador } from '../../core/ui.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const FUNDO = [10, 6, 24];
@@ -22,7 +22,7 @@ const PALETAS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/caleidoscopio.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/caleidoscopio.css?v=202610231621', import.meta.url));
 
   const config = { simetria: 8, espelho: true, paleta: 'arco-iris', pincel: 6, desvanecer: false, ...ler('caleido-config', {}) };
   const salvar = () => gravar('caleido-config', config);

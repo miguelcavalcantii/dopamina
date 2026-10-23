@@ -6,7 +6,7 @@
  * `criar(j)` devolve { comando?, atualizar(dt), desenhar(g), pressionar(x, y), mover(x, y, px, py), soltar(x, y), tecla(k) }.
  * Com `vencePorTempo`, sobreviver até o fim já é a vitória.
  */
-import { aleatorio, clamp, embaralhar, escolher } from '../../core/util.js';
+import { aleatorio, clamp, embaralhar, escolher } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const CORES_VIVAS = ['#ffd60a', '#22e4ff', '#a3ff12', '#ff7a18', '#3cffb4', '#ff5dc8', '#ffffff'];

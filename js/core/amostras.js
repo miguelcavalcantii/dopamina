@@ -4,7 +4,7 @@
  * e corta de um ataque até o som morrer. Cada toque sorteia um trecho diferente,
  * com pequena variação de tom e volume para nunca soar repetido.
  */
-import { aleatorio, clamp } from './util.js';
+import { aleatorio, clamp } from './util.js?v=202610231621';
 
 const JANELA = 0.004; // 4 ms por janela de energia
 

@@ -4,8 +4,8 @@
  * O tema salvo já é aplicado por um script no <head> antes da primeira pintura;
  * aqui ele é reaplicado e passa a reagir às mudanças. Emite 'mudou'.
  */
-import { ler, gravar } from './armazenamento.js';
-import { Emissor, movimentoReduzido } from './util.js';
+import { ler, gravar } from './armazenamento.js?v=202610231621';
+import { Emissor, movimentoReduzido } from './util.js?v=202610231621';
 
 const CHAVE = 'preferencias';
 

@@ -3,11 +3,11 @@
  * O motor cuida de rodadas, vidas, pontos, velocidade, cartões de comando,
  * entrada (mouse, toque e teclado com cursor virtual) e partículas.
  */
-import { MICROGAMES } from './microgames.js';
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { icone } from '../../core/icones.js';
-import { aleatorio, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js';
-import { ler, gravar } from '../../core/armazenamento.js';
+import { MICROGAMES } from './microgames.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { aleatorio, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
 
 /**
  * Dificuldades. `tempo` multiplica a duração de cada microgame (com `tempoMinimo`);
@@ -29,7 +29,7 @@ const FRASES_ERRO = ['QUASE!', 'OPS!', 'FOI POR POUCO!', 'TUDO BEM!'];
 const FUNDO_INICIAL = ['#ff2e97', '#ffd60a'];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/microgames.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/microgames.css?v=202610231621', import.meta.url));
 
   const config = { dificuldade: 'normal', ...ler('relampago-config', {}) };
   const insanoLiberado = () => (progresso.recorde('microgames', 'pontos-dificil') ?? 0) >= PONTOS_PARA_INSANO;

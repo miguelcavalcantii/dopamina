@@ -3,9 +3,9 @@
  * Passar o cursor atrai, clicar explode, segurar cria um redemoinho,
  * "Formar" desenha figuras com as partículas e "Gravidade" faz a areia cair e acumular.
  */
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, movimentoReduzido, perfilLeve, semHover } from '../../core/util.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, movimentoReduzido, perfilLeve, semHover } from '../../core/util.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const RAIO_INFLUENCIA = 220;
@@ -22,7 +22,7 @@ const PALETAS = [
 const FORMAS = ['coracao', 'estrela', 'UAU!', 'espiral', 'OI!'];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/areia-magica.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/areia-magica.css?v=202610231621', import.meta.url));
 
   const config = { paleta: 'areia', gravidade: false, ...ler('areia-config', {}) };
   const salvar = () => gravar('areia-config', config);

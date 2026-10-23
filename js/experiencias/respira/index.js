@@ -3,11 +3,11 @@
  * e encolhe (solte). Padrões Caixa, 4-7-8 e Coerente; sessões de 1, 3, 5 min ou livre.
  * Som de "respiração" em ruído suave, sino a cada fase e música ambiente opcional.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { criarPainelJogo } from '../../core/painel-jogo.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { aleatorio, carregarEstilo, clamp, formatarTempo, movimentoReduzido } from '../../core/util.js';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { aleatorio, carregarEstilo, clamp, formatarTempo, movimentoReduzido } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 
@@ -23,7 +23,7 @@ const NOTAS = { inspire: 76, segure: 79, solte: 72 };
 const suave = (t) => 0.5 - Math.cos(Math.PI * clamp(t, 0, 1)) / 2;
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/respira.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/respira.css?v=202610231621', import.meta.url));
 
   const config = { padrao: 'caixa', duracao: 3, musica: true, ...ler('respira-config', {}) };
   const salvar = () => gravar('respira-config', config);

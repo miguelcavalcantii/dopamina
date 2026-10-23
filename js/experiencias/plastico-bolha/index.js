@@ -6,11 +6,11 @@
  * dezenas de estouros diferentes, com pequena variação de tom.
  * Toque ou arraste para estourar. Quando a folha acaba, uma nova desliza para a tela.
  */
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido, semHover } from '../../core/util.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { criarBanco } from '../../core/amostras.js';
-import { mostrarToast } from '../../core/ui.js';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido, semHover } from '../../core/util.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { criarBanco } from '../../core/amostras.js?v=202610231621';
+import { mostrarToast } from '../../core/ui.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const VARIANTES = 4;
@@ -27,7 +27,7 @@ const FOLHAS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/plastico-bolha.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/plastico-bolha.css?v=202610231621', import.meta.url));
 
   const config = { folha: 0, ...ler('bolha-config', {}) };
   const banco = criarBanco(audio, SONS, { recorte: { duracaoMax: 0.22 } });

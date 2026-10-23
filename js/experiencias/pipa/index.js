@@ -6,12 +6,12 @@
  * A rabiola é uma corrente de pontos (Verlet) levada pelo vento.
  * Modos: Livre (só curtir) e Desafio (estrelas para pegar; pássaros e pipas para desviar).
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js';
-import { icone } from '../../core/icones.js';
-import { ler, gravar } from '../../core/armazenamento.js';
-import { criarBanco } from '../../core/amostras.js';
-import { criarPainelJogo } from '../../core/painel-jogo.js';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, geradorComSemente, movimentoReduzido } from '../../core/util.js';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { criarBanco } from '../../core/amostras.js?v=202610231621';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, geradorComSemente, movimentoReduzido } from '../../core/util.js?v=202610231621';
 
 const TAU = Math.PI * 2;
 const SOM_VENTO = new URL('../../../assets/sons/jogos/vento.mp3', import.meta.url);
@@ -37,7 +37,7 @@ const RABIOLAS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/pipa.css', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/pipa.css?v=202610231621', import.meta.url));
 
   const config = { formato: 'losango', cor: 'fogo', rabiola: 'lacos', ...ler('pipa-config', {}) };
   const salvar = () => gravar('pipa-config', config);

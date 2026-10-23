@@ -8,8 +8,8 @@
  * Cada canal tem volume próprio (tela de Configurações). Os sons da interface
  * (clique, hover, transições, nível, conquista, missão) mudam com o pacote escolhido.
  */
-import { ler, gravar } from './armazenamento.js';
-import { aleatorio, clamp, escolher } from './util.js';
+import { ler, gravar } from './armazenamento.js?v=202610231621';
+import { aleatorio, clamp, escolher } from './util.js?v=202610231621';
 
 const midiParaHz = (nota) => 440 * 2 ** ((nota - 69) / 12);
 
