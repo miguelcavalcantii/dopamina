@@ -850,4 +850,45 @@ export const PREVIAS = {
       }
     }
   },
+
+  areiaCinetica(ctx, l, a, t) {
+    degrade(ctx, l, a, '#f6e6ff', '#c9b3e6');
+    const x0 = l * 0.16;
+    const y0 = a * 0.2;
+    const lb = l * 0.68;
+    const ab = a * 0.6;
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(x0, y0, lb, ab, 14);
+    ctx.clip();
+    const faixas = ['#ffb3c7', '#ffd59e', '#fff1a8', '#c4f5b8', '#b3e5ff', '#d9c2ff'];
+    faixas.forEach((cor, i) => {
+      ctx.fillStyle = cor;
+      ctx.beginPath();
+      const d0 = (i / 6) * (lb + ab);
+      const d1 = ((i + 1) / 6) * (lb + ab) + 1;
+      ctx.moveTo(x0 + d0, y0);
+      ctx.lineTo(x0 + d1, y0);
+      ctx.lineTo(x0 + d1 - ab * 2, y0 + ab * 2);
+      ctx.lineTo(x0 + d0 - ab * 2, y0 + ab * 2);
+      ctx.fill();
+    });
+    // Cortes já feitos e o corte que avança
+    const progresso = (t * 0.35) % 1.4;
+    for (let k = 0; k < 3; k++) {
+      const y = y0 + ab * (0.25 + k * 0.25);
+      const fim = k < Math.floor(progresso * 3) ? 1 : k === Math.floor(progresso * 3) ? (progresso * 3) % 1 : 0;
+      if (fim <= 0) continue;
+      ctx.strokeStyle = 'rgba(70,40,50,0.35)';
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(x0, y);
+      ctx.lineTo(x0 + lb * fim, y);
+      ctx.stroke();
+      ctx.strokeStyle = '#ff8fb0';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
+    ctx.restore();
+  },
 };

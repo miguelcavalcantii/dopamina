@@ -39,6 +39,24 @@ Licença CC0: https://creativecommons.org/publicdomain/zero/1.0/
 | `assets/sons/jogos/slime-gel.mp3` | squishing gel between hands | breadparticles | https://freesound.org/people/breadparticles/sounds/575333/ | CC0 1.0 |
 | `assets/sons/jogos/slime-squish.mp3` | Slime Squish | qubodup | https://freesound.org/people/qubodup/sounds/442772/ | CC0 1.0 |
 | `assets/sons/jogos/slime-2.mp3` | Slime 27.wav | Archos | https://freesound.org/people/Archos/sounds/433840/ | CC0 1.0 |
+| `assets/sons/asmr/areia-atrito.mp3` | S_L_1_Friction_Sand_01.wav | Tim_Verberne | https://freesound.org/people/Tim_Verberne/sounds/576088/ | CC0 1.0 |
+| `assets/sons/asmr/areia-raspar.mp3` | scraping-sandy.mp3 | Ntar10 | https://freesound.org/people/Ntar10/sounds/565796/ | CC0 1.0 |
+| `assets/sons/asmr/areia-umida.mp3` | Dig wet sand-02.wav | RUncELL | https://freesound.org/people/RUncELL/sounds/349457/ | CC0 1.0 |
+| `assets/sons/asmr/espuma-mao.mp3` | Shaving foam on hand (version1) | MicheleFalleri | https://freesound.org/people/MicheleFalleri/sounds/578460/ | CC0 1.0 |
+| `assets/sons/asmr/espuma.mp3` | 09 - Shaving foam.wav | 15F_Panska_Kosova_Barbora | https://freesound.org/people/15F_Panska_Kosova_Barbora/sounds/460541/ | CC0 1.0 |
+| `assets/sons/asmr/faca-raspando.mp3` | Knife Scraping Toast | ibiles1 | https://freesound.org/people/ibiles1/sounds/508053/ | CC0 1.0 |
+| `assets/sons/asmr/manteiga.mp3` | Spreading butter; quick_1-2.aif | domrodrig | https://freesound.org/people/domrodrig/sounds/119103/ | CC0 1.0 |
+| `assets/sons/asmr/chuva-janela.mp3` | rain against window 2 | bastipictures | https://freesound.org/people/bastipictures/sounds/243781/ | CC0 1.0 |
+| `assets/sons/asmr/trovao.mp3` | Rain distant thunder.wav | papedo | https://freesound.org/people/papedo/sounds/478073/ | CC0 1.0 |
+| `assets/sons/asmr/mesa-chuva.mp3` | Rain from Indoors - Perfect loop | samesamesame | https://freesound.org/people/samesamesame/sounds/242889/ | CC0 1.0 |
+| `assets/sons/asmr/mesa-fogueira.mp3` | Campfire 2_01.aif | bobv2 | https://freesound.org/people/bobv2/sounds/400900/ | CC0 1.0 |
+| `assets/sons/asmr/mesa-ondas.mp3` | Ocean Waves | derjuli | https://freesound.org/people/derjuli/sounds/693388/ | CC0 1.0 |
+| `assets/sons/asmr/mesa-floresta.mp3` | forest-bird (1).WAV | sama66 | https://freesound.org/people/sama66/sounds/462137/ | CC0 1.0 |
+| `assets/sons/asmr/mesa-cafe.mp3` | Coffee Shop.wav | Trainscough5407 | https://freesound.org/people/Trainscough5407/sounds/404478/ | CC0 1.0 |
+| `assets/sons/asmr/tinta-pinceladas.mp3` | normal paint strokes_1-2.aif | acrober | https://freesound.org/people/acrober/sounds/86113/ | CC0 1.0 |
+| `assets/sons/asmr/tinta-pincel.mp3` | brush_strokes | KenneysGarage | https://freesound.org/people/KenneysGarage/sounds/754324/ | CC0 1.0 |
+| `assets/sons/asmr/tinta-espatula.mp3` | Scrape - palette knife | are_the | https://freesound.org/people/are_the/sounds/413720/ | CC0 1.0 |
+| `assets/sons/asmr/tinta-massa.mp3` | wet squish 1 | 45t | https://freesound.org/people/45t/sounds/546086/ | CC0 1.0 |
 
 ## Imagens
 

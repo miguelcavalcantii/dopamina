@@ -322,3 +322,34 @@
   .chip { padding: 0 12px; font-size: 0.85rem; }
   .amostra-tema { width: 40px; height: 40px; }
 }
+
+/* ---------- ASMR: modo "Só a tela" ---------- */
+
+body.modo-zen .barra { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+.barra { transition: opacity 0.4s, transform 0.4s var(--suave); }
+.asmr--zen .doca,
+.asmr--zen .hud-jogo,
+.asmr--zen .cantos-jogo,
+.asmr--zen .dica-palco { opacity: 0; pointer-events: none; }
+.asmr--zen .doca { transform: translate(-50%, calc(100% + 30px)); }
+
+.asmr__mostrar {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  z-index: 25;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: rgba(10, 6, 30, 0.35);
+  color: rgba(255, 255, 255, 0.7);
+  opacity: 0.45;
+  transition: opacity 0.3s, transform 0.3s var(--mola);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.asmr__mostrar:hover, .asmr__mostrar:focus-visible { opacity: 1; transform: scale(1.08); }
+.asmr__mostrar .icone { width: 22px; height: 22px; }

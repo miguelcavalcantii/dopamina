@@ -358,6 +358,22 @@ export const EXPERIENCIAS = [
       return recorde ? `Recorde: ${recorde.toLocaleString('pt-BR')}` : 'Combo, combo, combo!';
     },
   },
+  {
+    id: 'areia-cinetica',
+    palavras: ['areia cinetica', 'kinetic sand', 'cortar', 'faca', 'asmr', 'satisfatorio'],
+    nome: 'Areia Cinética',
+    descricao: 'Corte a areia colorida com uma faca e veja as camadas por dentro.',
+    categoria: 'ASMR',
+    icone: 'faca',
+    cores: ['#ff8fb0', '#80d0ff'],
+    disponivel: true,
+    previa: 'areiaCinetica',
+    carregar: () => import('./areia-cinetica/index.js'),
+    estatistica: (p) => {
+      const cortes = p.contador('areia-cinetica:corte');
+      return cortes ? `${cortes} cortes de areia` : 'Crec, crec, crec';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);
