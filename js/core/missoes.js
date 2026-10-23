@@ -35,6 +35,8 @@ export const MODELOS_MISSAO = [
   { id: 'pipa-estrelas', texto: 'Pegue 25 estrelas com a pipa', evento: 'pipa:estrela', meta: 25, xp: 70, icone: 'estrela', cor: '#ffd60a', requer: 'pipa' },
   { id: 'pingpong-pontos', texto: 'Faça 15 pontos no Ping Pong', evento: 'pingpong:ponto', meta: 15, xp: 70, icone: 'raquete', cor: '#ff9a3c', requer: 'ping-pong' },
   { id: 'jardim-plantas', texto: 'Plante 30 coisas no Jardim Bioluminescente', evento: 'jardim:planta', meta: 30, xp: 60, icone: 'cogumelo', cor: '#3cffb4', requer: 'jardim' },
+  { id: 'pinball-batedores', texto: 'Acerte 80 batedores no Pinball', evento: 'pinball:batedor', meta: 80, xp: 60, icone: 'pinball', cor: '#ff2e97', requer: 'pinball' },
+  { id: 'pinball-rampas', texto: 'Suba a rampa do Pinball 3 vezes', evento: 'pinball:rampa', meta: 3, xp: 80, icone: 'pinball', cor: '#22e4ff', requer: 'pinball' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -66,5 +68,8 @@ export const XP_POR_EVENTO = {
   'pingpong:ponto': 2,
   'pingpong:golpe': 0.2,
   'jardim:planta': 0.5,
+  'pinball:batedor': 0.2,
+  'pinball:rampa': 3,
+  'pinball:multibola': 10,
   tempo: 0.2,
 };

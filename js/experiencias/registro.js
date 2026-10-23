@@ -310,6 +310,22 @@ export const EXPERIENCIAS = [
       return plantas ? `${plantas} plantas cultivadas` : 'Um jardim que canta';
     },
   },
+  {
+    id: 'pinball',
+    palavras: ['pinball', 'fliperama', 'flipper', 'neon', 'multibola', 'bola'],
+    nome: 'Pinball Neon',
+    descricao: 'Batedores que explodem em luz, rampa, multiplicador e multibola.',
+    categoria: 'Jogos',
+    icone: 'pinball',
+    cores: ['#ff2e97', '#22e4ff'],
+    disponivel: true,
+    previa: 'pinball',
+    carregar: () => import('./pinball/index.js'),
+    estatistica: (p) => {
+      const recorde = p.recorde('pinball', 'pontos');
+      return recorde ? `Recorde: ${recorde.toLocaleString('pt-BR')}` : 'Bola na mesa!';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

@@ -726,4 +726,50 @@ export const PREVIAS = {
     }
     ctx.globalCompositeOperation = 'source-over';
   },
+
+  pinball(ctx, l, a, t) {
+    degrade(ctx, l, a, '#2a0f55', '#07031a');
+    ctx.lineCap = 'round';
+    const neon = (cor, largura, desenho) => {
+      for (const [w, alfa] of [[largura * 3, 0.2], [largura, 1]]) {
+        ctx.strokeStyle = cor;
+        ctx.globalAlpha = alfa;
+        ctx.lineWidth = w;
+        ctx.beginPath();
+        desenho();
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    };
+    // Batedores piscando
+    const batedores = [[0.36, 0.34, '#ff2e97'], [0.64, 0.34, '#22e4ff'], [0.5, 0.56, '#ffd60a']];
+    batedores.forEach(([x, y, cor], i) => {
+      const luz = Math.max(0, Math.sin(t * 4 + i * 2.1));
+      ctx.fillStyle = cor;
+      ctx.globalAlpha = 0.25 + luz * 0.6;
+      ctx.beginPath();
+      ctx.arc(l * x, a * y, a * 0.09, 0, TAU);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      neon(cor, 2, () => ctx.arc(l * x, a * y, a * 0.09, 0, TAU));
+    });
+    // Flippers
+    const sobe = Math.sin(t * 3) > 0.6 ? -0.5 : 0.45;
+    neon('#ff2e97', 4, () => {
+      ctx.moveTo(l * 0.3, a * 0.86);
+      ctx.lineTo(l * 0.3 + Math.cos(sobe) * l * 0.16, a * 0.86 + Math.sin(sobe) * l * 0.16);
+      ctx.moveTo(l * 0.7, a * 0.86);
+      ctx.lineTo(l * 0.7 - Math.cos(sobe) * l * 0.16, a * 0.86 + Math.sin(sobe) * l * 0.16);
+    });
+    // Bola quicando entre os batedores
+    const bx = l * (0.5 + Math.sin(t * 1.7) * 0.25);
+    const by = a * (0.45 + Math.cos(t * 2.3) * 0.25);
+    const bola = ctx.createRadialGradient(bx - 2, by - 2, 0, bx, by, 6);
+    bola.addColorStop(0, '#fff');
+    bola.addColorStop(1, '#5a6378');
+    ctx.fillStyle = bola;
+    ctx.beginPath();
+    ctx.arc(bx, by, 6, 0, TAU);
+    ctx.fill();
+  },
 };

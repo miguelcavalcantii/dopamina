@@ -396,6 +396,32 @@ class MotorAudio {
       case 'fase':
         this.#sino(midiParaHz(o.nota ?? 76), 0, 2.2, 0.06, 0);
         break;
+      case 'bumper': {
+        // Batedor de pinball: estalo grave + "tóin" metálico
+        const tom = o.tom ?? 1;
+        this.#ruido({ duracao: 0.08, filtro: 'bandpass', freq: 900, q: 1.2, volume: 0.22, pan, reverb: 0.1 });
+        this.#tom({ freq: 520 * tom, freqFinal: 240 * tom, tipo: 'square', duracao: 0.16, volume: 0.07, pan, filtro: { freq: 2600 } });
+        this.#tom({ freq: 1040 * tom, duracao: 0.25, volume: 0.05, pan, reverb: 0.3 });
+        break;
+      }
+      case 'flipper':
+        this.#ruido({ duracao: 0.05, filtro: 'lowpass', freq: 600, q: 0.8, volume: 0.25, pan, reverb: 0 });
+        this.#tom({ freq: 140, freqFinal: 70, duracao: 0.07, volume: 0.18, pan });
+        break;
+      case 'quique':
+        this.#tom({ freq: 260 * (o.tom ?? 1), freqFinal: 180 * (o.tom ?? 1), tipo: 'triangle', duracao: 0.06, volume: 0.1 * (o.volume ?? 1), pan });
+        break;
+      case 'mola':
+        this.#ruido({ duracao: 0.25, filtro: 'bandpass', freq: 300, freqFinal: 1800, q: 2, volume: 0.15, pan });
+        this.#tom({ freq: 120, freqFinal: 420, tipo: 'sawtooth', duracao: 0.2, volume: 0.05, pan, filtro: { freq: 1200 } });
+        break;
+      case 'rampa':
+        this.#tom({ freq: 300, freqFinal: 1500, tipo: 'sawtooth', duracao: 0.55, volume: 0.06, filtro: { freq: 2500 }, reverb: 0.3 });
+        this.#ruido({ duracao: 0.6, filtro: 'bandpass', freq: 400, freqFinal: 3000, q: 1.5, volume: 0.06 });
+        break;
+      case 'trava':
+        [60, 67, 72].forEach((n, i) => this.#tom({ freq: midiParaHz(n), tipo: 'square', inicio: i * 0.06, duracao: 0.12, volume: 0.05, filtro: { freq: 3000 } }));
+        break;
       case 'tema':
         for (let i = 0; i < 5; i++) this.#sino(midiParaHz(escolher([79, 81, 84, 86, 88, 91])), i * 0.06, 0.8, 0.045, aleatorio(-0.6, 0.6));
         break;
@@ -416,9 +442,21 @@ class MotorAudio {
     return this.ctx ? (this.ctx.outputLatency || this.ctx.baseLatency || 0) : 0;
   }
 
-  /** Toca uma nota MIDI. `quando` é o tempo absoluto do AudioContext (padrão: já). */
-  nota(midi, { quando, duracao = 0.35, timbre = 'sino', volume = 0.12, pan = 0 } = {}) {
+  /**
+   * Toca uma nota MIDI. `quando` é o tempo absoluto do AudioContext (padrão: já).
+   * `canal: 'musica'` para trilhas (respeita o volume de Música).
+   */
+  nota(midi, { quando, duracao = 0.35, timbre = 'sino', volume = 0.12, pan = 0, canal = 'efeitos' } = {}) {
     if (!this.ativo || this.#config.mudo) return;
+    this.#canal = this.#destinoCanal(canal);
+    try {
+      this.#notaNoCanal(midi, { quando, duracao, timbre, volume, pan });
+    } finally {
+      this.#canal = this.#efeitos;
+    }
+  }
+
+  #notaNoCanal(midi, { quando, duracao, timbre, volume, pan }) {
     const inicio = Math.max(0, (quando ?? this.ctx.currentTime) - this.ctx.currentTime);
     const freq = midiParaHz(midi);
     if (timbre === 'sino') {
@@ -438,8 +476,17 @@ class MotorAudio {
   }
 
   /** Bateria sintetizada: 'bumbo', 'caixa', 'chimbal' ou 'palma'. */
-  batida(tipo, quando) {
+  batida(tipo, quando, canal = 'efeitos') {
     if (!this.ativo || this.#config.mudo) return;
+    this.#canal = this.#destinoCanal(canal);
+    try {
+      this.#batidaNoCanal(tipo, quando);
+    } finally {
+      this.#canal = this.#efeitos;
+    }
+  }
+
+  #batidaNoCanal(tipo, quando) {
     const inicio = Math.max(0, (quando ?? this.ctx.currentTime) - this.ctx.currentTime);
     if (tipo === 'bumbo') {
       this.#tom({ freq: 150, freqFinal: 42, inicio, duracao: 0.3, volume: 0.45, ataque: 0.002 });

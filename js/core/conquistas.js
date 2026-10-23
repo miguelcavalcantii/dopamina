@@ -46,6 +46,8 @@ export const CONQUISTAS = [
   { id: 'rally', nome: 'Rally Infinito', descricao: 'Faça uma troca de 20 golpes no Ping Pong', icone: 'raquete', cor: '#ff9a3c', condicao: (v) => v.recorde('ping-pong', 'troca') >= 20 },
   { id: 'floresta-magica', nome: 'Floresta Mágica', descricao: 'Plante 200 coisas no Jardim Bioluminescente', icone: 'cogumelo', cor: '#3cffb4', condicao: (v) => v.contador('jardim:planta') >= 200 },
   { id: 'botanico', nome: 'Botânico Noturno', descricao: 'Plante os 4 tipos do jardim', icone: 'flor', cor: '#b18cff', condicao: (v) => v.distintos('jardim:planta') >= 4 },
+  { id: 'multibola', nome: 'Caos Cromado', descricao: 'Ative a multibola no Pinball', icone: 'pinball', cor: '#ff2e97', condicao: (v) => v.contador('pinball:multibola') >= 1 },
+  { id: 'mago-pinball', nome: 'Mago do Pinball', descricao: 'Faça 250.000 pontos numa partida de Pinball', icone: 'coroa', cor: '#ffd60a', condicao: (v) => v.recorde('pinball', 'pontos') >= 250000 },
   { id: 'explorador', nome: 'Explorador', descricao: 'Abra todas as 10 experiências', icone: 'bussola', cor: '#22e4ff', condicao: (v) => v.distintos('experiencia:abrir') >= 10 },
   { id: 'missao-cumprida', nome: 'Missão Cumprida', descricao: 'Complete uma missão diária', icone: 'check', cor: '#a3ff12', condicao: (v) => v.missoesConcluidas >= 1 },
   { id: 'dia-perfeito', nome: 'Dia Perfeito', descricao: 'Complete as 3 missões de um dia', icone: 'trofeu', cor: '#ffd60a', condicao: (v) => v.missoesHoje >= 3 },
