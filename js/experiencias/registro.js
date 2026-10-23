@@ -342,6 +342,22 @@ export const EXPERIENCIAS = [
       return orbitas ? `${orbitas} planetas em órbita` : 'Seu próprio sistema solar';
     },
   },
+  {
+    id: 'quebra-cristais',
+    palavras: ['match 3', 'combinar', 'cristais', 'joias', 'gemas', 'candy', 'combo'],
+    nome: 'Quebra-Cristais',
+    descricao: 'Combine cristais brilhantes, faça reações em cadeia. 90 segundos!',
+    categoria: 'Jogos',
+    icone: 'cristal',
+    cores: ['#22c4ff', '#ff2e5e'],
+    disponivel: true,
+    previa: 'cristais',
+    carregar: () => import('./quebra-cristais/index.js'),
+    estatistica: (p) => {
+      const recorde = p.recorde('quebra-cristais', 'pontos');
+      return recorde ? `Recorde: ${recorde.toLocaleString('pt-BR')}` : 'Combo, combo, combo!';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

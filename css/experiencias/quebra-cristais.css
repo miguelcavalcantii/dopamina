@@ -1,0 +1,15 @@
+/* ==========================================================================
+   Quebra-Cristais
+   ========================================================================== */
+
+.cristais { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.cristais__palco {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  touch-action: none;
+  outline: none;
+}
+.cristais__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--destaque); }
+.cristais__canvas { width: 100%; height: 100%; }

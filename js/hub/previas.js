@@ -806,4 +806,48 @@ export const PREVIAS = {
       ctx.fill();
     }
   },
+
+  cristais(ctx, l, a, t) {
+    degrade(ctx, l, a, '#2a1458', '#0a0420');
+    const cores = ['#ff2e5e', '#22c4ff', '#3cff8a', '#ffd60a', '#b06bff', '#ff8a1a'];
+    const lado = Math.min(l, a) * 0.15;
+    const colunas = 5;
+    const linhas = 4;
+    const x0 = l / 2 - (colunas * lado) / 2;
+    const y0 = a / 2 - (linhas * lado) / 2;
+    const fase = (t * 0.8) % 3;
+    for (let ll = 0; ll < linhas; ll++) {
+      for (let c = 0; c < colunas; c++) {
+        let tipo = (ll * 7 + c * 3) % 6;
+        if (ll === 1 && c >= 1 && c <= 3) tipo = 1;
+        const some = ll === 1 && c >= 1 && c <= 3 && fase > 1.6;
+        const s = some ? Math.max(0, 1 - (fase - 1.6) * 3) : 1;
+        if (s <= 0) continue;
+        const x = x0 + (c + 0.5) * lado;
+        const y = y0 + (ll + 0.5) * lado;
+        const r = lado * 0.38 * s;
+        const grad = ctx.createLinearGradient(x - r, y - r, x + r, y + r);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.4, cores[tipo]);
+        grad.addColorStop(1, '#1a0b30');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        const lados = [4, 6, 3, 0, 5, 8][tipo];
+        if (!lados) ctx.arc(x, y, r, 0, TAU);
+        else for (let i = 0; i < lados; i++) {
+          const ang = -Math.PI / 2 + (i / lados) * TAU;
+          if (i) ctx.lineTo(x + Math.cos(ang) * r, y + Math.sin(ang) * r);
+          else ctx.moveTo(x + Math.cos(ang) * r, y + Math.sin(ang) * r);
+        }
+        ctx.closePath();
+        ctx.fill();
+        if (some) {
+          ctx.fillStyle = `rgba(255,255,255,${1 - s})`;
+          ctx.beginPath();
+          ctx.arc(x, y, lado * 0.4, 0, TAU);
+          ctx.fill();
+        }
+      }
+    }
+  },
 };

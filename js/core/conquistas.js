@@ -51,6 +51,8 @@ export const CONQUISTAS = [
   { id: 'mago-pinball', nome: 'Mago do Pinball', descricao: 'Faça 250.000 pontos numa partida de Pinball', icone: 'coroa', cor: '#ffd60a', condicao: (v) => v.recorde('pinball', 'pontos') >= 250000 },
   { id: 'sistema-solar', nome: 'Sistema Solar', descricao: 'Mantenha 8 planetas em órbita ao mesmo tempo', icone: 'planeta', cor: '#ffb020', condicao: (v) => v.recorde('orbitando', 'orbitas') >= 8 },
   { id: 'devorador', nome: 'Devorador de Mundos', descricao: 'Um buraco negro engole 15 corpos', icone: 'espiral', cor: '#8b5cff', condicao: (v) => v.recorde('orbitando', 'engolidos') >= 15 },
+  { id: 'reacao-em-cadeia', nome: 'Reação em Cadeia', descricao: 'Faça um combo x5 no Quebra-Cristais', icone: 'cristal', cor: '#22c4ff', condicao: (v) => v.recorde('quebra-cristais', 'combo') >= 5 },
+  { id: 'joalheiro', nome: 'Joalheiro', descricao: 'Ative os 4 cristais especiais (raio na linha, raio na coluna, bomba e prisma)', icone: 'coroa', cor: '#ff2e5e', condicao: (v) => v.distintos('cristais:especial') >= 4 },
   { id: 'explorador', nome: 'Explorador', descricao: 'Abra todas as 10 experiências', icone: 'bussola', cor: '#22e4ff', condicao: (v) => v.distintos('experiencia:abrir') >= 10 },
   { id: 'missao-cumprida', nome: 'Missão Cumprida', descricao: 'Complete uma missão diária', icone: 'check', cor: '#a3ff12', condicao: (v) => v.missoesConcluidas >= 1 },
   { id: 'dia-perfeito', nome: 'Dia Perfeito', descricao: 'Complete as 3 missões de um dia', icone: 'trofeu', cor: '#ffd60a', condicao: (v) => v.missoesHoje >= 3 },

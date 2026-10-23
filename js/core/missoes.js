@@ -39,6 +39,7 @@ export const MODELOS_MISSAO = [
   { id: 'pinball-batedores', texto: 'Acerte 80 batedores no Pinball', evento: 'pinball:batedor', meta: 80, xp: 60, icone: 'pinball', cor: '#ff2e97', requer: 'pinball' },
   { id: 'pinball-rampas', texto: 'Suba a rampa do Pinball 3 vezes', evento: 'pinball:rampa', meta: 3, xp: 80, icone: 'pinball', cor: '#22e4ff', requer: 'pinball' },
   { id: 'orbita-lancar', texto: 'Lance 20 corpos no Orbitando', evento: 'orbita:lancamento', meta: 20, xp: 60, icone: 'planeta', cor: '#ffb020', requer: 'orbitando' },
+  { id: 'cristais-quebrar', texto: 'Quebre 150 cristais', evento: 'cristais:quebrado', meta: 150, xp: 70, icone: 'cristal', cor: '#22c4ff', requer: 'quebra-cristais' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -75,5 +76,7 @@ export const XP_POR_EVENTO = {
   'pinball:multibola': 10,
   'orbita:lancamento': 0.5,
   'orbita:colisao': 1,
+  'cristais:quebrado': 0.1,
+  'cristais:especial': 2,
   tempo: 0.2,
 };
