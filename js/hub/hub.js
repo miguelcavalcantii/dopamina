@@ -1,8 +1,9 @@
 /**
  * Tela inicial: herói com logo e botão Surpresa, painel do jogador
- * (nível, missões, conquistas) e a grade de experiências com prévias animadas.
+ * (nível, missões, conquistas) e as experiências em seções por categoria,
+ * com busca, filtros e favoritos. Cada card tem uma prévia animada.
  */
-import { EXPERIENCIAS } from '../experiencias/registro.js';
+import { EXPERIENCIAS, CATEGORIAS } from '../experiencias/registro.js';
 import { PREVIAS } from './previas.js';
 import { CONQUISTAS } from '../core/conquistas.js';
 import { aoQuadro } from '../core/loop.js';
@@ -10,7 +11,8 @@ import { criarCanvasResponsivo } from '../core/canvas.js';
 import { icone } from '../core/icones.js';
 import { formatarTempo, movimentoReduzido, semHover } from '../core/util.js';
 
-const CATEGORIAS = ['Todos', 'Relaxar', 'Ação', 'Criar', 'Fidget'];
+/** Texto sem acentos e em minúsculas, para a busca achar "musica" em "Música". */
+const normalizar = (texto) => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 const TITULOS_NIVEL = [
   [25, 'Lenda da Dopamina'],
   [18, 'Galáxia viva'],
@@ -65,7 +67,7 @@ function criarPrevia(canvas, desenho, cores) {
 /**
  * @param {{ progresso, audio, aoEscolher: (id, origem) => void, aoSurpresa: (origem) => void }} opcoes
  */
-export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
+export function criarHub({ progresso, audio, preferencias, aoEscolher, aoSurpresa }) {
   const raiz = document.getElementById('tela-hub');
   raiz.innerHTML = `
     <div class="hub__topo">
@@ -102,13 +104,37 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
       </aside>
     </div>
     <div class="hub__cabecalho-secao">
-      <h2 class="hub__secao">Experiências</h2>
-      <div class="filtros" role="group" aria-label="Filtrar por categoria" data-filtros>
-        ${CATEGORIAS.map((c, i) => `<button type="button" class="filtro" data-categoria="${c}" aria-pressed="${i === 0}">${c}</button>`).join('')}
-      </div>
+      <h2 class="hub__secao">Experiências <small data-total-experiencias></small></h2>
+      <label class="busca">
+        ${icone('lupa')}
+        <input type="search" class="busca__campo" placeholder="Buscar jogo, brinquedo, som..." data-busca
+          aria-label="Buscar experiências" autocomplete="off" spellcheck="false">
+        <kbd class="busca__atalho" aria-hidden="true">/</kbd>
+      </label>
     </div>
-    <div class="grade" id="grade-experiencias" tabindex="-1" data-grade>
-      ${EXPERIENCIAS.map(htmlCard).join('')}
+    <div class="filtros" role="group" aria-label="Filtrar por categoria" data-filtros>
+      ${[{ id: 'Todos', nome: 'Todos', icone: 'grade' }, { id: 'Favoritos', nome: 'Favoritos', icone: 'coracao' }, ...CATEGORIAS]
+        .map((c, i) => `<button type="button" class="filtro" data-categoria="${c.id}" aria-pressed="${i === 0}" style="--cor:${c.cor ?? 'var(--destaque)'}">
+          ${icone(c.icone)}<span>${c.nome}</span><small data-contagem-filtro="${c.id}"></small></button>`).join('')}
+    </div>
+    <div class="secoes" id="grade-experiencias" tabindex="-1" data-grade>
+      ${CATEGORIAS.map((cat) => `
+        <section class="secao-hub" data-secao="${cat.id}" style="--cor:${cat.cor}" aria-labelledby="secao-${cat.chave}">
+          <header class="secao-hub__topo">
+            <span class="secao-hub__icone">${icone(cat.icone)}</span>
+            <div class="secao-hub__textos">
+              <h3 id="secao-${cat.chave}">${cat.nome}</h3>
+              <p>${cat.descricao}</p>
+            </div>
+          </header>
+          <div class="grade">
+            ${EXPERIENCIAS.filter((e) => e.categoria === cat.id).map(htmlCard).join('')}
+          </div>
+        </section>`).join('')}
+      <div class="hub__vazio" data-vazio hidden>
+        <span class="hub__vazio-icone">${icone('lupa')}</span>
+        <p data-vazio-texto></p>
+      </div>
     </div>
     <p class="hub__rodape">Seu progresso fica salvo só neste navegador. Respire, brinque e volte quando quiser.</p>`;
 
@@ -150,7 +176,7 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
     }
   }, { threshold: 0.6 });
 
-  for (const card of grade.querySelectorAll('.card')) {
+  for (const card of grade.querySelectorAll('a.card, button.card')) {
     const exp = EXPERIENCIAS.find((e) => e.id === card.dataset.id);
     const previa = criarPrevia(card.querySelector('canvas'), PREVIAS[exp.previa], exp.cores);
     previas.set(exp.id, previa);
@@ -182,27 +208,107 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
     });
   }
 
-  /* ---------- Filtros ---------- */
+  /* ---------- Favoritos ---------- */
+
+  function aplicarFavoritos() {
+    for (const casca of grade.querySelectorAll('.card-casca')) {
+      const favorito = preferencias.ehFavorito(casca.dataset.id);
+      const botao = casca.querySelector('[data-favorito]');
+      botao.setAttribute('aria-pressed', String(favorito));
+      botao.setAttribute('aria-label', `${favorito ? 'Tirar dos' : 'Marcar nos'} favoritos: ${casca.dataset.nome}`);
+      casca.classList.toggle('card-casca--favorito', favorito);
+      // Favoritos sobem para o começo da própria seção
+      casca.style.order = favorito ? '-1' : '';
+    }
+    raiz.querySelector('[data-contagem-filtro="Favoritos"]').textContent = String(preferencias.favoritos.length);
+  }
+
+  grade.addEventListener('click', (e) => {
+    const botao = e.target.closest('[data-favorito]');
+    if (!botao) return;
+    e.preventDefault();
+    const agora = preferencias.alternarFavorito(botao.dataset.favorito);
+    audio.tocar(agora ? 'combo' : 'alternar', { n: 3 });
+    botao.classList.remove('card__favorito--pulsar');
+    void botao.offsetWidth;
+    if (agora) botao.classList.add('card__favorito--pulsar');
+    if (filtroAtual === 'Favoritos') filtrar();
+  });
+
+  /* ---------- Busca e filtros ---------- */
+
+  const campoBusca = $('[data-busca]');
+  let filtroAtual = 'Todos';
+
+  function filtrar({ animar = true } = {}) {
+    const termos = normalizar(campoBusca.value.trim()).split(/\s+/).filter(Boolean);
+    let ordem = 0;
+    let visiveis = 0;
+    for (const secao of grade.querySelectorAll('.secao-hub')) {
+      let naSecao = 0;
+      for (const casca of secao.querySelectorAll('.card-casca')) {
+        const categoriaOk = filtroAtual === 'Todos' ||
+          (filtroAtual === 'Favoritos' ? preferencias.ehFavorito(casca.dataset.id) : casca.dataset.categoria === filtroAtual);
+        const buscaOk = termos.every((t) => casca.dataset.busca.includes(t));
+        const mostrar = categoriaOk && buscaOk;
+        const mudou = casca.hidden === mostrar;
+        casca.hidden = !mostrar;
+        if (!mostrar) continue;
+        naSecao++;
+        if (animar && mudou) {
+          const card = casca.querySelector('.card');
+          card.style.setProperty('--ordem', ordem++);
+          card.classList.remove('card--entrar');
+          void card.offsetWidth;
+          card.classList.add('card--entrar');
+        }
+      }
+      secao.hidden = naSecao === 0;
+      visiveis += naSecao;
+    }
+    const vazio = $('[data-vazio]');
+    vazio.hidden = visiveis > 0;
+    if (!visiveis) {
+      $('[data-vazio-texto]').textContent = filtroAtual === 'Favoritos' && !termos.length
+        ? 'Nenhum favorito ainda. Toque no coração de um card para guardar aqui.'
+        : `Nada encontrado para "${campoBusca.value.trim()}". Tente outra palavra.`;
+    }
+  }
 
   $('[data-filtros]').addEventListener('click', (e) => {
     const botao = e.target.closest('[data-categoria]');
     if (!botao) return;
-    const categoria = botao.dataset.categoria;
+    filtroAtual = botao.dataset.categoria;
     for (const outro of raiz.querySelectorAll('[data-filtros] [data-categoria]')) {
       outro.setAttribute('aria-pressed', String(outro === botao));
     }
-    let ordem = 0;
-    for (const card of grade.querySelectorAll('.card')) {
-      const mostrar = categoria === 'Todos' || card.dataset.categoria === categoria;
-      card.hidden = !mostrar;
-      if (mostrar) {
-        card.style.setProperty('--ordem', ordem++);
-        card.classList.remove('card--entrar');
-        void card.offsetWidth;
-        card.classList.add('card--entrar');
-      }
+    for (const casca of grade.querySelectorAll('.card-casca')) casca.hidden = true; // força a animação de entrada
+    filtrar();
+  });
+
+  campoBusca.addEventListener('input', () => filtrar({ animar: false }));
+  campoBusca.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && campoBusca.value) {
+      e.stopPropagation();
+      campoBusca.value = '';
+      filtrar({ animar: false });
     }
   });
+
+  // "/" em qualquer lugar do hub leva à busca
+  addEventListener('keydown', (e) => {
+    if (!visivel || e.key !== '/' || e.ctrlKey || e.metaKey || e.target.closest?.('input, textarea, dialog')) return;
+    e.preventDefault();
+    campoBusca.focus();
+  });
+
+  for (const filtro of [{ id: 'Todos' }, ...CATEGORIAS]) {
+    const total = EXPERIENCIAS.filter((e) => filtro.id === 'Todos' || e.categoria === filtro.id).length;
+    raiz.querySelector(`[data-contagem-filtro="${filtro.id}"]`).textContent = String(total);
+  }
+  $('[data-total-experiencias]').textContent = `${EXPERIENCIAS.filter((e) => e.disponivel).length}`;
+  preferencias.on('mudou', aplicarFavoritos);
+  aplicarFavoritos();
 
   $('[data-surpresa]').addEventListener('click', (e) => aoSurpresa(origemDoElemento(e.currentTarget)));
 
@@ -265,7 +371,7 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
         data-conquista="${c.id}" aria-label="${c.nome}${ganha ? ', conquistada' : ', ainda bloqueada'}">${icone(ganha ? c.icone : 'cadeado')}</button></li>`;
     }).join('');
 
-    for (const card of grade.querySelectorAll('.card')) {
+    for (const card of grade.querySelectorAll('a.card, button.card')) {
       const exp = EXPERIENCIAS.find((e) => e.id === card.dataset.id);
       const alvo = card.querySelector('[data-estatistica]');
       alvo.textContent = exp.estatistica ? exp.estatistica(progresso) : 'Em breve';
@@ -291,7 +397,7 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
       atualizarPainel();
       // Reanima o destaque e os cards visíveis no celular
       observadorVisibilidade.disconnect();
-      for (const card of grade.querySelectorAll('.card')) {
+      for (const card of grade.querySelectorAll('a.card, button.card')) {
         const exp = EXPERIENCIAS.find((e) => e.id === card.dataset.id);
         if (semHover() || exp.destaque) observadorVisibilidade.observe(card);
       }
@@ -301,7 +407,7 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
       for (const previa of [...ativas]) desativar(previa);
     },
     focarCard(id) {
-      grade.querySelector(`[data-id="${id}"]`)?.focus({ preventScroll: false });
+      grade.querySelector(`.card[data-id="${id}"]`)?.focus({ preventScroll: false });
     },
   };
 }
@@ -311,7 +417,10 @@ function htmlCard(exp, ordem) {
     ? `href="#/x/${exp.id}"`
     : 'type="button" aria-disabled="true"';
   const tag = exp.disponivel ? 'a' : 'button';
-  return `<${tag} class="card card--entrar ${exp.destaque ? 'card--destaque' : ''}" ${atributos}
+  const busca = normalizar([exp.nome, exp.descricao, exp.categoria, ...(exp.palavras ?? [])].join(' '));
+  return `<div class="card-casca ${exp.destaque ? 'card-casca--destaque' : ''}" data-id="${exp.id}" data-nome="${exp.nome}"
+      data-categoria="${exp.categoria}" data-busca="${busca}">
+    <${tag} class="card card--entrar ${exp.destaque ? 'card--destaque' : ''}" ${atributos}
       data-id="${exp.id}" data-categoria="${exp.categoria}"
       style="--c1:${exp.cores[0]};--c2:${exp.cores[1]};--ordem:${ordem}">
     <canvas class="card__previa" aria-hidden="true"></canvas>
@@ -328,7 +437,9 @@ function htmlCard(exp, ordem) {
         <span class="card__jogar">${exp.disponivel ? 'Jogar' : 'Na fila'}${icone('seta')}</span>
       </span>
     </span>
-  </${tag}>`;
+  </${tag}>
+    <button type="button" class="card__favorito" data-favorito="${exp.id}" aria-pressed="false">${icone('coracao')}</button>
+  </div>`;
 }
 
 /** Centro do elemento na tela, de onde nasce a transição. */

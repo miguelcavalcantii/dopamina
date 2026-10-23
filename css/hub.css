@@ -265,7 +265,7 @@
 
 .conquista-detalhe { min-height: 1.5em; margin-top: 10px; font-size: 0.85rem; color: var(--texto-suave); }
 
-/* ---------- Cabeçalho da grade e filtros ---------- */
+/* ---------- Cabeçalho, busca e filtros ---------- */
 
 .hub__cabecalho-secao {
   display: flex;
@@ -273,25 +273,157 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 14px;
-  margin: 44px 0 18px;
+  margin: 48px 0 14px;
 }
 
 .hub__secao { font-size: clamp(1.5rem, 3.4vw, 2.1rem); }
+.hub__secao small {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 30px;
+  margin-left: 6px;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: var(--destaque);
+  color: var(--destaque-texto);
+  font-size: 0.5em;
+  vertical-align: middle;
+}
 
-.filtros { display: flex; flex-wrap: wrap; gap: 8px; }
+.busca {
+  position: relative;
+  display: flex;
+  flex: 0 1 380px;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 10px 0 16px;
+  border: 1px solid var(--vidro-borda);
+  border-radius: 99px;
+  background: linear-gradient(145deg, var(--vidro-1), var(--vidro-2));
+  color: var(--texto-suave);
+  box-shadow: var(--sombra-vidro);
+  transition: border-color 0.2s, box-shadow 0.3s;
+}
+.busca:focus-within {
+  border-color: var(--destaque);
+  box-shadow: var(--sombra-vidro), 0 0 0 4px color-mix(in srgb, var(--destaque) 25%, transparent);
+  color: var(--destaque);
+}
+.busca__campo {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  border: 0;
+  background: transparent;
+  color: var(--texto);
+  font-size: 1rem;
+  outline: none;
+}
+.busca__campo::placeholder { color: var(--texto-suave); opacity: 0.8; }
+.busca__campo::-webkit-search-cancel-button { cursor: pointer; }
+.busca__atalho {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--vidro-borda);
+  border-radius: 8px;
+  font-family: var(--fonte-texto);
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+.busca:focus-within .busca__atalho { display: none; }
+
+.filtros {
+  display: flex;
+  gap: 8px;
+  margin: 0 -16px 22px;
+  padding: 4px 16px 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filtros::-webkit-scrollbar { display: none; }
 
 .filtro {
-  min-height: 42px;
-  padding: 0 16px;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 14px 0 12px;
   border: 1px solid var(--vidro-borda);
   border-radius: 99px;
   background: var(--vidro);
   font-size: 0.92rem;
   font-weight: 600;
-  transition: background 0.2s, transform 0.25s var(--mola), color 0.2s;
+  transition: background 0.2s, transform 0.25s var(--mola), color 0.2s, box-shadow 0.25s;
+}
+.filtro .icone { width: 18px; height: 18px; color: var(--cor); }
+.filtro small {
+  min-width: 22px;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: rgb(var(--tinta) / 0.12);
+  font-size: 0.74rem;
+  text-align: center;
 }
 .filtro:hover { transform: translateY(-2px); background: var(--vidro-forte); }
-.filtro[aria-pressed='true'] { border-color: transparent; background: var(--destaque); color: var(--destaque-texto); box-shadow: 0 6px 20px -6px var(--destaque); }
+.filtro[aria-pressed='true'] {
+  border-color: transparent;
+  background: var(--destaque);
+  color: var(--destaque-texto);
+  box-shadow: 0 6px 20px -6px var(--destaque);
+}
+.filtro[aria-pressed='true'] .icone { color: currentColor; }
+.filtro[aria-pressed='true'] small { background: rgba(0, 0, 0, 0.16); }
+
+/* ---------- Seções por categoria ---------- */
+
+.secoes { display: flex; flex-direction: column; gap: 40px; outline: none; }
+
+.secao-hub__topo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.secao-hub__icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(140deg, var(--cor), color-mix(in srgb, var(--cor) 50%, #fff));
+  color: #14082e;
+  box-shadow: 0 10px 26px -10px var(--cor);
+}
+.secao-hub__icone .icone { width: 26px; height: 26px; }
+.secao-hub__textos h3 { font-size: clamp(1.15rem, 2.6vw, 1.45rem); }
+.secao-hub__textos p { font-size: 0.92rem; color: var(--texto-suave); }
+
+.hub__vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 16px;
+  border: 1px dashed var(--vidro-borda);
+  border-radius: var(--raio-g);
+  text-align: center;
+  color: var(--texto-suave);
+}
+.hub__vazio-icone {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgb(var(--tinta) / 0.08);
+}
+.hub__vazio-icone .icone { width: 30px; height: 30px; }
 
 /* ---------- Grade e cards ---------- */
 
@@ -302,8 +434,48 @@
   outline: none;
 }
 
+.card-casca { position: relative; display: flex; }
+
 @media (min-width: 620px) {
-  .card--destaque { grid-column: span 2; }
+  .card-casca--destaque { grid-column: span 2; }
+}
+
+/* Coração de favorito: irmão do card (botão dentro de link não é permitido) */
+.card__favorito {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 50%;
+  background: rgba(14, 6, 40, 0.5);
+  color: #fff;
+  opacity: 0;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: opacity 0.25s, transform 0.35s var(--mola), background 0.2s;
+}
+.card__favorito .icone { width: 20px; height: 20px; transition: transform 0.35s var(--mola); }
+.card-casca:hover .card__favorito,
+.card__favorito:focus-visible,
+.card__favorito[aria-pressed='true'] { opacity: 1; }
+.card__favorito:hover { transform: scale(1.12); }
+.card__favorito:active { transform: scale(0.9); }
+.card__favorito[aria-pressed='true'] { border-color: transparent; background: #ff2e97; box-shadow: 0 6px 18px -4px #ff2e97; }
+.card__favorito[aria-pressed='true'] .icone { fill: currentColor; }
+.card__favorito--pulsar .icone { animation: pulsar-coracao 0.55s var(--mola); }
+
+@keyframes pulsar-coracao {
+  35% { transform: scale(1.5); }
+}
+
+/* No toque não há hover: o coração fica sempre à vista, mais discreto */
+@media (hover: none) {
+  .card__favorito { opacity: 0.85; }
 }
 
 .card {
