@@ -581,4 +581,108 @@ export const PREVIAS = {
       cubinho(x, y, z, cores[cor]);
     }
   },
+
+  pipa(ctx, l, a, t) {
+    const ceu = ctx.createLinearGradient(0, 0, 0, a);
+    ceu.addColorStop(0, '#3a6df0');
+    ceu.addColorStop(0.6, '#7fb2ff');
+    ceu.addColorStop(1, '#ffc2c9');
+    ctx.fillStyle = ceu;
+    ctx.fillRect(0, 0, l, a);
+    // Nuvens passando
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    for (let i = 0; i < 3; i++) {
+      const x = ((t * (12 + i * 8) + i * 90) % (l + 120)) - 60;
+      const y = a * (0.18 + i * 0.16);
+      ctx.beginPath();
+      ctx.arc(x, y, 14, 0, TAU);
+      ctx.arc(x + 16, y - 6, 18, 0, TAU);
+      ctx.arc(x + 34, y, 13, 0, TAU);
+      ctx.fill();
+    }
+    // Morro
+    ctx.fillStyle = '#4fae7e';
+    ctx.beginPath();
+    ctx.ellipse(l / 2, a * 1.05, l * 0.7, a * 0.2, 0, 0, TAU);
+    ctx.fill();
+    // Pipa balançando
+    const px = l * 0.62 + Math.sin(t * 1.2) * l * 0.08;
+    const py = a * 0.36 + Math.sin(t * 2.1) * a * 0.05;
+    ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(l * 0.45, a * 0.92);
+    ctx.quadraticCurveTo(l * 0.6, a * 0.75, px, py);
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(Math.sin(t * 2) * 0.2 + 0.25);
+    const s = Math.min(l, a) * 0.13;
+    const cores = ['#ff2e5e', '#ffd60a', '#ff7a18', '#ff2e5e'];
+    const gomos = [[[0, -s], [s * 0.7, -s * 0.2], [0, -s * 0.2]], [[0, -s], [-s * 0.7, -s * 0.2], [0, -s * 0.2]], [[0, s], [s * 0.7, -s * 0.2], [0, -s * 0.2]], [[0, s], [-s * 0.7, -s * 0.2], [0, -s * 0.2]]];
+    gomos.forEach((tri, i) => {
+      ctx.fillStyle = cores[i];
+      ctx.beginPath();
+      tri.forEach(([x, y], k) => (k ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+      ctx.closePath();
+      ctx.fill();
+    });
+    // Rabiola
+    ctx.strokeStyle = '#ff2e5e';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, s);
+    for (let i = 1; i <= 6; i++) ctx.lineTo(Math.sin(t * 4 + i) * 6, s + i * 9);
+    ctx.stroke();
+    ctx.restore();
+  },
+
+  pingPong(ctx, l, a, t) {
+    degrade(ctx, l, a, '#0e1630', '#3a2a1e', true);
+    // Mesa em trapézio (perspectiva)
+    const topo = a * 0.3;
+    const base = a * 0.88;
+    const mesa = [[l * 0.36, topo], [l * 0.64, topo], [l * 0.9, base], [l * 0.1, base]];
+    ctx.fillStyle = '#1d5fd1';
+    ctx.beginPath();
+    mesa.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(l / 2, topo);
+    ctx.lineTo(l / 2, base);
+    ctx.stroke();
+    // Rede
+    const ry = (topo + base) / 2 - a * 0.04;
+    ctx.fillStyle = 'rgba(20,24,36,0.6)';
+    ctx.fillRect(l * 0.2, ry, l * 0.6, a * 0.06);
+    ctx.fillStyle = '#f4f4f0';
+    ctx.fillRect(l * 0.2, ry, l * 0.6, 2);
+    // Bola indo e vindo num arco
+    const f = (Math.sin(t * 2.4) + 1) / 2;
+    const y = topo + (base - topo) * f;
+    const arco = Math.sin(f * Math.PI * 2) * a * 0.06;
+    const x = l / 2 + Math.sin(t * 1.3) * l * 0.12 * (0.5 + f * 0.5);
+    const raio = 3 + f * 5;
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(x, y, raio, raio * 0.4, 0, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#ffb35c';
+    ctx.beginPath();
+    ctx.arc(x, y - a * 0.12 - Math.abs(arco), raio, 0, TAU);
+    ctx.fill();
+    // Raquetes
+    ctx.fillStyle = '#e8343a';
+    ctx.beginPath();
+    ctx.ellipse(l * 0.5 + Math.sin(t * 1.3) * l * 0.12, a * 0.92, l * 0.05, l * 0.055, 0, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#1d4ed8';
+    ctx.beginPath();
+    ctx.ellipse(l * 0.5 + Math.sin(t * 1.3 + 2) * l * 0.06, a * 0.24, l * 0.025, l * 0.028, 0, 0, TAU);
+    ctx.fill();
+  },
 };

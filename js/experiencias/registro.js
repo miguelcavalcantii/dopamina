@@ -260,6 +260,40 @@ export const EXPERIENCIAS = [
       return dobras ? `${dobras.toLocaleString('pt-BR')} dobras` : 'Sem fim, sem pressa';
     },
   },
+  {
+    id: 'pipa',
+    palavras: ['pipa', 'papagaio', 'arraia', 'vento', 'ceu', 'nuvens', 'empinar'],
+    nome: 'Empinar Pipa',
+    descricao: 'Puxe e solte a linha no vento que muda. Livre ou caçando estrelas.',
+    categoria: 'Jogos',
+    icone: 'pipa',
+    cores: ['#ff7a18', '#22a8ff'],
+    disponivel: true,
+    previa: 'pipa',
+    carregar: () => import('./pipa/index.js'),
+    estatistica: (p) => {
+      const recorde = p.recorde('pipa', 'estrelas');
+      return recorde ? `Recorde: ${recorde} estrelas` : 'O céu é o limite';
+    },
+  },
+  {
+    id: 'ping-pong',
+    palavras: ['ping pong', 'tenis de mesa', 'raquete', 'bola', 'dois jogadores', '2 jogadores'],
+    nome: 'Ping Pong',
+    descricao: 'Mesa em perspectiva, efeito na bola e torcida. Contra a CPU ou a dois.',
+    categoria: 'Jogos',
+    icone: 'raquete',
+    cores: ['#ff9a3c', '#1d5fd1'],
+    disponivel: true,
+    previa: 'pingPong',
+    carregar: () => import('./ping-pong/index.js'),
+    estatistica: (p) => {
+      const vitorias = p.contador('pingpong:vitoria');
+      const troca = p.recorde('ping-pong', 'troca');
+      if (vitorias) return `${vitorias} ${vitorias === 1 ? 'vitória' : 'vitórias'}`;
+      return troca ? `Maior troca: ${troca}` : 'Pá, pum, pá';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

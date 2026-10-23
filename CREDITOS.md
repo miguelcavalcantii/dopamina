@@ -29,6 +29,16 @@ Licença CC0: https://creativecommons.org/publicdomain/zero/1.0/
 | `assets/sons/fidget/deslizante.mp3` | Switches Slider | kamgam | https://freesound.org/people/kamgam/sounds/788044/ | CC0 1.0 |
 | `assets/sons/fidget/spinner.mp3` | Rotating fidget spinner on wooden table v1 | martin-bn | https://freesound.org/people/martin-bn/sounds/500315/ | CC0 1.0 |
 | `assets/sons/fidget/pop-it.mp3` | Infinate bubble wrap toy - Sony ICD-PX470 | Sadiquecat | https://freesound.org/people/Sadiquecat/sounds/868928/ | CC0 1.0 |
+| `assets/sons/jogos/pingpong-1.mp3` | ping pong ball.WAV | cj_ascoli | https://freesound.org/people/cj_ascoli/sounds/444372/ | CC0 1.0 |
+| `assets/sons/jogos/pingpong-mesa.mp3` | Ping Pong - Ball on Table | el_boss | https://freesound.org/people/el_boss/sounds/628637/ | CC0 1.0 |
+| `assets/sons/jogos/pingpong-2.mp3` | ping-pong.wav | lezaarth | https://freesound.org/people/lezaarth/sounds/242044/ | CC0 1.0 |
+| `assets/sons/jogos/torcida.mp3` | Crowd Cheer 5 | Krizin | https://freesound.org/people/Krizin/sounds/651646/ | CC0 1.0 |
+| `assets/sons/jogos/aplausos.mp3` | Small applause | Breviceps | https://freesound.org/people/Breviceps/sounds/462362/ | CC0 1.0 |
+| `assets/sons/jogos/vento.mp3` | WIND_loop | kevinklang | https://freesound.org/people/kevinklang/sounds/841982/ | CC0 1.0 |
+| `assets/sons/jogos/pipa-tecido.mp3` | flag_flap_2.wav | RichieMcMullen | https://freesound.org/people/RichieMcMullen/sounds/386797/ | CC0 1.0 |
+| `assets/sons/jogos/slime-gel.mp3` | squishing gel between hands | breadparticles | https://freesound.org/people/breadparticles/sounds/575333/ | CC0 1.0 |
+| `assets/sons/jogos/slime-squish.mp3` | Slime Squish | qubodup | https://freesound.org/people/qubodup/sounds/442772/ | CC0 1.0 |
+| `assets/sons/jogos/slime-2.mp3` | Slime 27.wav | Archos | https://freesound.org/people/Archos/sounds/433840/ | CC0 1.0 |
 
 ## Imagens
 
