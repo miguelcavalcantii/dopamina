@@ -54,6 +54,7 @@ export const CONQUISTAS = [
   { id: 'reacao-em-cadeia', nome: 'Reação em Cadeia', descricao: 'Faça um combo x5 no Quebra-Cristais', icone: 'cristal', cor: '#22c4ff', condicao: (v) => v.recorde('quebra-cristais', 'combo') >= 5 },
   { id: 'joalheiro', nome: 'Joalheiro', descricao: 'Ative os 4 cristais especiais (raio na linha, raio na coluna, bomba e prisma)', icone: 'coroa', cor: '#ff2e5e', condicao: (v) => v.distintos('cristais:especial') >= 4 },
   { id: 'escultor-cinetico', nome: 'Confeiteiro de Areia', descricao: 'Use as 4 forminhas na Areia Cinética', icone: 'faca', cor: '#ff8fb0', condicao: (v) => v.distintos('areia-cinetica:forma') >= 4 },
+  { id: 'barbeiro', nome: 'Mestre da Espuma', descricao: 'Raspe 150 cachinhos de sabonete', icone: 'sabonete', cor: '#6fd6b0', condicao: (v) => v.contador('sabonete:lasca') >= 150 },
   { id: 'explorador', nome: 'Explorador', descricao: 'Abra todas as 10 experiências', icone: 'bussola', cor: '#22e4ff', condicao: (v) => v.distintos('experiencia:abrir') >= 10 },
   { id: 'missao-cumprida', nome: 'Missão Cumprida', descricao: 'Complete uma missão diária', icone: 'check', cor: '#a3ff12', condicao: (v) => v.missoesConcluidas >= 1 },
   { id: 'dia-perfeito', nome: 'Dia Perfeito', descricao: 'Complete as 3 missões de um dia', icone: 'trofeu', cor: '#ffd60a', condicao: (v) => v.missoesHoje >= 3 },

@@ -353,3 +353,14 @@ body.modo-zen .barra { opacity: 0; transform: translateY(-20px); pointer-events:
 }
 .asmr__mostrar:hover, .asmr__mostrar:focus-visible { opacity: 1; transform: scale(1.08); }
 .asmr__mostrar .icone { width: 22px; height: 22px; }
+
+/* ---------- Cenas claras (areia, sabonete): vidro escuro para os controles ---------- */
+
+.cena-clara .doca,
+body:has(.cena-clara) .barra .vidro-fosco,
+body:has(.cena-clara) .barra__titulo {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(58, 28, 92, 0.62);
+}
+.cena-clara .dica-palco { color: #4a2a6a; text-shadow: 0 1px 12px rgba(255, 255, 255, 0.8); }
+.cena-clara .dica-palco small { text-shadow: none; }

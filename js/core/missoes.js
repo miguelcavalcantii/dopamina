@@ -41,6 +41,7 @@ export const MODELOS_MISSAO = [
   { id: 'orbita-lancar', texto: 'Lance 20 corpos no Orbitando', evento: 'orbita:lancamento', meta: 20, xp: 60, icone: 'planeta', cor: '#ffb020', requer: 'orbitando' },
   { id: 'cristais-quebrar', texto: 'Quebre 150 cristais', evento: 'cristais:quebrado', meta: 150, xp: 70, icone: 'cristal', cor: '#22c4ff', requer: 'quebra-cristais' },
   { id: 'areia-cortar', texto: 'Faça 20 cortes na Areia Cinética', evento: 'areia-cinetica:corte', meta: 20, xp: 60, icone: 'faca', cor: '#ff8fb0', requer: 'areia-cinetica' },
+  { id: 'sabonete-lascas', texto: 'Raspe 30 cachinhos de sabonete', evento: 'sabonete:lasca', meta: 30, xp: 60, icone: 'sabonete', cor: '#c7b0f5', requer: 'sabonete' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -81,5 +82,8 @@ export const XP_POR_EVENTO = {
   'cristais:especial': 2,
   'areia-cinetica:corte': 1,
   'areia-cinetica:forma': 0.5,
+  'sabonete:lasca': 0.5,
+  'sabonete:corte': 0.5,
+  'sabonete:aperto': 0.3,
   tempo: 0.2,
 };

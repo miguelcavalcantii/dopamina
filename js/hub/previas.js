@@ -891,4 +891,36 @@ export const PREVIAS = {
     }
     ctx.restore();
   },
+
+  sabonete(ctx, l, a, t) {
+    degrade(ctx, l, a, '#e6f3f8', '#cfe6ef');
+    const x0 = l * 0.2;
+    const y0 = a * 0.28;
+    const lb = l * 0.6;
+    const ab = a * 0.42;
+    ctx.fillStyle = '#9c7fe0';
+    ctx.beginPath();
+    ctx.roundRect(x0, y0 + 8, lb, ab, 18);
+    ctx.fill();
+    const topo = ctx.createRadialGradient(x0 + lb * 0.4, y0 + ab * 0.3, 4, x0 + lb / 2, y0 + ab / 2, lb * 0.7);
+    topo.addColorStop(0, '#f2eaff');
+    topo.addColorStop(1, '#b49ae8');
+    ctx.fillStyle = topo;
+    ctx.beginPath();
+    ctx.roundRect(x0, y0, lb, ab, 18);
+    ctx.fill();
+    // Espuma subindo
+    for (let i = 0; i < 14; i++) {
+      const fase = (t * 0.4 + hash(i)) % 1;
+      const x = x0 + lb * hash(i + 3);
+      const y = y0 + ab * 0.5 - fase * ab * 0.9;
+      const r = 3 + hash(i + 7) * 7;
+      ctx.fillStyle = `rgba(255,255,255,${0.7 * (1 - fase)})`;
+      ctx.strokeStyle = `rgba(200,180,255,${0.8 * (1 - fase)})`;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, TAU);
+      ctx.fill();
+      ctx.stroke();
+    }
+  },
 };

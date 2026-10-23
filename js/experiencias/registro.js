@@ -374,6 +374,22 @@ export const EXPERIENCIAS = [
       return cortes ? `${cortes} cortes de areia` : 'Crec, crec, crec';
     },
   },
+  {
+    id: 'sabonete',
+    palavras: ['sabonete', 'sabao', 'espuma', 'raspar', 'cortar', 'asmr', 'bolhas'],
+    nome: 'Sabonete e Espuma',
+    descricao: 'Corte, raspe cachinhos e faça espuma num sabonete macio.',
+    categoria: 'ASMR',
+    icone: 'sabonete',
+    cores: ['#c7b0f5', '#6fd6b0'],
+    disponivel: true,
+    previa: 'sabonete',
+    carregar: () => import('./sabonete/index.js'),
+    estatistica: (p) => {
+      const lascas = p.contador('sabonete:lasca');
+      return lascas ? `${lascas} cachinhos raspados` : 'Fresquinho e cheiroso';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

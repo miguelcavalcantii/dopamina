@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Sabonete e espuma
+   ========================================================================== */
+
+.sabao { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.sabao__palco {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
+}
+.sabao__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--destaque); }
+.sabao__canvas { width: 100%; height: 100%; }
+.sabao__doca { width: auto; max-width: calc(100% - 24px); }

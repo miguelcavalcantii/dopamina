@@ -37,7 +37,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
   audio.carregarAmostra(som('areia-atrito')).then((b) => { bufferAtrito = b; });
   audio.carregarAmostra(som('areia-raspar')).then((b) => { bufferRaspar = b; });
 
-  raiz.classList.add('cinetica');
+  raiz.classList.add('cinetica', 'cena-clara');
   raiz.innerHTML = `
     <div class="cinetica__palco" tabindex="0" role="application" data-foco-inicial
       aria-label="Areia cinética. Arraste a faca para cortar. Com a forminha, clique para carimbar. Teclado: espaço faz um corte sorteado, A alisa.">
@@ -171,7 +171,8 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     const emenda = pontoAnterior ?? { x: x0, y: y0 };
     cs.save();
     cs.clip(caminhoBloco());
-    cs.lineCap = 'round';
+    // Linhas translúcidas com ponta reta: pontas redondas se sobrepõem e marcam "contas"
+    cs.lineCap = 'butt';
     const nx = -(y1 - y0) / comprimento;
     const ny = (x1 - x0) / comprimento;
     // Fundo do corte: a cor de dentro, mais escura nas paredes
@@ -185,6 +186,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     cs.strokeStyle = corDaFaixa((x0 + x1) / 2, (y0 + y1) / 2, areia.dentro);
     cs.lineWidth = 4.5;
     cs.lineJoin = 'round';
+    cs.lineCap = 'round';
     cs.beginPath();
     cs.moveTo(emenda.x, emenda.y);
     cs.lineTo(x0, y0);
@@ -192,6 +194,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     cs.stroke();
     pontoAnterior = { x: x0, y: y0 };
     // Paredes: a de cima pega luz, a de baixo faz sombra
+    cs.lineCap = 'butt';
     for (const [lado, cor, largura] of [[-1, 'rgba(255,255,255,0.75)', 1.6], [1, 'rgba(60,30,40,0.35)', 2]]) {
       cs.strokeStyle = cor;
       cs.lineWidth = largura;
