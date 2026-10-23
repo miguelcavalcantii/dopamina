@@ -2,10 +2,10 @@
  * Progresso do jogador: XP, nível, conquistas, missões do dia e recordes.
  * Fica salvo no localStorage. Emite: 'xp', 'nivel', 'conquista', 'missao', 'mudou'.
  */
-import { ler, gravar } from './armazenamento.js?v=202610231621';
-import { Emissor, dataHoje, embaralhar, geradorComSemente, hashTexto } from './util.js?v=202610231621';
-import { CONQUISTAS } from './conquistas.js?v=202610231621';
-import { MODELOS_MISSAO, XP_POR_EVENTO } from './missoes.js?v=202610231621';
+import { ler, gravar } from './armazenamento.js?v=202610231820';
+import { Emissor, dataHoje, embaralhar, geradorComSemente, hashTexto } from './util.js?v=202610231820';
+import { CONQUISTAS } from './conquistas.js?v=202610231820';
+import { MODELOS_MISSAO, XP_POR_EVENTO } from './missoes.js?v=202610231820';
 
 const CHAVE = 'progresso';
 const MISSOES_POR_DIA = 3;

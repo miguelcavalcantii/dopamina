@@ -3,12 +3,12 @@
  * Três pistas, pulo, orbes que formam combos e poderes (escudo, ímã, turbo, pontos x2).
  * A velocidade sobe sem parar; 3 vidas, com invulnerabilidade curta após cada batida.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
-import { criarSequenciador } from '../../core/sequenciador.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { aleatorio, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231820';
+import { criarSequenciador } from '../../core/sequenciador.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { aleatorio, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231820';
 
 const Z_MAX = 70;
 const FOCO = 7;
@@ -30,7 +30,7 @@ const PODERES = {
 const BAIXO = [45, 45, 57, 45, 45, 57, 45, 57, 41, 41, 53, 41, 41, 53, 41, 53, 48, 48, 60, 48, 48, 60, 48, 60, 43, 43, 55, 43, 43, 55, 43, 55];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/corrida-neon.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/corrida-neon.css?v=202610231820', import.meta.url));
 
   raiz.classList.add('corrida');
   raiz.innerHTML = `

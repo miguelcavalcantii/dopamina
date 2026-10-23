@@ -2,8 +2,8 @@
  * Doca de controles do Vidro Líquido: temas, modos, intensidade,
  * música, tela cheia e botão para esconder tudo.
  */
-import { icone } from '../../core/icones.js?v=202610231621';
-import { atualizarDeslizador } from '../../core/ui.js?v=202610231621';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { atualizarDeslizador } from '../../core/ui.js?v=202610231820';
 
 export function criarPainel(raiz, { temas, modos, config, podeTelaCheia, aoTema, aoModo, aoIntensidade, aoMusica, aoTelaCheia }) {
   const doca = document.createElement('div');

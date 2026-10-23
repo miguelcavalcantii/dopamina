@@ -8,12 +8,12 @@
  * Controles: ← / Z e → / M para os flippers, espaço segura e solta a mola. No toque:
  * metade esquerda e metade direita da tela; botão Lançar.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
-import { criarSequenciador } from '../../core/sequenciador.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { aleatorio, carregarEstilo, clamp, movimentoReduzido, semHover } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231820';
+import { criarSequenciador } from '../../core/sequenciador.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { aleatorio, carregarEstilo, clamp, movimentoReduzido, semHover } from '../../core/util.js?v=202610231820';
 
 const L = 600;
 const A = 1000;
@@ -77,7 +77,7 @@ const FLIPPERS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/pinball.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/pinball.css?v=202610231820', import.meta.url));
 
   const config = { musica: true, ...ler('pinball-config', {}) };
 

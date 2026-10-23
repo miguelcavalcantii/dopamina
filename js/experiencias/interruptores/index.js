@@ -4,15 +4,15 @@
  * chave deslizante de 3 posições, alavanca com mola, botões de fliperama e botão
  * giratório com estalos. Tudo funciona com mouse, toque e teclado (Tab + Espaço/setas).
  */
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { criarBanco } from '../../core/amostras.js?v=202610231621';
-import { capturarPonteiro, carregarEstilo, clamp } from '../../core/util.js?v=202610231621';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { criarBanco } from '../../core/amostras.js?v=202610231820';
+import { capturarPonteiro, carregarEstilo, clamp } from '../../core/util.js?v=202610231820';
 
 const som = (nome) => new URL(`../../../assets/sons/fidget/${nome}.mp3`, import.meta.url);
 const DETENTES = 16;
 
 export async function montar(raiz, { audio, progresso }) {
-  await carregarEstilo(new URL('../../../css/experiencias/interruptores.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/interruptores.css?v=202610231820', import.meta.url));
 
   const estado = { caneta: false, luz: false, chave: false, deslizante: 0, giro: 5, ...ler('interruptores-estado', {}) };
   const salvar = () => gravar('interruptores-estado', estado);

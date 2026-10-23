@@ -7,11 +7,11 @@
  * misturando conforme é amassado. "Separar" divide de novo (já com as cores misturadas).
  * Sons: squish gravado de verdade (CC0) e bolhinhas quando o slime é espremido.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { criarBanco } from '../../core/amostras.js?v=202610231621';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { criarBanco } from '../../core/amostras.js?v=202610231820';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const PONTOS = 44;
@@ -56,7 +56,7 @@ function girarMatiz(hex, graus) {
 }
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/slime.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/slime.css?v=202610231820', import.meta.url));
 
   const config = { paleta: 'lima', rosto: true, glitter: true, camaleao: true, dois: false, ...ler('slime-config', {}) };
   const salvar = () => gravar('slime-config', config);

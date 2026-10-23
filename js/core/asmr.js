@@ -3,9 +3,9 @@
  * e o modo "Só a tela", que esconde a barra e os controles para ficar só a cena.
  * No modo tela, um olhinho discreto no canto (ou o Esc) traz a interface de volta.
  */
-import { icone } from './icones.js?v=202610231621';
-import { ler, gravar } from './armazenamento.js?v=202610231621';
-import { atualizarDeslizador } from './ui.js?v=202610231621';
+import { icone } from './icones.js?v=202610231820';
+import { ler, gravar } from './armazenamento.js?v=202610231820';
+import { atualizarDeslizador } from './ui.js?v=202610231820';
 
 /** Linha de doca com o volume desta experiência e o botão de esconder a interface. */
 export function htmlControlesAsmr(volume) {

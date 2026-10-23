@@ -2,7 +2,7 @@
  * Painel central de início e de resumo, compartilhado pelos jogos.
  * Usa as classes .painel-jogo e .botao-jogo de css/experiencia.css.
  */
-import { icone } from './icones.js?v=202610231621';
+import { icone } from './icones.js?v=202610231820';
 
 export function criarPainelJogo(raiz) {
   const elemento = document.createElement('div');

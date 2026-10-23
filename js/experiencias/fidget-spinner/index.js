@@ -6,10 +6,10 @@
  * giradas fazem o desfoque de movimento. O reflexo do metal fica parado no mundo
  * (como num metal de verdade) e, rápido, as pontas deixam um rastro de luz.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, movimentoReduzido } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const OMEGA_MAX = 270; // rad/s ≈ 2.580 RPM
@@ -35,7 +35,7 @@ const MATERIAIS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/fidget-spinner.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/fidget-spinner.css?v=202610231820', import.meta.url));
 
   const config = { modelo: 'tri', material: 'cromo', rastro: true, ...ler('spinner-config', {}) };
   const salvar = () => gravar('spinner-config', config);

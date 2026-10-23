@@ -2,7 +2,7 @@
  * Camada 2D por cima da água: bolhas de sabão, respingos, anéis de estouro
  * e textos flutuantes de combo. Coordenadas em pixels CSS.
  */
-import { aleatorio, escolher } from '../../core/util.js?v=202610231621';
+import { aleatorio, escolher } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const GRAVIDADE = 620;

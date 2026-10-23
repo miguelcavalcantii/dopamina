@@ -5,7 +5,7 @@
  *  - paleta da tinta e dos respingos, clima da música ambiente
  *  - `desenhar(ctx, l, a)`: pinta a imagem de fundo vista através da água
  */
-import { geradorComSemente } from '../../core/util.js?v=202610231621';
+import { geradorComSemente } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 

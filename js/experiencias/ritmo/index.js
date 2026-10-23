@@ -3,12 +3,12 @@
  * A bateria, o baixo e os acordes tocam sozinhos; cada acerto toca a nota da melodia,
  * então quem joga "toca" a música. Tudo sincronizado pelo relógio do AudioContext.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
-import { criarSequenciador } from '../../core/sequenciador.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { aleatorio, aleatorioInt, carregarEstilo, clamp, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231820';
+import { criarSequenciador } from '../../core/sequenciador.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { aleatorio, aleatorioInt, carregarEstilo, clamp, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231820';
 
 const CORES = ['#ff2e97', '#ffd60a', '#22e4ff', '#a3ff12'];
 const ROTULOS = ['D', 'F', 'J', 'K'];
@@ -59,7 +59,7 @@ function gerarPartitura(musica) {
 }
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/ritmo.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/ritmo.css?v=202610231820', import.meta.url));
 
   raiz.classList.add('ritmo');
   raiz.innerHTML = `

@@ -5,11 +5,11 @@
  * coração, estrela e polvo. Arraste para apertar várias de uma vez.
  * Desenho: base de silicone e as bolinhas são pré-desenhadas; o quadro só cola imagens.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { criarBanco } from '../../core/amostras.js?v=202610231621';
-import { capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { criarBanco } from '../../core/amostras.js?v=202610231820';
+import { capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const SOM_POP = new URL('../../../assets/sons/fidget/pop-it.mp3', import.meta.url);
@@ -81,7 +81,7 @@ function caminhoFormato(id, t) {
 }
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/pop-it.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/pop-it.css?v=202610231820', import.meta.url));
 
   const config = { formato: 'arco', ...ler('popit-config', {}) };
   let formato = FORMATOS.find((f) => f.id === config.formato) ?? FORMATOS[0];

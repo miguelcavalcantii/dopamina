@@ -3,14 +3,14 @@
  * Este módulo junta simulação, renderização, efeitos 2D, entrada (mouse/toque/teclado),
  * sons e o painel de controles.
  */
-import { TEMAS } from './temas.js?v=202610231621';
-import { CampoDeOndas, CampoDeTinta } from './simulacao.js?v=202610231621';
-import { RenderizadorGL } from './renderizador-gl.js?v=202610231621';
-import { RenderizadorCPU } from './renderizador-cpu.js?v=202610231621';
-import { CamadaEfeitos } from './efeitos.js?v=202610231621';
-import { criarPainel } from './painel.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { aleatorio, carregarEstilo, clamp, escolher, hexParaRgb, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
+import { TEMAS } from './temas.js?v=202610231820';
+import { CampoDeOndas, CampoDeTinta } from './simulacao.js?v=202610231820';
+import { RenderizadorGL } from './renderizador-gl.js?v=202610231820';
+import { RenderizadorCPU } from './renderizador-cpu.js?v=202610231820';
+import { CamadaEfeitos } from './efeitos.js?v=202610231820';
+import { criarPainel } from './painel.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { aleatorio, carregarEstilo, clamp, escolher, hexParaRgb, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231820';
 
 const MODOS = [
   { id: 'livre', nome: 'Livre', icone: 'onda', dica: 'Arraste para criar ondas', detalhe: 'Clique ou toque para soltar uma gota grande', amortecimento: 0.986 },
@@ -26,7 +26,7 @@ const PASSO_FISICA = 1 / 60;
 const MAX_BOLHAS = 26;
 
 export async function montar(raiz, { audio, progresso, aoQuadro, params }) {
-  await carregarEstilo(new URL('../../../css/experiencias/vidro-liquido.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/vidro-liquido.css?v=202610231820', import.meta.url));
 
   const config = { ...CONFIG_PADRAO, ...ler('vidro-config', {}) };
   const surpresa = params?.has('surpresa');

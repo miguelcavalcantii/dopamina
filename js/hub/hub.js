@@ -3,13 +3,13 @@
  * (nível, missões, conquistas) e as experiências em seções por categoria,
  * com busca, filtros e favoritos. Cada card tem uma prévia animada.
  */
-import { EXPERIENCIAS, CATEGORIAS } from '../experiencias/registro.js?v=202610231621';
-import { PREVIAS } from './previas.js?v=202610231621';
-import { CONQUISTAS } from '../core/conquistas.js?v=202610231621';
-import { aoQuadro } from '../core/loop.js?v=202610231621';
-import { criarCanvasResponsivo } from '../core/canvas.js?v=202610231621';
-import { icone } from '../core/icones.js?v=202610231621';
-import { formatarTempo, movimentoReduzido, semHover } from '../core/util.js?v=202610231621';
+import { EXPERIENCIAS, CATEGORIAS } from '../experiencias/registro.js?v=202610231820';
+import { PREVIAS } from './previas.js?v=202610231820';
+import { CONQUISTAS } from '../core/conquistas.js?v=202610231820';
+import { aoQuadro } from '../core/loop.js?v=202610231820';
+import { criarCanvasResponsivo } from '../core/canvas.js?v=202610231820';
+import { icone } from '../core/icones.js?v=202610231820';
+import { formatarTempo, movimentoReduzido, semHover } from '../core/util.js?v=202610231820';
 
 /** Texto sem acentos e em minúsculas, para a busca achar "musica" em "Música". */
 const normalizar = (texto) => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -136,6 +136,11 @@ export function criarHub({ progresso, audio, preferencias, aoEscolher, aoSurpres
         <p data-vazio-texto></p>
       </div>
     </div>
+    <a class="hub__ronco" href="https://miguelcavalcantii.github.io/ronco/">
+      <svg class="hub__ronco-icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 14.5V21M9.6 11.2L3.4 9.6M14.4 11.2l6.2-1.6"/></svg>
+      <span class="hub__ronco-textos"><small>Novo app</small><strong>Ronco</strong><span>Estrada infinita em 3D, sons de motor e uma homenagem a Ayrton Senna.</span></span>
+      <span class="hub__ronco-seta" aria-hidden="true">→</span>
+    </a>
     <p class="hub__rodape">Seu progresso fica salvo só neste navegador. Respire, brinque e volte quando quiser.</p>`;
 
   const $ = (seletor) => raiz.querySelector(seletor);

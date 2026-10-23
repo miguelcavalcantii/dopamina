@@ -631,4 +631,27 @@
 .card__jogar .icone { transition: transform 0.35s var(--mola); }
 .card:hover .card__jogar .icone { transform: translateX(5px); }
 
-.hub__rodape { margin-top: 52px; text-align: center; font-size: 0.86rem; color: var(--texto-suave); }
+/* Atalho para o Ronco (app irmão de carros) */
+.hub__ronco {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 620px;
+  margin: 52px auto 0;
+  padding: 16px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  background: linear-gradient(100deg, #06331a, #0b1f4a);
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.25s var(--mola, ease), border-color 0.2s;
+}
+.hub__ronco:hover { transform: translateY(-3px); border-color: #ffd60a; }
+.hub__ronco-icone { flex: none; width: 46px; height: 46px; padding: 8px; border-radius: 14px; background: #ffd60a; color: #06331a; }
+.hub__ronco-textos { display: flex; flex: 1; flex-direction: column; line-height: 1.25; }
+.hub__ronco-textos small { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #ffd60a; }
+.hub__ronco-textos strong { font-size: 1.3rem; }
+.hub__ronco-textos span { font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); }
+.hub__ronco-seta { font-size: 1.6rem; color: #ffd60a; transition: transform 0.25s; }
+.hub__ronco:hover .hub__ronco-seta { transform: translateX(4px); }
+.hub__rodape { margin-top: 28px; text-align: center; font-size: 0.86rem; color: var(--texto-suave); }

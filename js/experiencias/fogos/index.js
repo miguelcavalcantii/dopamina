@@ -3,9 +3,9 @@
  * Sete formas de explosão, cinco paletas, show automático e grand finale,
  * com a cidade refletida na água. Brilhos contidos para evitar flashes fortes.
  */
-import { geradorComSemente, aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
+import { geradorComSemente, aleatorio, capturarPonteiro, carregarEstilo, clamp, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const GRAVIDADE_FOGUETE = 300;
@@ -31,7 +31,7 @@ const PALETAS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/fogos.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/fogos.css?v=202610231820', import.meta.url));
 
   const config = { forma: 'surpresa', paleta: 'arco-iris', ...ler('fogos-config', {}) };
   const salvar = () => gravar('fogos-config', { forma: config.forma, paleta: config.paleta });

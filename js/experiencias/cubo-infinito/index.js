@@ -7,11 +7,11 @@
  * Arraste para dobrar (o quanto arrasta = o quanto dobra), solte para encaixar,
  * ou ligue o modo automático. 3D próprio: projeção em perspectiva, pintor por cubo.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { criarBanco } from '../../core/amostras.js?v=202610231621';
-import { capturarPonteiro, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { criarBanco } from '../../core/amostras.js?v=202610231820';
+import { capturarPonteiro, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231820';
 
 const PI = Math.PI;
 const SOM_ENCAIXE = new URL('../../../assets/sons/fidget/toggle.mp3', import.meta.url);
@@ -50,7 +50,7 @@ const FACES = [
 const identidade = () => [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // colunas = eixos locais
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/cubo-infinito.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/cubo-infinito.css?v=202610231820', import.meta.url));
 
   const config = { paleta: 'classico', automatico: false, ...ler('cubo-config', {}) };
   const salvar = () => gravar('cubo-config', config);

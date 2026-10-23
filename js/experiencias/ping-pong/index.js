@@ -6,12 +6,12 @@
  * que curvam a bola em voo (Magnus) e mudam o quique.
  * Contra o computador (3 níveis) ou 2 jogadores no mesmo teclado. Partida até 11.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { criarBanco } from '../../core/amostras.js?v=202610231621';
-import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231621';
-import { aleatorio, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { criarBanco } from '../../core/amostras.js?v=202610231820';
+import { criarPainelJogo } from '../../core/painel-jogo.js?v=202610231820';
+import { aleatorio, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js?v=202610231820';
 
 const som = (nome) => new URL(`../../../assets/sons/jogos/${nome}.mp3`, import.meta.url);
 
@@ -33,7 +33,7 @@ const NIVEIS = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/ping-pong.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/ping-pong.css?v=202610231820', import.meta.url));
 
   const config = { nivel: 'medio', modo: '1p', ...ler('pingpong-config', {}) };
   const salvar = () => gravar('pingpong-config', config);

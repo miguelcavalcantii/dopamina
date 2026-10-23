@@ -5,12 +5,12 @@
  * alisa tudo de novo. Sons gravados (CC0): atrito de areia em laço (segue a
  * velocidade da faca) e farelos de areia úmida.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { criarBanco } from '../../core/amostras.js?v=202610231621';
-import { htmlControlesAsmr, ligarControlesAsmr } from '../../core/asmr.js?v=202610231621';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { criarBanco } from '../../core/amostras.js?v=202610231820';
+import { htmlControlesAsmr, ligarControlesAsmr } from '../../core/asmr.js?v=202610231820';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const som = (nome) => new URL(`../../../assets/sons/asmr/${nome}.mp3`, import.meta.url);
@@ -26,7 +26,7 @@ const AREIAS = [
 const FORMAS = ['estrela', 'coracao', 'circulo', 'flor'];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/areia-cinetica.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/areia-cinetica.css?v=202610231820', import.meta.url));
 
   const config = { areia: 'arco', ferramenta: 'faca', forma: 'estrela', ...ler('areia-cinetica-config', {}) };
   const salvar = () => gravar('areia-cinetica-config', config);

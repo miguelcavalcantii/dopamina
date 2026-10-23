@@ -2,7 +2,7 @@
  * Peças de interface compartilhadas: avisos (toasts), controles de som,
  * selo de nível na barra e preenchimento dos controles deslizantes.
  */
-import { icone } from './icones.js?v=202610231621';
+import { icone } from './icones.js?v=202610231820';
 
 const pilhaToasts = document.getElementById('toasts');
 const MAX_TOASTS = 3;

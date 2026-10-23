@@ -7,11 +7,11 @@
  * volta a embaçar devagar). Trovões opcionais: clarão suave (máx. 8%) e trovoada
  * gravada, tirada dos trechos mais altos da gravação.
  */
-import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231621';
-import { icone } from '../../core/icones.js?v=202610231621';
-import { ler, gravar } from '../../core/armazenamento.js?v=202610231621';
-import { htmlControlesAsmr, ligarControlesAsmr } from '../../core/asmr.js?v=202610231621';
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231621';
+import { criarCanvasResponsivo } from '../../core/canvas.js?v=202610231820';
+import { icone } from '../../core/icones.js?v=202610231820';
+import { ler, gravar } from '../../core/armazenamento.js?v=202610231820';
+import { htmlControlesAsmr, ligarControlesAsmr } from '../../core/asmr.js?v=202610231820';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, geradorComSemente, movimentoReduzido, perfilLeve } from '../../core/util.js?v=202610231820';
 
 const TAU = Math.PI * 2;
 const som = (nome) => new URL(`../../../assets/sons/asmr/${nome}.mp3`, import.meta.url);
@@ -30,7 +30,7 @@ const INTENSIDADES = [
 ];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
-  await carregarEstilo(new URL('../../../css/experiencias/chuva-janela.css?v=202610231621', import.meta.url));
+  await carregarEstilo(new URL('../../../css/experiencias/chuva-janela.css?v=202610231820', import.meta.url));
 
   const config = { cena: 'cidade', intensidade: 'chuva', trovoes: true, ...ler('chuva-janela-config', {}) };
   const salvar = () => gravar('chuva-janela-config', config);

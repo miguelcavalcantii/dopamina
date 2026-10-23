@@ -3,10 +3,10 @@
  * tema da interface, cor de destaque, pacote de sons e volumes por canal.
  * Tudo é aplicado na hora e salvo no localStorage pelos próprios módulos.
  */
-import { icone } from './icones.js?v=202610231621';
-import { TEMAS, DESTAQUES_SUGERIDOS } from './preferencias.js?v=202610231621';
-import { PACOTES_SOM } from './audio.js?v=202610231621';
-import { atualizarDeslizador } from './ui.js?v=202610231621';
+import { icone } from './icones.js?v=202610231820';
+import { TEMAS, DESTAQUES_SUGERIDOS } from './preferencias.js?v=202610231820';
+import { PACOTES_SOM } from './audio.js?v=202610231820';
+import { atualizarDeslizador } from './ui.js?v=202610231820';
 
 const CANAIS = [
   { id: 'geral', nome: 'Geral', icone: 'som', descricao: 'Tudo junto' },
