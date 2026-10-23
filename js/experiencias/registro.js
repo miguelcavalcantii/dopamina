@@ -390,6 +390,22 @@ export const EXPERIENCIAS = [
       return lascas ? `${lascas} cachinhos raspados` : 'Fresquinho e cheiroso';
     },
   },
+  {
+    id: 'chuva-janela',
+    palavras: ['chuva', 'janela', 'gotas', 'vidro', 'trovao', 'dormir', 'asmr', 'relaxar'],
+    nome: 'Chuva na Janela',
+    descricao: 'Gotas escorrendo no vidro, luzes desfocadas e trovões ao longe.',
+    categoria: 'ASMR',
+    icone: 'janela',
+    cores: ['#9fd8ff', '#ffb347'],
+    disponivel: true,
+    previa: 'chuvaJanela',
+    carregar: () => import('./chuva-janela/index.js'),
+    estatistica: (p) => {
+      const segundos = p.contador('tempo:chuva-janela');
+      return segundos >= 60 ? `${Math.floor(segundos / 60)} min de chuva` : 'Plic, plic, plic';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

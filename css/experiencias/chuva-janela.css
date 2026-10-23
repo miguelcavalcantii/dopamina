@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Chuva na janela
+   ========================================================================== */
+
+.janela { overflow: hidden; background: #05060f; user-select: none; -webkit-user-select: none; }
+
+.janela__palco {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  touch-action: none;
+  outline: none;
+}
+.janela__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--destaque); }
+.janela__canvas { width: 100%; height: 100%; }
+.janela__doca { width: auto; max-width: calc(100% - 24px); }

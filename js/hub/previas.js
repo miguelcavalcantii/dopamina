@@ -923,4 +923,48 @@ export const PREVIAS = {
       ctx.stroke();
     }
   },
+
+  chuvaJanela(ctx, l, a, t) {
+    degrade(ctx, l, a, '#141a3a', '#2a1c3a', true);
+    // Luzes desfocadas lá fora
+    const cores = ['#ffb347', '#ff5dc8', '#22e4ff', '#ffe08a'];
+    for (let i = 0; i < 12; i++) {
+      const x = l * hash(i);
+      const y = a * (0.35 + hash(i + 5) * 0.6);
+      const r = 8 + hash(i + 9) * 16;
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0, `${cores[i % 4]}cc`);
+      grad.addColorStop(1, `${cores[i % 4]}00`);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, TAU);
+      ctx.fill();
+    }
+    ctx.fillStyle = 'rgba(200,215,235,0.18)';
+    ctx.fillRect(0, 0, l, a);
+    // Gotas paradas e uma escorrendo
+    for (let i = 0; i < 40; i++) {
+      const x = l * hash(i + 20);
+      const y = a * hash(i + 60);
+      const r = 1 + hash(i + 90) * 2.5;
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, TAU);
+      ctx.fill();
+    }
+    for (let k = 0; k < 3; k++) {
+      const x = l * (0.25 + k * 0.25);
+      const y = ((t * (30 + k * 12) + k * 60) % (a + 40)) - 20;
+      ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, Math.max(0, y - 40));
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.beginPath();
+      ctx.ellipse(x, y, 4, 5.5, 0, 0, TAU);
+      ctx.fill();
+    }
+  },
 };
