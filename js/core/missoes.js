@@ -23,6 +23,7 @@ export const MODELOS_MISSAO = [
   { id: 'caleido-desenhar', texto: 'Desenhe por 2 minutos no Caleidoscópio', evento: 'caleido:segundos', meta: 120, xp: 70, icone: 'flor', cor: '#c77dff', formato: 'tempo', requer: 'caleidoscopio' },
   { id: 'bolha-estourar', texto: 'Estoure 150 bolhas no Plástico-Bolha', evento: 'bolha:estouro', meta: 150, xp: 60, icone: 'bolhas', cor: '#3cffb4', requer: 'plastico-bolha' },
   { id: 'respira-ciclos', texto: 'Complete 5 ciclos no Respira', evento: 'respira:ciclo', meta: 5, xp: 70, icone: 'respirar', cor: '#b18cff', requer: 'respira' },
+  { id: 'slime-misturar', texto: 'Misture dois slimes', evento: 'slime:mistura', meta: 1, xp: 60, icone: 'gosma', cor: '#ff70c0', requer: 'slime' },
   { id: 'slime-apertar', texto: 'Aperte o Slime 30 vezes', evento: 'slime:aperto', meta: 30, xp: 50, icone: 'gosma', cor: '#7bff4a', requer: 'slime' },
   { id: 'bolha-folha', texto: 'Complete uma folha inteira de Plástico-Bolha', evento: 'bolha:folha', meta: 1, xp: 80, icone: 'bolhas', cor: '#9fd8ff', requer: 'plastico-bolha' },
   { id: 'relampago-dificil', texto: 'Jogue 2 partidas de Relâmpago no Difícil', evento: 'relampago:partida-dificil', meta: 2, xp: 80, icone: 'raio', cor: '#ff7a18', requer: 'microgames' },

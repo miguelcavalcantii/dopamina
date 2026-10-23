@@ -32,6 +32,7 @@ export const CONQUISTAS = [
   { id: 'folha-perfeita', nome: 'Folha Perfeita', descricao: 'Estoure todas as bolhas de uma folha', icone: 'bolhas', cor: '#9fd8ff', condicao: (v) => v.contador('bolha:folha') >= 1 },
   { id: 'fabrica-bolhas', nome: 'Fábrica de Bolhas', descricao: 'Complete 10 folhas de plástico-bolha', icone: 'bolha', cor: '#3cffb4', condicao: (v) => v.contador('bolha:folha') >= 10 },
   { id: 'respiro-fundo', nome: 'Respiro Fundo', descricao: 'Complete uma sessão no Respira', icone: 'respirar', cor: '#b18cff', condicao: (v) => v.contador('respira:sessao') >= 1 },
+  { id: 'alquimista', nome: 'Alquimista de Slime', descricao: 'Misture dois slimes até virar uma cor só', icone: 'gosma', cor: '#ff70c0', condicao: (v) => v.contador('slime:mistura-completa') >= 1 },
   { id: 'amigo-slime', nome: 'Amigo Gosmento', descricao: 'Aperte o Slime 100 vezes', icone: 'gosma', cor: '#7bff4a', condicao: (v) => v.contador('slime:aperto') >= 100 },
   { id: 'ventania', nome: 'Ventania', descricao: 'Faça o spinner passar de 1.500 RPM', icone: 'spinner', cor: '#bfe4ff', condicao: (v) => v.recorde('fidget-spinner', 'rpm') >= 1500 },
   { id: 'mil-voltas', nome: 'Mil Voltas', descricao: 'Dê 1.000 voltas no Fidget Spinner', icone: 'espiral', cor: '#8b5cff', condicao: (v) => v.contador('spinner:volta') >= 1000 },

@@ -164,7 +164,7 @@ export const EXPERIENCIAS = [
     id: 'slime',
     palavras: ['gosma', 'apertar', 'squish', 'massinha'],
     nome: 'Slime',
-    descricao: 'Uma gosma elástica para apertar, esticar e cutucar.',
+    descricao: 'Gosma que estica, muda de cor e se mistura com outro slime.',
     categoria: 'Fidget Toys',
     icone: 'gosma',
     cores: ['#7bff4a', '#00ffa3'],
