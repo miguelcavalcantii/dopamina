@@ -44,6 +44,7 @@ export const MODELOS_MISSAO = [
   { id: 'sabonete-lascas', texto: 'Raspe 30 cachinhos de sabonete', evento: 'sabonete:lasca', meta: 30, xp: 60, icone: 'sabonete', cor: '#c7b0f5', requer: 'sabonete' },
   { id: 'chuva-ouvir', texto: 'Escute a chuva na janela por 3 minutos', evento: 'tempo:chuva-janela', meta: 180, xp: 70, icone: 'janela', cor: '#9fd8ff', formato: 'tempo', requer: 'chuva-janela' },
   { id: 'mesa-sons', texto: 'Experimente 4 sons diferentes na Mesa de Sons', evento: 'mesa:som', meta: 4, distinto: true, xp: 60, icone: 'mixer', cor: '#7fb8ff', requer: 'mesa-sons' },
+  { id: 'tinta-espalhar', texto: 'Espalhe tinta com a espátula 20 vezes', evento: 'tinta:espatulada', meta: 20, xp: 60, icone: 'espatula', cor: '#ff2e63', requer: 'tinta-grossa' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -87,5 +88,7 @@ export const XP_POR_EVENTO = {
   'sabonete:lasca': 0.5,
   'sabonete:corte': 0.5,
   'sabonete:aperto': 0.3,
+  'tinta:espatulada': 0.5,
+  'tinta:pingo': 0.2,
   tempo: 0.2,
 };

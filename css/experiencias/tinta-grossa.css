@@ -1,0 +1,16 @@
+/* ==========================================================================
+   Tinta grossa
+   ========================================================================== */
+
+.tinta { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.tinta__palco {
+  position: absolute;
+  inset: 0;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
+}
+.tinta__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--destaque); }
+.tinta__canvas { width: 100%; height: 100%; }
+.tinta__doca { width: auto; max-width: calc(100% - 24px); }

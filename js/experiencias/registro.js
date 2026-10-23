@@ -422,6 +422,22 @@ export const EXPERIENCIAS = [
       return sons ? `${sons} de 5 sons usados` : 'Seu ambiente, do seu jeito';
     },
   },
+  {
+    id: 'tinta-grossa',
+    palavras: ['tinta', 'pintar', 'espatula', 'misturar', 'cores', 'arte', 'asmr', 'oleo'],
+    nome: 'Tinta Grossa',
+    descricao: 'Pingue montinhos de tinta e espalhe com a espátula. Puro capricho.',
+    categoria: 'ASMR',
+    icone: 'espatula',
+    cores: ['#ff2e63', '#1fb4ff'],
+    disponivel: true,
+    previa: 'tintaGrossa',
+    carregar: () => import('./tinta-grossa/index.js'),
+    estatistica: (p) => {
+      const espatuladas = p.contador('tinta:espatulada');
+      return espatuladas ? `${espatuladas} espatuladas` : 'Grossa, brilhante, macia';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

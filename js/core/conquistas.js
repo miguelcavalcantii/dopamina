@@ -57,6 +57,7 @@ export const CONQUISTAS = [
   { id: 'barbeiro', nome: 'Mestre da Espuma', descricao: 'Raspe 150 cachinhos de sabonete', icone: 'sabonete', cor: '#6fd6b0', condicao: (v) => v.contador('sabonete:lasca') >= 150 },
   { id: 'dia-chuvoso', nome: 'Dia Chuvoso', descricao: 'Passe 15 minutos ouvindo a chuva na janela', icone: 'janela', cor: '#9fd8ff', condicao: (v) => v.contador('tempo:chuva-janela') >= 900 },
   { id: 'dj-sossego', nome: 'DJ do Sossego', descricao: 'Toque os 5 sons da Mesa de Sons ao mesmo tempo', icone: 'mixer', cor: '#7fb8ff', condicao: (v) => v.recorde('mesa-sons', 'simultaneos') >= 5 },
+  { id: 'paleta-cheia', nome: 'Paleta Cheia', descricao: 'Pingue as 9 cores na Tinta Grossa', icone: 'espatula', cor: '#ff2e63', condicao: (v) => v.distintos('tinta:pingo') >= 9 },
   { id: 'explorador', nome: 'Explorador', descricao: 'Abra todas as 10 experiências', icone: 'bussola', cor: '#22e4ff', condicao: (v) => v.distintos('experiencia:abrir') >= 10 },
   { id: 'missao-cumprida', nome: 'Missão Cumprida', descricao: 'Complete uma missão diária', icone: 'check', cor: '#a3ff12', condicao: (v) => v.missoesConcluidas >= 1 },
   { id: 'dia-perfeito', nome: 'Dia Perfeito', descricao: 'Complete as 3 missões de um dia', icone: 'trofeu', cor: '#ffd60a', condicao: (v) => v.missoesHoje >= 3 },

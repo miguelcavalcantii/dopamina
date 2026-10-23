@@ -995,4 +995,31 @@ export const PREVIAS = {
       }
     });
   },
+
+  tintaGrossa(ctx, l, a, t) {
+    degrade(ctx, l, a, '#f3ece0', '#e2d6c2');
+    const cores = ['#ff2e63', '#ffd60a', '#1fb4ff', '#c04bff'];
+    // Faixa de tinta sendo espalhada pela espátula
+    const progresso = (t * 0.25) % 1.2;
+    const x = l * 0.12 + Math.min(1, progresso) * l * 0.76;
+    cores.forEach((cor, i) => {
+      const y = a * (0.3 + i * 0.12);
+      const grad = ctx.createLinearGradient(l * 0.12, y, x, y);
+      grad.addColorStop(0, cor);
+      grad.addColorStop(1, cor);
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(l * 0.12, y - a * 0.05, x - l * 0.12 + 1, a * 0.1, a * 0.05);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillRect(l * 0.12, y - a * 0.03, x - l * 0.12, 2);
+      // Montinho ainda não espalhado
+      ctx.fillStyle = cor;
+      ctx.beginPath();
+      ctx.arc(Math.max(x + 14, l * 0.8), y, a * 0.05, 0, TAU);
+      ctx.fill();
+    });
+    ctx.fillStyle = '#d9dee8';
+    ctx.fillRect(x - 3, a * 0.2, 6, a * 0.6);
+  },
 };
