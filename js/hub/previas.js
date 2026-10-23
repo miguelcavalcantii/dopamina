@@ -685,4 +685,45 @@ export const PREVIAS = {
     ctx.ellipse(l * 0.5 + Math.sin(t * 1.3 + 2) * l * 0.06, a * 0.24, l * 0.025, l * 0.028, 0, 0, TAU);
     ctx.fill();
   },
+
+  jardim(ctx, l, a, t) {
+    degrade(ctx, l, a, '#040619', '#03110f', true);
+    ctx.fillStyle = '#0b2a26';
+    ctx.beginPath();
+    ctx.moveTo(0, a);
+    for (let x = 0; x <= l; x += 6) ctx.lineTo(x, a * 0.7 + Math.sin(x * 0.03) * 5);
+    ctx.lineTo(l, a);
+    ctx.fill();
+    const cores = ['#22e4ff', '#ff5dc8', '#a3ff12', '#b18cff', '#ffb347'];
+    ctx.globalCompositeOperation = 'lighter';
+    for (let i = 0; i < 5; i++) {
+      const x = l * (0.14 + i * 0.18);
+      const cresc = Math.min(1, ((t * 0.5 + i * 0.37) % 2.2));
+      const h = a * 0.32 * cresc;
+      const y = a * 0.74;
+      ctx.strokeStyle = 'rgba(80,255,190,0.6)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.quadraticCurveTo(x + Math.sin(t + i) * 6, y - h * 0.5, x, y - h);
+      ctx.stroke();
+      const r = 9 * cresc;
+      const brilho = ctx.createRadialGradient(x, y - h, 0, x, y - h, r * 3);
+      brilho.addColorStop(0, cores[i]);
+      brilho.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = brilho;
+      ctx.beginPath();
+      ctx.arc(x, y - h, r * 3, 0, TAU);
+      ctx.fill();
+    }
+    for (let i = 0; i < 8; i++) {
+      const x = l * hash(i) + Math.sin(t * 0.8 + i) * 14;
+      const y = a * (0.25 + hash(i + 9) * 0.4) + Math.cos(t * 0.7 + i) * 10;
+      ctx.fillStyle = `rgba(216,255,106,${0.4 + Math.sin(t * 3 + i) * 0.4})`;
+      ctx.beginPath();
+      ctx.arc(x, y, 2.2, 0, TAU);
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  },
 };

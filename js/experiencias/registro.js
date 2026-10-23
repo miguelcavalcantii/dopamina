@@ -294,6 +294,22 @@ export const EXPERIENCIAS = [
       return troca ? `Maior troca: ${troca}` : 'Pá, pum, pá';
     },
   },
+  {
+    id: 'jardim',
+    palavras: ['jardim', 'flores', 'cogumelo', 'brilho', 'vaga-lume', 'noite', 'plantar', 'musica'],
+    nome: 'Jardim Bioluminescente',
+    descricao: 'Plante flores e cogumelos que brilham, cantam e soltam esporos.',
+    categoria: 'Relaxar',
+    icone: 'cogumelo',
+    cores: ['#3cffb4', '#b18cff'],
+    disponivel: true,
+    previa: 'jardim',
+    carregar: () => import('./jardim/index.js'),
+    estatistica: (p) => {
+      const plantas = p.contador('jardim:planta');
+      return plantas ? `${plantas} plantas cultivadas` : 'Um jardim que canta';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);
