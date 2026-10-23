@@ -28,6 +28,9 @@ export const MODELOS_MISSAO = [
   { id: 'relampago-dificil', texto: 'Jogue 2 partidas de Relâmpago no Difícil', evento: 'relampago:partida-dificil', meta: 2, xp: 80, icone: 'raio', cor: '#ff7a18', requer: 'microgames' },
   { id: 'spinner-voltas', texto: 'Dê 500 voltas no Fidget Spinner', evento: 'spinner:volta', meta: 500, xp: 60, icone: 'spinner', cor: '#bfe4ff', requer: 'fidget-spinner' },
   { id: 'popit-viradas', texto: 'Vire a placa do Pop It 2 vezes', evento: 'popit:virada', meta: 2, xp: 70, icone: 'popit', cor: '#ffd23f', requer: 'pop-it' },
+  { id: 'teclado-toques', texto: 'Aperte 200 teclas no Teclado de Switches', evento: 'teclado:toque', meta: 200, xp: 60, icone: 'teclado', cor: '#2e7bff', requer: 'teclado-switches' },
+  { id: 'caneta-cliques', texto: 'Clique a caneta 50 vezes', evento: 'caneta:clique', meta: 50, xp: 50, icone: 'interruptor', cor: '#ffd60a', requer: 'interruptores' },
+  { id: 'cubo-dobras', texto: 'Dobre o Cubo Infinito 60 vezes', evento: 'cubo:dobra', meta: 60, xp: 60, icone: 'cubo', cor: '#2e7bff', requer: 'cubo-infinito' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -51,5 +54,9 @@ export const XP_POR_EVENTO = {
   'spinner:volta': 0.02,
   'popit:aperto': 0.15,
   'popit:virada': 8,
+  'teclado:toque': 0.1,
+  'caneta:clique': 0.2,
+  'interruptor:uso': 0.1,
+  'cubo:dobra': 0.3,
   tempo: 0.2,
 };

@@ -210,6 +210,56 @@ export const EXPERIENCIAS = [
       return apertos ? `${apertos} pops` : 'Pop, pop, vira!';
     },
   },
+  {
+    id: 'teclado-switches',
+    palavras: ['teclado', 'mecanico', 'switch', 'clicky', 'tecla', 'asmr'],
+    nome: 'Teclado de Switches',
+    descricao: 'Teclas mecânicas com som de verdade: clicky, tátil ou linear.',
+    categoria: 'Fidget Toys',
+    icone: 'teclado',
+    cores: ['#2e7bff', '#ff9ad5'],
+    disponivel: true,
+    previa: 'teclado',
+    carregar: () => import('./teclado-switches/index.js'),
+    estatistica: (p) => {
+      const toques = p.contador('teclado:toque');
+      return toques ? `${toques.toLocaleString('pt-BR')} toques` : 'Clack, clack, clack';
+    },
+  },
+  {
+    id: 'interruptores',
+    palavras: ['caneta', 'clicker', 'interruptor', 'botao', 'alavanca', 'chave', 'luz', 'click'],
+    nome: 'Caneta e Interruptores',
+    descricao: 'Caneta clicker, chaves, alavanca e botões, cada um com seu clique.',
+    categoria: 'Fidget Toys',
+    icone: 'interruptor',
+    cores: ['#ffd60a', '#ff2e3d'],
+    disponivel: true,
+    previa: 'interruptores',
+    carregar: () => import('./interruptores/index.js'),
+    estatistica: (p) => {
+      const cliques = p.contador('caneta:clique');
+      const usados = p.distintos('interruptor:uso');
+      if (usados) return `${usados} de 7 controles usados`;
+      return cliques ? `${cliques} cliques de caneta` : 'Click, clack, tlec';
+    },
+  },
+  {
+    id: 'cubo-infinito',
+    palavras: ['cubo', 'infinito', 'dobrar', '3d', 'rubik', 'infinity cube'],
+    nome: 'Cubo Infinito',
+    descricao: 'Dobra, desdobra e dobra de novo. As metades trocam de lugar sem fim.',
+    categoria: 'Fidget Toys',
+    icone: 'cubo',
+    cores: ['#2e7bff', '#e8343a'],
+    disponivel: true,
+    previa: 'cubo',
+    carregar: () => import('./cubo-infinito/index.js'),
+    estatistica: (p) => {
+      const dobras = p.contador('cubo:dobra');
+      return dobras ? `${dobras.toLocaleString('pt-BR')} dobras` : 'Sem fim, sem pressa';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

@@ -1,0 +1,17 @@
+/* ==========================================================================
+   Cubo infinito
+   ========================================================================== */
+
+.cubo { overflow: hidden; user-select: none; -webkit-user-select: none; }
+
+.cubo__palco {
+  position: absolute;
+  inset: 0;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.cubo__palco:active { cursor: grabbing; }
+.cubo__palco:focus-visible { box-shadow: inset 0 0 0 4px var(--destaque); }
+.cubo__canvas { width: 100%; height: 100%; }
+.cubo__doca { width: auto; max-width: calc(100% - 24px); }

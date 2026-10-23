@@ -1,0 +1,422 @@
+/* ==========================================================================
+   Caneta e interruptores: painel de metal com controles
+   ========================================================================== */
+
+.painel {
+  overflow: hidden;
+  background:
+    radial-gradient(70% 55% at 50% 30%, rgba(255, 255, 255, 0.07), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 3px),
+    linear-gradient(180deg, #2a2d36, #15171d);
+  user-select: none;
+  -webkit-user-select: none;
+  transition: background-color 0.4s;
+}
+
+/* Luz acesa: o painel inteiro esquenta */
+.painel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(60% 50% at 50% 25%, rgba(255, 200, 90, 0.28), transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.painel--acesa::before { opacity: 1; }
+
+.painel__placa {
+  position: absolute;
+  inset: calc(var(--altura-barra) + 12px) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  align-content: center;
+  gap: 16px;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 8px 16px 32px;
+  overflow-y: auto;
+}
+
+/* ---------- Módulo: placa usinada com parafusos ---------- */
+
+.modulo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 250px;
+  padding: 22px 16px 16px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, #3a3e4a, #23262f);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), inset 0 -2px 0 rgba(0, 0, 0, 0.4), 0 14px 30px -14px rgba(0, 0, 0, 0.8);
+}
+
+.modulo::before,
+.modulo::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background:
+    linear-gradient(45deg, transparent 44%, rgba(0, 0, 0, 0.55) 45% 55%, transparent 56%),
+    radial-gradient(circle at 35% 30%, #e6e9f0, #7d8392);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+.modulo::before { left: 10px; }
+.modulo::after { right: 10px; }
+
+.modulo__nome {
+  font-family: var(--fonte-titulo);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9aa1b2;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6), 0 -1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.modulo__info { font-size: 0.8rem; color: #9aa1b2; letter-spacing: 0.04em; }
+.modulo__info strong { color: #fff; font-variant-numeric: tabular-nums; }
+
+.modulo--caneta { grid-row: span 2; }
+
+/* ---------- Caneta ---------- */
+
+.caneta {
+  display: grid;
+  place-items: center;
+  height: min(340px, 100%);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  touch-action: none;
+}
+.caneta svg { width: auto; height: min(320px, 46vh); filter: drop-shadow(8px 12px 10px rgba(0, 0, 0, 0.55)); }
+.caneta__botao, .caneta__ponta { transition: transform 0.08s ease-out; }
+.caneta--apertando .caneta__botao { transform: translateY(10px); }
+.caneta[aria-pressed='false'] .caneta__ponta { transform: translateY(-24px); }
+.caneta:focus-visible { outline: 3px solid var(--destaque); outline-offset: 6px; border-radius: 12px; }
+
+/* ---------- Lâmpada e interruptor de luz ---------- */
+
+.lampada { position: relative; display: grid; justify-items: center; }
+.lampada__vidro {
+  width: 58px;
+  height: 58px;
+  border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.5), rgba(200, 210, 230, 0.12) 60%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  transition: background 0.25s, box-shadow 0.3s;
+}
+.lampada__base {
+  width: 26px;
+  height: 18px;
+  margin-top: -3px;
+  border-radius: 3px 3px 8px 8px;
+  background: repeating-linear-gradient(180deg, #c9ced8 0 3px, #7f8696 3px 5px);
+}
+.modulo--acesa .lampada__vidro {
+  background: radial-gradient(circle at 45% 40%, #fffbe6, #ffd36b 55%, #ff9f1a);
+  box-shadow: 0 0 30px 10px rgba(255, 200, 90, 0.55), 0 0 80px 30px rgba(255, 180, 60, 0.25);
+}
+
+.espelho {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 128px;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #f5f5f2, #cfcfc8);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45), inset 0 1px 0 #fff;
+}
+
+.tecla-luz {
+  width: 46px;
+  height: 78px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: #d9d9d2;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  perspective: 300px;
+}
+.tecla-luz__face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  background: linear-gradient(180deg, #ffffff 0%, #e8e8e2 48%, #c8c8c0 52%, #f2f2ec 100%);
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
+  transform: rotateX(14deg);
+  transition: transform 0.12s cubic-bezier(0.3, 1.6, 0.6, 1), background 0.12s;
+}
+.tecla-luz[aria-checked='true'] .tecla-luz__face {
+  background: linear-gradient(180deg, #f2f2ec 0%, #c8c8c0 48%, #e8e8e2 52%, #ffffff 100%);
+  transform: rotateX(-14deg);
+}
+
+/* ---------- Chave de alavanca + LED ---------- */
+
+.led {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ff8a8a, #7a1010);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.4);
+  transition: background 0.15s, box-shadow 0.2s;
+}
+.led--aceso {
+  background: radial-gradient(circle at 35% 30%, #eaffd8, #3cff6b 50%, #0a8a2a);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2), 0 0 16px 4px rgba(60, 255, 107, 0.6);
+}
+
+.chave {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 110px;
+  height: 120px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.chave__porca {
+  width: 64px;
+  height: 56px;
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  background: radial-gradient(circle at 40% 35%, #f4f6fa, #9aa1b2 55%, #565c6b);
+}
+.chave__haste {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 16px;
+  height: 66px;
+  margin-left: -8px;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(90deg, #8a90a0, #ffffff 40%, #b9bfcc 60%, #6a7080);
+  box-shadow: 4px 6px 8px rgba(0, 0, 0, 0.45);
+  transform-origin: 50% 100%;
+  transform: rotate(-26deg);
+  transition: transform 0.16s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+.chave[aria-checked='true'] .chave__haste { transform: rotate(26deg); }
+
+/* ---------- Chave deslizante ---------- */
+
+.barra-leds { display: flex; gap: 8px; }
+.barra-leds span {
+  width: 22px;
+  height: 10px;
+  border-radius: 3px;
+  background: #2a2e38;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+  transition: background 0.15s, box-shadow 0.2s;
+}
+.barra-leds span.aceso:nth-child(1) { background: #3cffb4; box-shadow: 0 0 10px #3cffb4; }
+.barra-leds span.aceso:nth-child(2) { background: #ffd60a; box-shadow: 0 0 10px #ffd60a; }
+.barra-leds span.aceso:nth-child(3) { background: #ff2e97; box-shadow: 0 0 10px #ff2e97; }
+
+.deslizante {
+  --pos: 0;
+  position: relative;
+  width: 150px;
+  height: 44px;
+  cursor: pointer;
+  touch-action: none;
+  outline: none;
+}
+.deslizante:focus-visible { outline: 3px solid var(--destaque); outline-offset: 6px; border-radius: 12px; }
+.deslizante__trilho {
+  position: absolute;
+  inset: 12px 0;
+  border-radius: 10px;
+  background: #0d0f14;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.9), 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.deslizante__pino {
+  position: absolute;
+  top: 2px;
+  left: calc(var(--pos) / 2 * (100% - 52px));
+  width: 52px;
+  height: 40px;
+  border-radius: 8px;
+  background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0 2px, transparent 2px 6px), linear-gradient(180deg, #f1f3f8, #9ea5b4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 #fff;
+  transition: left 0.14s cubic-bezier(0.3, 1.5, 0.5, 1);
+}
+.deslizante__rotulos { display: flex; justify-content: space-between; width: 150px; padding: 0 18px; font-size: 0.75rem; color: #9aa1b2; }
+
+/* ---------- Alavanca ---------- */
+
+.alavanca {
+  --puxada: 0;
+  position: relative;
+  width: 80px;
+  height: 170px;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.alavanca:active { cursor: grabbing; }
+.alavanca:focus-visible { outline: 3px solid var(--destaque); outline-offset: 6px; border-radius: 12px; }
+.alavanca__fenda {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  bottom: 14px;
+  width: 14px;
+  margin-left: -7px;
+  border-radius: 7px;
+  background: #07080b;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 1), 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.alavanca__braco {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 12px;
+  height: 52px;
+  margin-left: -6px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #8a90a0, #ffffff 45%, #8a90a0);
+  transform: translateY(calc(var(--puxada) * 100px));
+}
+.alavanca--voltando .alavanca__braco { transition: transform 0.45s cubic-bezier(0.25, 1.7, 0.45, 1); }
+.alavanca__bola {
+  position: absolute;
+  left: 50%;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffb3b3, #ff2e3d 45%, #8a0010);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Botões de fliperama ---------- */
+
+.arcade { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.arcade__botao {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 40%, #3a3e4a, #15171d);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  touch-action: none;
+}
+.arcade__botao span {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 30%, color-mix(in srgb, var(--cor) 50%, #fff), var(--cor) 50%, color-mix(in srgb, var(--cor) 60%, #000));
+  box-shadow: 0 6px 0 color-mix(in srgb, var(--cor) 45%, #000), inset 0 -4px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-5px);
+  transition: transform 0.05s, box-shadow 0.05s, filter 0.1s;
+}
+.arcade__botao--apertado span {
+  transform: translateY(0);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--cor) 45%, #000), inset 0 -2px 6px rgba(0, 0, 0, 0.25), 0 0 26px 6px var(--cor);
+  filter: brightness(1.15);
+}
+
+/* ---------- Botão giratório ---------- */
+
+.giratorio {
+  --giro: -135deg;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  cursor: grab;
+  touch-action: none;
+  outline: none;
+}
+.giratorio:focus-visible { outline: 3px solid var(--destaque); outline-offset: 2px; border-radius: 50%; }
+.giratorio__leds span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px;
+  border-radius: 50%;
+  background: #2a2e38;
+  transform: rotate(var(--a)) translateY(-68px);
+  transition: background 0.1s, box-shadow 0.15s;
+}
+.giratorio__leds span.aceso { background: #22e4ff; box-shadow: 0 0 8px #22e4ff; }
+.giratorio__botao {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #4a4f5e 0 40%, transparent 41%),
+    repeating-conic-gradient(#6a7080 0 4deg, #2a2d36 4deg 8deg);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.6), inset 0 0 0 3px rgba(0, 0, 0, 0.3);
+  transform: rotate(var(--giro));
+  transition: transform 0.08s ease-out;
+}
+.giratorio__botao::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #9aa1b2, #3a3e4a);
+}
+.giratorio__marca {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  z-index: 1;
+  width: 6px;
+  height: 22px;
+  margin-left: -3px;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 0 8px #fff;
+}
+
+/* ---------- Festa ao puxar a alavanca ---------- */
+
+.painel--festa .painel__placa::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 214, 10, 0.18) 45%, rgba(255, 46, 151, 0.18) 55%, transparent 70%);
+  pointer-events: none;
+  animation: varredura-festa 0.8s ease-out forwards;
+}
+
+@keyframes varredura-festa {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+  .painel__placa { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 6px 10px 24px; align-content: start; }
+  .modulo { min-height: 200px; padding: 18px 8px 12px; }
+  .modulo--caneta { grid-row: span 2; }
+  .caneta svg { height: 300px; }
+  .deslizante, .deslizante__rotulos { width: 130px; }
+  .giratorio { width: 130px; height: 130px; }
+  .giratorio__leds span { transform: rotate(var(--a)) translateY(-58px); }
+  .giratorio__botao { width: 88px; height: 88px; }
+  .arcade__botao { width: 54px; height: 54px; }
+  .arcade__botao span { width: 40px; height: 40px; }
+}

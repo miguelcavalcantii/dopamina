@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Teclado de switches
+   ========================================================================== */
+
+.teclado {
+  overflow: hidden;
+  background:
+    radial-gradient(90% 70% at 50% 35%, #2a2440 0%, #0d0b16 70%),
+    #0d0b16;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.teclado__mesa {
+  position: absolute;
+  inset: calc(var(--altura-barra) + 10px) 16px 150px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 56px);
+  overflow-y: auto;
+}
+
+/* ---------- Testador: o switch visto por dentro ---------- */
+
+.testador {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.testador__switch { width: clamp(84px, 12vw, 130px); }
+.testador__switch svg { width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.5)); }
+.testador__haste { transition: transform 0.09s cubic-bezier(0.5, 0, 0.8, 0.4); }
+.testador__mola { transform-origin: 60px 122px; transition: transform 0.09s cubic-bezier(0.5, 0, 0.8, 0.4); }
+.testador__switch--baixo .testador__haste { transform: translateY(26px); }
+.testador__switch--baixo .testador__mola { transform: scaleY(0.62); }
+
+.testador__info { display: flex; flex-direction: column; gap: 4px; width: 170px; }
+.testador__nome { font-family: var(--fonte-titulo); font-size: 1.15rem; color: var(--c1); }
+.testador__desc { font-size: 0.82rem; color: var(--texto-suave); line-height: 1.3; }
+.testador__curva { width: 100%; height: auto; margin-top: 6px; }
+.testador__legenda { font-size: 0.72rem; color: var(--texto-suave); opacity: 0.8; }
+
+/* ---------- Teclas ---------- */
+
+.teclas {
+  --tam: clamp(58px, 9vw, 94px);
+  --cap: #ece4cf;
+  --cap-lado: #c9bea2;
+  --cap-mod: #a7a49c;
+  --cap-mod-lado: #85827a;
+  --legenda: #3b352a;
+  --legenda-mod: #f4f0e6;
+  --caixa-1: #d8dbe2;
+  --caixa-2: #9ea4b0;
+  --placa: #2c2f38;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.teclas[data-estilo='pastel'] {
+  --cap: #f7e6ff; --cap-lado: #d8bfe8; --cap-mod: #a5f0d8; --cap-mod-lado: #79cdb2;
+  --legenda: #6b4a8a; --legenda-mod: #24614f; --caixa-1: #ffe1f0; --caixa-2: #e7b8d6; --placa: #3a2d48;
+}
+.teclas[data-estilo='noite'] {
+  --cap: #2c2e38; --cap-lado: #17181f; --cap-mod: #3a2e5c; --cap-mod-lado: #231a3a;
+  --legenda: #9ff3ff; --legenda-mod: #ff9ad5; --caixa-1: #3a3d4a; --caixa-2: #121318; --placa: #08090d;
+}
+.teclas[data-estilo='mel'] {
+  --cap: #ffd27a; --cap-lado: #d99b2b; --cap-mod: #5a3a1c; --cap-mod-lado: #3a240f;
+  --legenda: #5a3a1c; --legenda-mod: #ffd27a; --caixa-1: #6b4a2a; --caixa-2: #2e1d0e; --placa: #1d1309;
+}
+
+/* Caixa de alumínio com a placa por dentro */
+.teclas__placa {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, var(--tam));
+  gap: calc(var(--tam) * 0.12);
+  padding: calc(var(--tam) * 0.2) calc(var(--tam) * 0.2) calc(var(--tam) * 0.26);
+  border-radius: calc(var(--tam) * 0.28);
+  background:
+    linear-gradient(var(--placa), var(--placa)) padding-box,
+    linear-gradient(160deg, var(--caixa-1), var(--caixa-2)) border-box;
+  border: calc(var(--tam) * 0.1) solid transparent;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  isolation: isolate;
+}
+
+/* Luz RGB por baixo das teclas: só aparece nas frestas */
+.teclas__placa::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(110deg, #ff2e97, #ff7a18, #ffd60a, #3cffb4, #22e4ff, #8b5cff, #ff2e97);
+  background-size: 300% 100%;
+  opacity: 0;
+  filter: blur(6px);
+  transition: opacity 0.4s;
+  animation: teclado-rgb 6s linear infinite;
+}
+.teclas[data-rgb='true'] .teclas__placa::before { opacity: 0.55; }
+
+@keyframes teclado-rgb { to { background-position: 300% 0; } }
+
+/* Onda de luz a partir da tecla apertada */
+.teclas__placa::after {
+  content: '';
+  position: absolute;
+  left: calc(var(--tam) * 0.2 + (var(--onda-coluna, 0) + 0.5) * var(--tam) * 1.12);
+  top: calc(var(--tam) * 0.2 + (var(--onda-linha, 0) + 0.5) * var(--tam) * 1.12);
+  z-index: -1;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0) 70%);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.teclas--onda .teclas__placa::after { animation: teclado-onda 0.5s ease-out; }
+
+@keyframes teclado-onda {
+  from { opacity: 1; width: 10px; height: 10px; }
+  to { opacity: 0; width: calc(var(--tam) * 4); height: calc(var(--tam) * 4); }
+}
+
+/* Uma tecla: saia (lados) + topo côncavo com a legenda */
+.tecla {
+  position: relative;
+  width: var(--tam);
+  height: var(--tam);
+  padding: calc(var(--tam) * 0.08) calc(var(--tam) * 0.1) calc(var(--tam) * 0.16);
+  border: 0;
+  border-radius: calc(var(--tam) * 0.14);
+  background: linear-gradient(180deg, var(--cap-lado), color-mix(in srgb, var(--cap-lado) 80%, #000));
+  box-shadow:
+    0 calc(var(--tam) * 0.07) 0 color-mix(in srgb, var(--cap-lado) 60%, #000),
+    0 calc(var(--tam) * 0.12) calc(var(--tam) * 0.16) rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  touch-action: none;
+  transition: transform 0.06s ease-out, box-shadow 0.06s ease-out;
+}
+
+.tecla__topo {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--tam) * 0.1);
+  background:
+    radial-gradient(120% 90% at 50% 20%, color-mix(in srgb, var(--cap) 70%, #fff) 0%, var(--cap) 55%, color-mix(in srgb, var(--cap) 88%, #000) 100%);
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.55), inset 0 -3px 5px rgba(0, 0, 0, 0.14), 0 1px 2px rgba(0, 0, 0, 0.25);
+  color: var(--legenda);
+  font-family: var(--fonte-texto);
+  font-size: calc(var(--tam) * 0.24);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.teclas[data-estilo='noite'] .tecla__topo { text-shadow: 0 0 10px currentColor; }
+
+.tecla--mod { background: linear-gradient(180deg, var(--cap-mod-lado), color-mix(in srgb, var(--cap-mod-lado) 80%, #000)); }
+.tecla--mod .tecla__topo {
+  background: radial-gradient(120% 90% at 50% 20%, color-mix(in srgb, var(--cap-mod) 70%, #fff) 0%, var(--cap-mod) 55%, color-mix(in srgb, var(--cap-mod) 85%, #000) 100%);
+  color: var(--legenda-mod);
+  font-size: calc(var(--tam) * 0.17);
+}
+.tecla--mod { box-shadow:
+    0 calc(var(--tam) * 0.07) 0 color-mix(in srgb, var(--cap-mod-lado) 60%, #000),
+    0 calc(var(--tam) * 0.12) calc(var(--tam) * 0.16) rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25); }
+
+.tecla:focus-visible { outline: 3px solid var(--destaque); outline-offset: 4px; }
+
+/* Apertada: desce até o fundo do curso, a saia some e a sombra encurta */
+.tecla.tecla--apertada {
+  transform: translateY(calc(var(--tam) * 0.06));
+  box-shadow:
+    0 calc(var(--tam) * 0.012) 0 color-mix(in srgb, var(--cap-lado) 60%, #000),
+    0 calc(var(--tam) * 0.03) calc(var(--tam) * 0.05) rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.tecla.tecla--apertada .tecla__topo { filter: brightness(0.96); }
+
+.teclas__placar {
+  display: flex;
+  gap: 18px;
+  font-size: 0.88rem;
+  color: var(--texto-suave);
+}
+.teclas__placar strong { font-family: var(--fonte-titulo); font-weight: 400; color: var(--texto); font-variant-numeric: tabular-nums; }
+
+.teclado__doca { width: auto; max-width: calc(100% - 24px); }
+.teclado__bolinha {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--cor);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 700px) {
+  .teclado__mesa { bottom: 130px; gap: 14px; }
+  .testador { padding: 10px 14px; gap: 12px; }
+  .testador__info { width: 140px; }
+  .testador__curva, .testador__legenda { display: none; }
+}

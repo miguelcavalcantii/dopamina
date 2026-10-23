@@ -80,6 +80,31 @@ O plano completo e as perguntas que eu teria feito estão em `PLANO.md`.
 - Recorde separado por dificuldade. O recorde antigo vira o do Normal. **Insano** libera com 4.000 pontos no Difícil
   (tabela em `js/experiencias/microgames/index.js`, `DIFICULDADES`).
 
+### Hub
+- **Seções** na ordem Jogos, Relaxar, Fidget Toys e ASMR (`CATEGORIAS` em `js/experiencias/registro.js`). Filtros
+  mostram a contagem de cada categoria. A busca ignora acentos e também procura em `palavras` de cada experiência.
+  A tecla `/` leva à busca, e Esc dentro dela limpa o texto.
+- **Favoritos**: coração no canto do card. Aparece no hover; no celular fica sempre visível. Os favoritos sobem para
+  o começo da própria seção e ganham o filtro "Favoritos". Ficam salvos nas preferências.
+- **Categorias antigas**: Ação virou Jogos; Criar (Fogos, Caleidoscópio) virou Relaxar; Fidget virou Fidget Toys.
+
+### Fidget Toys
+- **Fidget Spinner**: inércia com atrito de rolamento (0,22 rad/s² fixo + 1,1%/s viscoso), máx. ~2.580 RPM. Agarrar
+  freia; soltar arremessa com a velocidade dos últimos 90 ms; passar o dedo por fora dá peteleco. Som: gravação real em
+  laço (tom e volume seguem a velocidade) + zumbido de passagem das pontas. 4 modelos, 5 materiais. O reflexo do metal
+  fica parado enquanto o corpo gira; em alta velocidade há desfoque de movimento (até 18 cópias) e rastro de luz.
+- **Pop It**: 4 formatos (Arco-íris, Coração, Estrela, Polvo). Só as bolinhas de pé podem ser apertadas; quando todas
+  afundam, a placa vira (animação de 0,55 s) e o outro lado (um tom mais escuro) fica todo de pé. Som: gravação de um
+  brinquedo de bolhas de silicone, recortada em ~20 pops; fileiras de baixo soam um pouco mais graves.
+- **Teclado de Switches**: 16 teclas (Esc, Q W E, A S D F, Z X C V, 1 2 3, Enter), que também respondem ao teclado de
+  verdade. Switches Clicky, Tátil e Linear, com gravações de teclados MX Blue, Brown e Red. A volta da tecla toca o
+  mesmo som mais leve. 4 estilos de keycap e luz RGB com onda a partir da tecla apertada.
+- **Caneta e Interruptores**: 7 controles. O estado (luz, chave, posições) fica salvo. A alavanca precisa descer 92%
+  para "travar" e volta com mola. Puxar a alavanca passa uma luz colorida pelo painel.
+- **Cubo Infinito**: 3D próprio em canvas. As dobras alternam 6 combinações de eixo e dobradiça. Arrastar dobra na hora;
+  soltar com impulso continua; soltar devagar encaixa no lado mais perto (passou de 42%, completa). Clássico tem cores
+  por face; Neon, Pastel e Alumínio têm uma cor por cubinho.
+
 ## Não testado / limites conhecidos
 
 - **Som**: não consigo ouvir. Todos os sons foram escritos e o código roda sem erros, mas volume e timbre

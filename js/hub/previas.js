@@ -464,4 +464,121 @@ export const PREVIAS = {
     ctx.restore();
     brilhoCanto(ctx, l, a);
   },
+
+  teclado(ctx, l, a, t) {
+    degrade(ctx, l, a, '#2a2440', '#0d0b16');
+    const tam = Math.min(l / 5.6, a / 3.3);
+    const x0 = l / 2 - tam * 2.12;
+    const y0 = a / 2 - tam * 1.06;
+    // Luz RGB por baixo
+    const rgb = ctx.createLinearGradient(x0, 0, x0 + tam * 4.3, 0);
+    ['#ff2e97', '#ffd60a', '#3cffb4', '#22e4ff', '#8b5cff'].forEach((cor, i) => rgb.addColorStop((i / 4 + t * 0.15) % 1, cor));
+    ctx.fillStyle = rgb;
+    ctx.globalAlpha = 0.6;
+    ctx.fillRect(x0 - 6, y0 - 6, tam * 4.36 + 12, tam * 2.12 + 12);
+    ctx.globalAlpha = 1;
+    const apertada = Math.floor(t * 5) % 8;
+    for (let i = 0; i < 8; i++) {
+      const x = x0 + (i % 4) * tam * 1.12;
+      const baixo = i === apertada;
+      const y = y0 + Math.floor(i / 4) * tam * 1.12 + (baixo ? tam * 0.06 : 0);
+      ctx.fillStyle = '#c9bea2';
+      ctx.beginPath();
+      ctx.roundRect(x, y, tam, tam, tam * 0.14);
+      ctx.fill();
+      ctx.fillStyle = baixo ? '#f4ead2' : '#ece4cf';
+      ctx.beginPath();
+      ctx.roundRect(x + tam * 0.1, y + tam * 0.08, tam * 0.8, tam * 0.74, tam * 0.1);
+      ctx.fill();
+      ctx.fillStyle = '#3b352a';
+      ctx.font = `600 ${tam * 0.26}px Rubik, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('QWERASDF'[i], x + tam / 2, y + tam * 0.45);
+    }
+  },
+
+  interruptores(ctx, l, a, t) {
+    degrade(ctx, l, a, '#2a2d36', '#15171d', true);
+    const ligado = Math.floor(t * 1.2) % 2 === 0;
+    // Lâmpada
+    const lx = l * 0.28;
+    const ly = a * 0.42;
+    if (ligado) {
+      const luz = ctx.createRadialGradient(lx, ly, 0, lx, ly, a * 0.5);
+      luz.addColorStop(0, 'rgba(255,200,90,0.55)');
+      luz.addColorStop(1, 'rgba(255,200,90,0)');
+      ctx.fillStyle = luz;
+      ctx.fillRect(0, 0, l, a);
+    }
+    ctx.fillStyle = ligado ? '#ffd36b' : 'rgba(220,230,255,0.25)';
+    ctx.beginPath();
+    ctx.arc(lx, ly, a * 0.13, 0, TAU);
+    ctx.fill();
+    ctx.fillStyle = '#9aa1b2';
+    ctx.fillRect(lx - a * 0.055, ly + a * 0.12, a * 0.11, a * 0.08);
+    // Chave de alavanca
+    const cx = l * 0.62;
+    const cy = a * 0.62;
+    ctx.fillStyle = '#7d8392';
+    ctx.beginPath();
+    ctx.arc(cx, cy, a * 0.09, 0, TAU);
+    ctx.fill();
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(ligado ? 0.45 : -0.45);
+    ctx.fillStyle = '#e6e9f0';
+    ctx.beginPath();
+    ctx.roundRect(-a * 0.03, -a * 0.3, a * 0.06, a * 0.3, a * 0.03);
+    ctx.fill();
+    ctx.restore();
+    // LED
+    ctx.fillStyle = ligado ? '#3cff6b' : '#7a1010';
+    ctx.shadowColor = '#3cff6b';
+    ctx.shadowBlur = ligado ? 14 : 0;
+    ctx.beginPath();
+    ctx.arc(l * 0.84, a * 0.3, a * 0.05, 0, TAU);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  },
+
+  cubo(ctx, l, a, t) {
+    degrade(ctx, l, a, '#26214a', '#09081a');
+    // Dois blocos que se abrem como um livro e voltam a fechar
+    const cx = l / 2;
+    const cy = a / 2 + a * 0.06;
+    const s = Math.min(l, a) * 0.17;
+    const abertura = (1 - Math.cos(t * 1.6)) / 2;
+    const cores = [['#e8343a', '#ff8a1a'], ['#2e7bff', '#22c25a']];
+    const iso = (x, y, z) => [cx + (x - z) * s * 0.87, cy + (x + z) * s * 0.5 - y * s];
+    const cubinho = (x, y, z, [c1, c2]) => {
+      const topo = [iso(x, y + 1, z), iso(x + 1, y + 1, z), iso(x + 1, y + 1, z + 1), iso(x, y + 1, z + 1)];
+      const frente = [iso(x, y, z + 1), iso(x + 1, y, z + 1), iso(x + 1, y + 1, z + 1), iso(x, y + 1, z + 1)];
+      const lado = [iso(x + 1, y, z), iso(x + 1, y, z + 1), iso(x + 1, y + 1, z + 1), iso(x + 1, y + 1, z)];
+      for (const [face, cor] of [[topo, '#f4f4f0'], [frente, c1], [lado, c2]]) {
+        ctx.fillStyle = '#121318';
+        ctx.beginPath();
+        face.forEach(([px, py], i) => (i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)));
+        ctx.closePath();
+        ctx.fill();
+        const mx = face.reduce((m, p) => m + p[0], 0) / 4;
+        const my = face.reduce((m, p) => m + p[1], 0) / 4;
+        ctx.fillStyle = cor;
+        ctx.beginPath();
+        face.forEach(([px, py], i) => {
+          const qx = mx + (px - mx) * 0.84;
+          const qy = my + (py - my) * 0.84;
+          if (i) ctx.lineTo(qx, qy);
+          else ctx.moveTo(qx, qy);
+        });
+        ctx.closePath();
+        ctx.fill();
+      }
+    };
+    const d = abertura * 0.9;
+    for (const [x, y, z, cor] of [[-1 - d, 0, -1, 0], [-1 - d, 0, 0, 0], [-1 - d, -1, -1, 0], [-1 - d, -1, 0, 0], [d, 0, -1, 1], [d, 0, 0, 1], [d, -1, -1, 1], [d, -1, 0, 1]]
+      .sort((p, q) => (p[0] + p[2] - p[1]) - (q[0] + q[2] - q[1]))) {
+      cubinho(x, y, z, cores[cor]);
+    }
+  },
 };

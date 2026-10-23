@@ -34,8 +34,9 @@ for (const evento of ['pointerdown', 'keydown', 'touchend']) {
   addEventListener(evento, liberarAudio, { passive: true, capture: true });
 }
 
-// Clique sonoro em qualquer botão ou link da interface
+// Clique sonoro em qualquer botão ou link da interface (brinquedos com som próprio usam data-sem-clique)
 document.addEventListener('click', (e) => {
+  if (e.target.closest('[data-sem-clique]')) return;
   if (e.target.closest('button:not([aria-disabled="true"]), a[href]')) audio.tocar('clique');
 });
 
