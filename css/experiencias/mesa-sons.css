@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Mesa de sons
+   ========================================================================== */
+
+.mesa { overflow: hidden; background: #0a0c1e; }
+
+.mesa__cena {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mesa__painel {
+  position: absolute;
+  inset: calc(var(--altura-barra) + 12px) 16px 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  overflow-y: auto;
+}
+
+.mesa__canais {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(120px, 160px));
+  gap: 14px;
+}
+
+.canal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  background: rgba(14, 10, 36, 0.55);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  transition: border-color 0.3s, box-shadow 0.4s, transform 0.35s var(--mola);
+}
+.canal--ligado {
+  border-color: color-mix(in srgb, var(--cor) 60%, transparent);
+  box-shadow: 0 14px 40px -16px var(--cor), inset 0 0 30px -12px var(--cor);
+}
+
+.canal__botao {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+  color: rgba(255, 255, 255, 0.7);
+  transition: transform 0.3s var(--mola), background 0.3s, color 0.3s, box-shadow 0.4s;
+}
+.canal__botao .icone { width: 32px; height: 32px; }
+.canal__botao:hover { transform: scale(1.06); }
+.canal__botao:active { transform: scale(0.94); }
+.canal--ligado .canal__botao {
+  border-color: transparent;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--cor) 60%, #fff), var(--cor));
+  color: #120a2e;
+  box-shadow: 0 0 34px -4px var(--cor);
+}
+
+.canal__nome { font-family: var(--fonte-titulo); font-size: 0.9rem; }
+.canal--ligado .canal__nome { color: var(--cor); text-shadow: 0 0 14px color-mix(in srgb, var(--cor) 60%, transparent); }
+
+.canal__barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 26px;
+}
+.canal__barras i {
+  width: 6px;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--cor);
+  transform: scaleY(0.05);
+  transform-origin: bottom;
+  opacity: 0.85;
+}
+
+.canal__volume { width: 100%; --cor-trilho: var(--cor); }
+
+.mesa__misturas { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.mesa__misturas .chip { background: rgba(14, 10, 36, 0.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+
+.mesa__doca { width: auto; max-width: calc(100% - 24px); }
+.mesa__restante { flex: none; padding: 0 8px; font-size: 0.85rem; color: var(--texto-suave); }
+
+@media (max-width: 860px) {
+  .mesa__canais { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .mesa__painel { bottom: 150px; gap: 14px; justify-content: flex-start; }
+  .canal { padding: 12px 10px; gap: 8px; }
+  .canal__botao { width: 60px; height: 60px; }
+  .canal__botao .icone { width: 26px; height: 26px; }
+}
+
+.asmr--zen .mesa__painel { opacity: 0; pointer-events: none; }
+.mesa__painel { transition: opacity 0.4s; }

@@ -63,6 +63,7 @@ const CAMINHOS = {
   janela: '<rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M12 3.5v17M3.5 12h17"/><path d="M7 6.5v2.5M16 14v2.5" opacity=".7"/>',
   mixer: '<path d="M6 3v18M12 3v18M18 3v18"/><rect x="3.8" y="13" width="4.4" height="3" rx="1" fill="currentColor"/><rect x="9.8" y="6" width="4.4" height="3" rx="1" fill="currentColor"/><rect x="15.8" y="10" width="4.4" height="3" rx="1" fill="currentColor"/>',
   espatula: '<path d="M14 3l7 7-5.5 5.5-7-7z"/><path d="M8.5 8.5L3 21l12.5-5.5"/>',
+  xicara: '<path d="M4 9h12v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h1.5a2.5 2.5 0 0 1 0 5H16"/><path d="M8 3c-.8 1 .8 2 0 3M12 3c-.8 1 .8 2 0 3"/>',
   grade: '<rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/>',
 };
 

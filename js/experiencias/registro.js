@@ -406,6 +406,22 @@ export const EXPERIENCIAS = [
       return segundos >= 60 ? `${Math.floor(segundos / 60)} min de chuva` : 'Plic, plic, plic';
     },
   },
+  {
+    id: 'mesa-sons',
+    palavras: ['sons ambientes', 'chuva', 'fogueira', 'ondas', 'mar', 'floresta', 'cafe', 'dormir', 'foco', 'ruido', 'mixer'],
+    nome: 'Mesa de Sons',
+    descricao: 'Misture chuva, fogueira, ondas, floresta e café. Com timer para dormir.',
+    categoria: 'ASMR',
+    icone: 'mixer',
+    cores: ['#7fb8ff', '#ff8a3c'],
+    disponivel: true,
+    previa: 'mesaSons',
+    carregar: () => import('./mesa-sons/index.js'),
+    estatistica: (p) => {
+      const sons = p.distintos('mesa:som');
+      return sons ? `${sons} de 5 sons usados` : 'Seu ambiente, do seu jeito';
+    },
+  },
 ];
 
 export const obterExperiencia = (id) => EXPERIENCIAS.find((e) => e.id === id);

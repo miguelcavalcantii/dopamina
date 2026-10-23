@@ -967,4 +967,32 @@ export const PREVIAS = {
       ctx.fill();
     }
   },
+
+  mesaSons(ctx, l, a, t) {
+    degrade(ctx, l, a, '#141838', '#2a1a22', true);
+    const cores = ['#7fb8ff', '#ff8a3c', '#3cd6ff', '#7bff8a', '#e0b07a'];
+    const largura = l / 7;
+    cores.forEach((cor, i) => {
+      const x = largura * (1 + i * 1.25);
+      // Fader
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.fillRect(x - 2, a * 0.2, 4, a * 0.6);
+      const nivel = 0.35 + Math.sin(t * (0.6 + i * 0.3) + i) * 0.25;
+      const y = a * 0.8 - nivel * a * 0.6;
+      ctx.fillStyle = cor;
+      ctx.shadowColor = cor;
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.roundRect(x - largura * 0.3, y - 6, largura * 0.6, 12, 4);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      // Barrinhas
+      for (let k = 0; k < 3; k++) {
+        const h = (0.2 + Math.abs(Math.sin(t * (3 + k) + i + k)) * 0.5) * a * 0.12 * nivel * 2;
+        ctx.globalAlpha = 0.7;
+        ctx.fillRect(x - 6 + k * 5, a * 0.92 - h, 3, h);
+        ctx.globalAlpha = 1;
+      }
+    });
+  },
 };
