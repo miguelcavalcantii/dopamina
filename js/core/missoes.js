@@ -24,6 +24,8 @@ export const MODELOS_MISSAO = [
   { id: 'bolha-estourar', texto: 'Estoure 150 bolhas no Plástico-Bolha', evento: 'bolha:estouro', meta: 150, xp: 60, icone: 'bolhas', cor: '#3cffb4', requer: 'plastico-bolha' },
   { id: 'respira-ciclos', texto: 'Complete 5 ciclos no Respira', evento: 'respira:ciclo', meta: 5, xp: 70, icone: 'respirar', cor: '#b18cff', requer: 'respira' },
   { id: 'slime-apertar', texto: 'Aperte o Slime 30 vezes', evento: 'slime:aperto', meta: 30, xp: 50, icone: 'gosma', cor: '#7bff4a', requer: 'slime' },
+  { id: 'bolha-folha', texto: 'Complete uma folha inteira de Plástico-Bolha', evento: 'bolha:folha', meta: 1, xp: 80, icone: 'bolhas', cor: '#9fd8ff', requer: 'plastico-bolha' },
+  { id: 'relampago-dificil', texto: 'Jogue 2 partidas de Relâmpago no Difícil', evento: 'relampago:partida-dificil', meta: 2, xp: 80, icone: 'raio', cor: '#ff7a18', requer: 'microgames' },
   { id: 'tempo-livre', texto: 'Divirta-se por 5 minutos', evento: 'tempo', meta: 300, xp: 70, icone: 'relogio', cor: '#ff7a18', formato: 'tempo' },
   { id: 'explorar', texto: 'Abra 3 experiências diferentes', evento: 'experiencia:abrir', meta: 3, distinto: true, xp: 60, icone: 'bussola', cor: '#a3ff12', minimoDisponiveis: 3 },
 ];
@@ -41,6 +43,7 @@ export const XP_POR_EVENTO = {
   'areia:forma': 2,
   'caleido:segundos': 0.2,
   'bolha:estouro': 0.1,
+  'bolha:folha': 15,
   'respira:ciclo': 3,
   'slime:aperto': 0.3,
   tempo: 0.2,

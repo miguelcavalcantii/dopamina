@@ -7,10 +7,22 @@ import { MICROGAMES } from './microgames.js';
 import { criarCanvasResponsivo } from '../../core/canvas.js';
 import { icone } from '../../core/icones.js';
 import { aleatorio, carregarEstilo, clamp, embaralhar, escolher, movimentoReduzido, perfilLeve } from '../../core/util.js';
+import { ler, gravar } from '../../core/armazenamento.js';
 
-const VIDAS = 4;
-const ACELERA_A_CADA = 4;
-const VELOCIDADE_MAXIMA = 2.4;
+/**
+ * Dificuldades. `tempo` multiplica a duração de cada microgame (com `tempoMinimo`);
+ * `complexidade` multiplica a velocidade que os microgames enxergam (mais balões,
+ * objetos mais rápidos, alvos menores). O Normal é o jogo original.
+ */
+export const DIFICULDADES = [
+  { id: 'facil', nome: 'Fácil', descricao: '5 vidas, tempo de sobra', cor: '#3cffb4', vidas: 5, velInicial: 0.8, incremento: 0.04, velMaxima: 1.7, aceleraACada: 5, tempo: 1.35, tempoMinimo: 2.8, complexidade: 0.8, chaveRecorde: 'pontos-facil' },
+  { id: 'normal', nome: 'Normal', descricao: '4 vidas, acelera aos poucos', cor: '#ffd60a', vidas: 4, velInicial: 1, incremento: 0.07, velMaxima: 2.4, aceleraACada: 4, tempo: 1, tempoMinimo: 2.2, complexidade: 1, chaveRecorde: 'pontos' },
+  { id: 'dificil', nome: 'Difícil', descricao: '3 vidas, desafios maiores', cor: '#ff7a18', vidas: 3, velInicial: 1.2, incremento: 0.09, velMaxima: 2.8, aceleraACada: 4, tempo: 0.85, tempoMinimo: 1.9, complexidade: 1.25, chaveRecorde: 'pontos-dificil' },
+  { id: 'insano', nome: 'Insano', descricao: '2 vidas, só reflexo puro', cor: '#ff2e97', vidas: 2, velInicial: 1.45, incremento: 0.11, velMaxima: 3.3, aceleraACada: 3, tempo: 0.7, tempoMinimo: 1.6, complexidade: 1.55, chaveRecorde: 'pontos-insano' },
+];
+/** Pontos no Difícil para liberar o Insano. */
+export const PONTOS_PARA_INSANO = 4000;
+
 const VELOCIDADE_CURSOR = 560;
 const FRASES_ACERTO = ['BOA!', 'ISSO!', 'UAU!', 'MANDOU BEM!', 'PERFEITO!', 'DEMAIS!'];
 const FRASES_ERRO = ['QUASE!', 'OPS!', 'FOI POR POUCO!', 'TUDO BEM!'];
@@ -18,6 +30,11 @@ const FUNDO_INICIAL = ['#ff2e97', '#ffd60a'];
 
 export async function montar(raiz, { audio, progresso, aoQuadro }) {
   await carregarEstilo(new URL('../../../css/experiencias/microgames.css', import.meta.url));
+
+  const config = { dificuldade: 'normal', ...ler('relampago-config', {}) };
+  const insanoLiberado = () => (progresso.recorde('microgames', 'pontos-dificil') ?? 0) >= PONTOS_PARA_INSANO;
+  let dif = DIFICULDADES.find((d) => d.id === config.dificuldade) ?? DIFICULDADES[1];
+  if (dif.id === 'insano' && !insanoLiberado()) dif = DIFICULDADES[1];
 
   raiz.classList.add('relampago');
   raiz.innerHTML = `
@@ -64,7 +81,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
   const aneis = [];
   const partida = {
     fase: 'inicio',
-    vidas: VIDAS,
+    vidas: dif.vidas,
     pontos: 0,
     rodada: 0,
     vitorias: 0,
@@ -90,7 +107,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
   const j = {
     get l() { return tela.l; },
     get a() { return tela.a; },
-    get vel() { return partida.vel; },
+    get vel() { return partida.vel * dif.complexidade; },
     get area() { return area(); },
     cursor,
     ganhar: () => finalizar(true),
@@ -114,7 +131,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
   /* ---------- HUD, cartões e painéis ---------- */
 
   function atualizarHud() {
-    $('[data-vidas]').innerHTML = Array.from({ length: VIDAS }, (_, i) =>
+    $('[data-vidas]').innerHTML = Array.from({ length: dif.vidas }, (_, i) =>
       `<span class="relampago__vida ${i < partida.vidas ? '' : 'relampago__vida--perdida'}">${icone('coracao')}</span>`).join('');
     $('[data-vidas]').setAttribute('aria-label', `${partida.vidas} vidas`);
     $('[data-pontos]').textContent = partida.pontos.toLocaleString('pt-BR');
@@ -137,39 +154,79 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     cartao.classList.remove('relampago__cartao--visivel');
   }
 
+  function htmlDificuldades() {
+    return `<div class="relampago__dificuldades" role="radiogroup" aria-label="Dificuldade">
+      ${DIFICULDADES.map((d) => {
+        const bloqueada = d.id === 'insano' && !insanoLiberado();
+        const recorde = progresso.recorde('microgames', d.chaveRecorde);
+        const rodape = bloqueada
+          ? `${icone('cadeado')}${PONTOS_PARA_INSANO.toLocaleString('pt-BR')} pts no Difícil`
+          : recorde ? `${icone('trofeu')}${recorde.toLocaleString('pt-BR')}` : 'sem recorde';
+        return `<button type="button" class="dificuldade ${bloqueada ? 'dificuldade--bloqueada' : ''}" role="radio"
+            data-dificuldade="${d.id}" aria-checked="${d.id === dif.id}" ${bloqueada ? 'aria-disabled="true"' : ''} style="--cor:${d.cor}">
+          <strong>${d.nome}</strong><small>${d.descricao}</small><span class="dificuldade__recorde">${rodape}</span>
+        </button>`;
+      }).join('')}
+    </div>`;
+  }
+
+  function ligarDificuldades() {
+    painel.querySelector('.relampago__dificuldades')?.addEventListener('click', (e) => {
+      const botao = e.target.closest('[data-dificuldade]');
+      if (!botao) return;
+      if (botao.getAttribute('aria-disabled') === 'true') {
+        audio.tocar('erro');
+        botao.classList.remove('dificuldade--tremer');
+        void botao.offsetWidth;
+        botao.classList.add('dificuldade--tremer');
+        return;
+      }
+      dif = DIFICULDADES.find((d) => d.id === botao.dataset.dificuldade);
+      config.dificuldade = dif.id;
+      gravar('relampago-config', config);
+      for (const outro of painel.querySelectorAll('[data-dificuldade]')) outro.setAttribute('aria-checked', String(outro === botao));
+      painel.style.setProperty('--cor-dificuldade', dif.cor);
+      partida.vidas = dif.vidas;
+      atualizarHud();
+    });
+    painel.style.setProperty('--cor-dificuldade', dif.cor);
+  }
+
   function mostrarPainelInicial() {
-    const recorde = progresso.recorde('microgames', 'pontos');
     painel.innerHTML = `
       <h2 class="relampago__titulo">Relâmpago</h2>
       <p class="relampago__texto">Desafios de poucos segundos, um atrás do outro. Leia o comando e reaja rápido!</p>
+      ${htmlDificuldades()}
       <ul class="relampago__regras">
-        <li>${icone('coracao')} ${VIDAS} vidas por partida</li>
         <li>${icone('raio')} Fica mais rápido a cada rodada</li>
         <li>${icone('alvo')} Mouse, toque ou teclado (setas + espaço)</li>
       </ul>
-      ${recorde ? `<p class="relampago__recorde">${icone('trofeu')} Recorde: ${recorde.toLocaleString('pt-BR')} pontos</p>` : ''}
       <button type="button" class="relampago__botao" data-comecar data-foco-inicial>${icone('jogar')}Começar</button>`;
     painel.hidden = false;
+    ligarDificuldades();
     painel.querySelector('[data-comecar]').addEventListener('click', iniciarPartida);
     painel.querySelector('[data-comecar]').focus({ preventScroll: true });
   }
 
-  function mostrarResumo(novoRecorde) {
-    const recorde = progresso.recorde('microgames', 'pontos') ?? partida.pontos;
+  function mostrarResumo(novoRecorde, liberouInsano) {
+    const recorde = progresso.recorde('microgames', dif.chaveRecorde) ?? partida.pontos;
     painel.innerHTML = `
-      <p class="relampago__selo">${novoRecorde ? `${icone('trofeu')} Novo recorde!` : `${icone('estrela')} Boa corrida!`}</p>
+      <p class="relampago__selo">${novoRecorde ? `${icone('trofeu')} Novo recorde no ${dif.nome}!` : `${icone('estrela')} Boa corrida!`}</p>
+      ${liberouInsano ? `<p class="relampago__selo relampago__selo--insano">${icone('raio')} Modo Insano liberado!</p>` : ''}
       <h2 class="relampago__titulo">${partida.pontos.toLocaleString('pt-BR')} <small>pontos</small></h2>
       <dl class="relampago__estatisticas">
         <div><dt>Vitórias</dt><dd>${partida.vitorias}</dd></div>
         <div><dt>Rodada</dt><dd>${partida.rodada}</dd></div>
         <div><dt>Sequência</dt><dd>x${partida.melhorSequencia}</dd></div>
-        <div><dt>Recorde</dt><dd>${recorde.toLocaleString('pt-BR')}</dd></div>
+        <div><dt>Recorde (${dif.nome})</dt><dd>${recorde.toLocaleString('pt-BR')}</dd></div>
       </dl>
+      ${htmlDificuldades()}
       <div class="relampago__acoes">
         <button type="button" class="relampago__botao" data-comecar>${icone('jogar')}Jogar de novo</button>
         <a class="relampago__botao relampago__botao--secundario" href="#/">${icone('voltar')}Hub</a>
       </div>`;
     painel.hidden = false;
+    ligarDificuldades();
     painel.querySelector('[data-comecar]').addEventListener('click', iniciarPartida);
     painel.querySelector('[data-comecar]').focus({ preventScroll: true });
   }
@@ -177,7 +234,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
   /* ---------- Fluxo da partida ---------- */
 
   function iniciarPartida() {
-    Object.assign(partida, { vidas: VIDAS, pontos: 0, rodada: 0, vitorias: 0, sequencia: 0, melhorSequencia: 0, vel: 1, fila: [], def: null, jogo: null });
+    Object.assign(partida, { vidas: dif.vidas, pontos: 0, rodada: 0, vitorias: 0, sequencia: 0, melhorSequencia: 0, vel: 1, fila: [], def: null, jogo: null });
     painel.hidden = true;
     $('[data-hud]').hidden = false;
     $('[data-pavio-caixa]').hidden = false;
@@ -189,9 +246,9 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
 
   function proximaRodada() {
     partida.rodada++;
-    partida.vel = Math.min(VELOCIDADE_MAXIMA, 1 + (partida.rodada - 1) * 0.07);
+    partida.vel = Math.min(dif.velMaxima, dif.velInicial + (partida.rodada - 1) * dif.incremento);
     atualizarHud();
-    if (partida.rodada > 1 && (partida.rodada - 1) % ACELERA_A_CADA === 0) {
+    if (partida.rodada > 1 && (partida.rodada - 1) % dif.aceleraACada === 0) {
       partida.fase = 'acelerar';
       partida.relogio = 1.1;
       partida.jogo = null;
@@ -216,7 +273,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     partida.def = def;
     partida.resultado = null;
     partida.jogo = def.criar(j);
-    partida.duracao = Math.max(2.2, def.duracao / Math.sqrt(partida.vel));
+    partida.duracao = Math.max(dif.tempoMinimo, (def.duracao * dif.tempo) / Math.sqrt(partida.vel));
     partida.restante = partida.duracao;
     partida.ultimoTique = Math.ceil(partida.restante);
     fundoAnterior = fundoAtual;
@@ -261,13 +318,17 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
     esconderCartao();
     $('[data-hud]').hidden = true;
     $('[data-pavio-caixa]').hidden = true;
-    progresso.registrar('relampago:partida');
-    const novoRecorde = progresso.definirRecorde('microgames', 'pontos', partida.pontos);
+    progresso.registrar('relampago:partida', 1, dif.id);
+    const insanoAntes = insanoLiberado();
+    const novoRecorde = progresso.definirRecorde('microgames', dif.chaveRecorde, partida.pontos);
+    const liberouInsano = !insanoAntes && insanoLiberado();
+    progresso.registrar(`relampago:partida-${dif.id}`);
+    progresso.definirRecorde('microgames', `rodada-${dif.id}`, partida.rodada);
     progresso.definirRecorde('microgames', 'rodada', partida.rodada);
     progresso.definirRecorde('microgames', 'sequencia', partida.melhorSequencia);
     progresso.ganharXp(Math.round(partida.pontos / 250));
     audio.tocar(novoRecorde && partida.pontos > 0 ? 'conquista' : 'fim');
-    mostrarResumo(novoRecorde && partida.pontos > 0);
+    mostrarResumo(novoRecorde && partida.pontos > 0, liberouInsano);
   }
 
   /* ---------- Entrada ---------- */

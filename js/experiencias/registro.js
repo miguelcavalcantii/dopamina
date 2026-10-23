@@ -24,7 +24,7 @@ export const EXPERIENCIAS = [
   {
     id: 'microgames',
     nome: 'Relâmpago',
-    descricao: 'Desafios de 3 segundos que mudam o tempo todo. Rápido, rápido!',
+    descricao: 'Desafios de 3 segundos que mudam o tempo todo. Do Fácil ao Insano.',
     categoria: 'Ação',
     icone: 'raio',
     cores: ['#ff2e97', '#ffd60a'],
@@ -32,7 +32,7 @@ export const EXPERIENCIAS = [
     previa: 'microgames',
     carregar: () => import('./microgames/index.js'),
     estatistica: (p) => {
-      const recorde = p.recorde('microgames', 'pontos');
+      const recorde = Math.max(0, ...['pontos-facil', 'pontos', 'pontos-dificil', 'pontos-insano'].map((k) => p.recorde('microgames', k) ?? 0));
       return recorde ? `Recorde: ${recorde.toLocaleString('pt-BR')} pts` : 'Teste seus reflexos';
     },
   },
@@ -114,7 +114,7 @@ export const EXPERIENCIAS = [
   {
     id: 'plastico-bolha',
     nome: 'Plástico-Bolha',
-    descricao: 'Bolhas infinitas para estourar. Elas sempre voltam.',
+    descricao: 'Plástico-bolha de verdade: transparente, com estouro gravado.',
     categoria: 'Fidget',
     icone: 'bolhas',
     cores: ['#3cffb4', '#00b4ff'],
@@ -123,6 +123,8 @@ export const EXPERIENCIAS = [
     carregar: () => import('./plastico-bolha/index.js'),
     estatistica: (p) => {
       const total = p.contador('bolha:estouro');
+      const folhas = p.contador('bolha:folha');
+      if (folhas) return `${folhas} ${folhas === 1 ? 'folha completa' : 'folhas completas'}`;
       return total ? `${total.toLocaleString('pt-BR')} bolhas estouradas` : 'Pop, pop, pop';
     },
   },

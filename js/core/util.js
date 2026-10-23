@@ -85,6 +85,12 @@ export function capturarPonteiro(elemento, idPonteiro) {
   }
 }
 
+/** Pontos intermediários de um pointermove (o mouse pode andar vários pixels entre eventos). */
+export function eventosCombinados(evento) {
+  const lista = evento.getCoalescedEvents?.();
+  return lista?.length ? lista : [evento];
+}
+
 /* ---------- Carregamento de CSS sob demanda ---------- */
 
 const estilosCarregados = new Map();

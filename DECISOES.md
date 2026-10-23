@@ -34,10 +34,51 @@ Qualquer uma pode ser trocada; indico onde mexer.
 - **Areia Mágica**: 7.000 partículas no desktop, 4.200 em PCs modestos, 2.600 no celular.
   "Formar" alterna coração, estrela, "UAU!", espiral e "OI!".
 - **Caleidoscópio**: "Salvar" baixa um PNG direto (sem perguntar). Teclado: setas desenham, A automático, L limpa, D desvanece.
-- **Plástico-Bolha**: bolhas voltam em 5–9 s; "Nova folha" troca entre 5 cores.
+- **Plástico-Bolha** (refeito na grande atualização): ver a seção abaixo.
 - **Respira**: padrões Caixa (4-4-4-4), 4-7-8 e Coerente (5-5); 1, 3, 5 min ou livre. A sessão termina ao fim
   do ciclo em que o tempo acaba (não corta uma expiração no meio).
 - **Slime**: anel de 44 pontos com molas + pressão; vários dedos ao mesmo tempo. Rostinho e glitter ligados por padrão.
+
+## Grande atualização (out/2026)
+
+O plano completo e as perguntas que eu teria feito estão em `PLANO.md`.
+
+### Configurações
+- **Onde**: engrenagem na barra do topo, em qualquer tela. Esc ou clique fora fecham. Código em
+  `js/core/configuracoes.js`; temas em `css/temas.css`; preferências em `js/core/preferencias.js`.
+- **Temas**: 8 temas mudam fundo, superfícies, manchas de luz, logo, degradês e destaque. A troca usa
+  View Transitions (cruzamento de 0,55 s) quando o navegador suporta. Um script no `<head>` aplica o tema salvo antes
+  da primeira pintura. **Doce** é o único tema claro; dentro das experiências os controles voltam a ser escuros,
+  porque a arte dos jogos é escura.
+- **Cor de destaque**: "Do tema" (padrão), 8 sugestões ou qualquer cor. O texto sobre ela vira escuro ou branco
+  automaticamente, conforme a luminância.
+- **Sons da interface**: 5 pacotes (Suave = o som original, Arcade, Bolhas, Cristal, Natureza). Afetam clique, hover,
+  transições, nível, conquista, missão e liga/desliga. Os sons de dentro dos jogos não mudam.
+- **Volumes**: Geral + Efeitos + Música + ASMR, em curva quadrática. A Música tem teto de 60% (como antes), para
+  nunca cobrir os efeitos. "Restaurar padrão" volta tudo.
+
+### Plástico-Bolha
+- **Visual**: 100% canvas, sem fotos. A bolha é uma lente: amplia em 1,3x o fundo embaixo dela. Tem borda de Fresnel,
+  reflexo interno, sombra com foco de luz e brilho especular que se move devagar seguindo o ponteiro, como se a
+  folha inclinasse. Estourada: plástico achatado, com facetas, vincos e aspecto leitoso (8 formatos sorteados).
+- **Sons**: 5 gravações CC0 de plástico-bolha, mais 1 de plástico amassado para a troca de folha (ver `CREDITOS.md`).
+  O site recorta sozinho cada estouro das gravações (cerca de 100 trechos, `js/core/amostras.js`). Sorteia
+  primeiro a gravação e depois o trecho, com ±9% de tom e um pouco de volume. Se os arquivos não carregarem,
+  volta ao estouro sintetizado.
+- **Folha**: as bolhas **não voltam mais** sozinhas. Quando todas estouram, aparece "Folha completa!" (+XP) e uma
+  folha nova, de outra cor, desliza para a tela. "Nova folha" (ou tecla N) troca na hora. O HUD mostra
+  "nesta folha", sequência e total.
+
+### Relâmpago: dificuldades
+| | Vidas | Velocidade inicial / máx. | Aceleração | Tempo de cada jogo | Complexidade |
+| --- | --- | --- | --- | --- | --- |
+| Fácil | 5 | 0,8 / 1,7 | a cada 5 rodadas | 1,35x (mín. 2,8 s) | 0,8x |
+| Normal | 4 | 1,0 / 2,4 | a cada 4 | 1x (mín. 2,2 s) | 1x (o jogo original) |
+| Difícil | 3 | 1,2 / 2,8 | a cada 4 | 0,85x (mín. 1,9 s) | 1,25x |
+| Insano | 2 | 1,45 / 3,3 | a cada 3 | 0,7x (mín. 1,6 s) | 1,55x |
+- "Complexidade" é a velocidade que os microgames enxergam: mais balões, objetos mais rápidos, alvos menores.
+- Recorde separado por dificuldade. O recorde antigo vira o do Normal. **Insano** libera com 4.000 pontos no Difícil
+  (tabela em `js/experiencias/microgames/index.js`, `DIFICULDADES`).
 
 ## Não testado / limites conhecidos
 

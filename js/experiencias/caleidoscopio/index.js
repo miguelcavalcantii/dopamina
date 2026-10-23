@@ -3,7 +3,7 @@
  * em degradê de cores com brilho. Desenhar toca notas: perto do centro é agudo, longe é grave.
  * Extras: desenho automático, desvanecer, girar a tela, limpar e salvar como imagem.
  */
-import { aleatorio, capturarPonteiro, carregarEstilo, clamp, movimentoReduzido } from '../../core/util.js';
+import { aleatorio, capturarPonteiro, carregarEstilo, clamp, eventosCombinados, movimentoReduzido } from '../../core/util.js';
 import { icone } from '../../core/icones.js';
 import { ler, gravar } from '../../core/armazenamento.js';
 import { atualizarDeslizador } from '../../core/ui.js';
@@ -268,7 +268,7 @@ export async function montar(raiz, { audio, progresso, aoQuadro }) {
   });
   palco.addEventListener('pointermove', (e) => {
     if (!desenhando) return;
-    const eventos = e.getCoalescedEvents?.() ?? [e];
+    const eventos = eventosCombinados(e);
     for (const ev of eventos) {
       const p = posicao(ev);
       const atual = paraCentro(p.x, p.y);
