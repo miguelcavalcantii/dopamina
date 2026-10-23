@@ -10,9 +10,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;500;600;700&display=swap">
+  <script>
+    // Aplica o tema salvo antes da primeira pintura (evita piscar no tema padrão)
+    try {
+      const p = JSON.parse(localStorage.getItem('dopamina:preferencias') || '{}');
+      if (p.tema) document.documentElement.dataset.tema = p.tema;
+      if (p.destaque) document.documentElement.style.setProperty('--destaque', p.destaque);
+    } catch (e) { /* sem armazenamento: fica o tema padrão */ }
+  </script>
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/temas.css">
   <link rel="stylesheet" href="css/hub.css">
   <link rel="stylesheet" href="css/experiencia.css">
+  <link rel="stylesheet" href="css/configuracoes.css">
   <script type="module" src="js/main.js"></script>
 </head>
 <body data-tela="hub">
@@ -32,6 +42,9 @@
         <span data-lv>LV 1</span>
         <span class="chip-nivel__barra"><span></span></span>
       </div>
+      <button type="button" class="botao-config pilula vidro-fosco" id="botao-config" aria-label="Configurações" title="Configurações" aria-haspopup="dialog">
+        <svg class="icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+      </button>
       <div class="controle-som pilula vidro-fosco">
         <button type="button" class="botao-icone" id="botao-mudo" aria-pressed="false" aria-label="Silenciar"></button>
         <input type="range" class="deslizador" id="volume" min="0" max="100" value="70" aria-label="Volume geral">

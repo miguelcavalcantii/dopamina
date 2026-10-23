@@ -1,0 +1,320 @@
+/* ==========================================================================
+   Janela de Configurações: temas, cor de destaque, pacotes de som e volumes
+   ========================================================================== */
+
+.config {
+  width: min(680px, calc(100vw - 24px));
+  max-width: none;
+  max-height: min(88dvh, 900px);
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--vidro-borda);
+  border-radius: 30px;
+  background: linear-gradient(165deg, var(--painel-1), var(--painel-2));
+  color: var(--texto);
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.75), 0 0 0 1px rgb(var(--tinta) / 0.04), 0 0 80px -30px var(--destaque);
+}
+
+.config[open] { display: flex; animation: config-entrar 0.42s var(--mola) both; }
+.config--saindo[open] { animation: config-sair 0.22s ease-in both; }
+.config::backdrop {
+  background: color-mix(in srgb, var(--fundo) 55%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+  animation: config-fundo 0.3s ease both;
+}
+.config--saindo::backdrop { animation: config-fundo 0.22s ease reverse both; }
+
+@keyframes config-entrar { from { opacity: 0; transform: translateY(24px) scale(0.94); } }
+@keyframes config-sair { to { opacity: 0; transform: translateY(16px) scale(0.96); } }
+@keyframes config-fundo { from { opacity: 0; } }
+
+.config__caixa {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 26px;
+  min-height: 0;
+  padding: 22px 24px 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.config__topo {
+  position: sticky;
+  top: -22px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: -22px -24px 0;
+  padding: 18px 20px 14px 24px;
+  background: linear-gradient(var(--painel-1) 70%, transparent);
+}
+
+.config__topo h2 { flex: 1; font-size: clamp(1.35rem, 4vw, 1.8rem); }
+
+.config__selo {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 15px;
+  background: linear-gradient(140deg, var(--tema-1), var(--tema-2) 60%, var(--tema-3));
+  color: #fff;
+  box-shadow: 0 8px 22px -6px var(--tema-2);
+}
+.config__selo .icone { width: 24px; height: 24px; animation: girar-engrenagem 9s linear infinite; }
+
+@keyframes girar-engrenagem { to { transform: rotate(360deg); } }
+
+.config__fechar { width: 46px; height: 46px; border: 1px solid var(--vidro-borda); background: rgb(var(--tinta) / 0.06); }
+.config__fechar:hover { transform: rotate(90deg); }
+
+.config__secao { display: flex; flex-direction: column; gap: 12px; }
+.config__secao h3 { font-size: 1rem; letter-spacing: 0.02em; }
+.config__ajuda { margin-top: -6px; font-size: 0.88rem; color: var(--texto-suave); }
+
+.config__linha-titulo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* ---------- Cartões de tema ---------- */
+
+.config__temas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 10px;
+}
+
+.tema-cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 8px 10px;
+  border: 2px solid rgb(var(--tinta) / 0.1);
+  border-radius: 20px;
+  background: rgb(var(--tinta) / 0.04);
+  text-align: left;
+  transition: transform 0.35s var(--mola), border-color 0.2s, box-shadow 0.3s;
+}
+.tema-cartao:hover { transform: translateY(-3px); }
+.tema-cartao:active { transform: scale(0.96); }
+.tema-cartao[aria-pressed='true'] {
+  border-color: var(--destaque);
+  box-shadow: 0 10px 26px -10px var(--destaque), inset 0 0 0 1px var(--destaque);
+}
+
+.tema-cartao__previa {
+  position: relative;
+  display: block;
+  height: 66px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--fundo-amostra);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Três manchas de luz, como o fundo do hub em miniatura */
+.tema-cartao__previa span {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  filter: blur(10px);
+  opacity: 0.9;
+  transition: transform 0.6s var(--mola);
+}
+.tema-cartao__previa span:nth-child(1) { left: -12px; top: -18px; background: var(--a1); }
+.tema-cartao__previa span:nth-child(2) { right: -14px; top: 4px; background: var(--a2); }
+.tema-cartao__previa span:nth-child(3) { left: 34%; bottom: -34px; background: var(--a3); }
+.tema-cartao--claro .tema-cartao__previa span { opacity: 0.75; }
+.tema-cartao:hover .tema-cartao__previa span:nth-child(1) { transform: translate(10px, 6px) scale(1.15); }
+.tema-cartao:hover .tema-cartao__previa span:nth-child(2) { transform: translate(-8px, 4px) scale(1.1); }
+.tema-cartao:hover .tema-cartao__previa span:nth-child(3) { transform: translate(6px, -8px) scale(1.2); }
+
+.tema-cartao__nome { padding: 0 4px; font-size: 0.9rem; font-weight: 600; }
+
+/* ---------- Cores de destaque ---------- */
+
+.config__cores { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+
+.config__do-tema[aria-pressed='true'] {
+  border-color: transparent;
+  background: var(--destaque);
+  color: var(--destaque-texto);
+  box-shadow: 0 6px 20px -6px var(--destaque);
+}
+
+.amostra-cor {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 3px solid rgb(var(--tinta) / 0.16);
+  border-radius: 50%;
+  background: var(--amostra);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.35s var(--mola), border-color 0.2s, box-shadow 0.25s;
+}
+.amostra-cor:hover { transform: scale(1.12) rotate(-8deg); }
+.amostra-cor[aria-pressed='true'],
+.amostra-cor--ativa {
+  border-color: var(--texto);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--amostra, var(--destaque)) 35%, transparent), 0 0 20px var(--destaque);
+  transform: scale(1.1);
+}
+
+.amostra-cor--livre .icone { width: 20px; height: 20px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.6)); }
+.amostra-cor--livre input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.amostra-cor--livre:focus-within { outline: 3px solid var(--destaque); outline-offset: 3px; }
+
+/* ---------- Pacotes de som ---------- */
+
+.config__pacotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.pacote {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 64px;
+  padding: 10px 14px;
+  border: 2px solid rgb(var(--tinta) / 0.1);
+  border-radius: 18px;
+  background: rgb(var(--tinta) / 0.05);
+  text-align: left;
+  transition: transform 0.35s var(--mola), border-color 0.2s, background 0.2s;
+}
+.pacote:hover { transform: translateY(-2px); background: rgb(var(--tinta) / 0.1); }
+.pacote:active { transform: scale(0.96); }
+.pacote__nome { font-family: var(--fonte-titulo); font-size: 0.92rem; }
+.pacote__desc { font-size: 0.8rem; color: var(--texto-suave); }
+.pacote[aria-pressed='true'] {
+  border-color: var(--destaque);
+  background: color-mix(in srgb, var(--destaque) 18%, transparent);
+}
+.pacote[aria-pressed='true'] .pacote__nome { color: var(--destaque); }
+
+/* ---------- Volumes ---------- */
+
+.config__volumes { display: flex; flex-direction: column; gap: 6px; }
+
+.volume-canal {
+  display: grid;
+  grid-template-columns: 40px minmax(96px, 150px) 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 18px;
+  background: rgb(var(--tinta) / 0.05);
+  transition: opacity 0.3s;
+}
+
+.volume-canal__icone {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--destaque) 22%, transparent);
+  color: var(--destaque);
+}
+.volume-canal__texto { display: flex; flex-direction: column; line-height: 1.2; }
+.volume-canal__texto strong { font-size: 0.95rem; }
+.volume-canal__texto small { font-size: 0.78rem; color: var(--texto-suave); }
+.volume-canal .deslizador { width: 100%; --cor-trilho: var(--destaque); }
+.volume-canal__valor { font-family: var(--fonte-titulo); font-size: 0.8rem; text-align: right; color: var(--texto-suave); }
+
+.config--mudo .volume-canal { opacity: 0.45; }
+
+/* Interruptor (liga/desliga) */
+.interruptor {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px 0 6px;
+  border: 1px solid var(--vidro-borda);
+  border-radius: 99px;
+  background: rgb(var(--tinta) / 0.05);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.interruptor__trilho {
+  position: relative;
+  width: 46px;
+  height: 28px;
+  border-radius: 99px;
+  background: rgb(var(--tinta) / 0.2);
+  transition: background 0.25s;
+}
+.interruptor__bolinha {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.35s var(--mola);
+}
+.interruptor[aria-checked='true'] .interruptor__trilho { background: var(--destaque); }
+.interruptor[aria-checked='true'] .interruptor__bolinha { transform: translateX(18px); }
+
+.config__rodape {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+.config__rodape .botao-jogo { --c1: var(--destaque); --c2: var(--tema-2); min-height: 50px; color: var(--destaque-texto); }
+.config__rodape .botao-jogo--secundario { color: var(--texto); }
+
+/* Celular: vira uma folha que sobe da base */
+@media (max-width: 600px) {
+  .config {
+    width: 100vw;
+    max-height: 92dvh;
+    margin: auto 0 0;
+    border-radius: 28px 28px 0 0;
+    border-bottom: 0;
+  }
+  .config[open] { animation-name: config-subir; }
+  .config--saindo[open] { animation-name: config-descer; }
+  .config__caixa { padding: 18px 16px calc(20px + env(safe-area-inset-bottom)); gap: 22px; }
+  .config__topo { top: -18px; margin: -18px -16px 0; padding: 16px 16px 12px; }
+  .volume-canal { grid-template-columns: 36px 1fr 44px; gap: 8px 10px; }
+  .volume-canal__icone { width: 36px; height: 36px; }
+  .volume-canal .deslizador { grid-column: 1 / -1; grid-row: 2; }
+  .config__rodape .botao-jogo { flex: 1; }
+}
+
+@keyframes config-subir { from { transform: translateY(100%); } }
+@keyframes config-descer { to { transform: translateY(100%); } }
+
+/* ---------- Botão de engrenagem na barra ---------- */
+
+.botao-config {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  justify-content: center;
+}
+.botao-config .icone { width: 22px; height: 22px; transition: transform 0.6s var(--mola); }
+.botao-config:hover .icone { transform: rotate(120deg); }

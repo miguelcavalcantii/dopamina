@@ -177,7 +177,7 @@
   padding: 6px 8px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
-  background: rgba(16, 6, 46, 0.6);
+  background: var(--superficie);
   transform: translateX(-50%);
   pointer-events: none;
   -webkit-backdrop-filter: blur(12px);
@@ -219,7 +219,7 @@
   overflow-y: auto;
   border: 1px solid var(--vidro-borda);
   border-radius: var(--raio-g);
-  background: linear-gradient(160deg, rgba(40, 10, 90, 0.86), rgba(14, 6, 42, 0.92));
+  background: linear-gradient(160deg, var(--painel-1), var(--painel-2));
   box-shadow: var(--sombra-vidro), 0 0 60px -10px color-mix(in srgb, var(--c1, #ff2e97) 50%, transparent);
   text-align: center;
   transform: translate(-50%, -50%);

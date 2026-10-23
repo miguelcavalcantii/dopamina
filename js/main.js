@@ -4,6 +4,8 @@
  */
 import { audio } from './core/audio.js';
 import { progresso } from './core/progresso.js';
+import { preferencias } from './core/preferencias.js';
+import { criarConfiguracoes } from './core/configuracoes.js';
 import { aoQuadro } from './core/loop.js';
 import { mostrarToast, ligarControlesSom, ligarChipNivel } from './core/ui.js';
 import { escolher, movimentoReduzido } from './core/util.js';
@@ -40,6 +42,9 @@ document.addEventListener('click', (e) => {
 ligarControlesSom(audio);
 ligarChipNivel(progresso);
 
+const configuracoes = criarConfiguracoes({ audio, preferencias });
+document.getElementById('botao-config').addEventListener('click', () => configuracoes.abrir());
+
 /* ---------- Retorno de progresso ---------- */
 
 progresso.on('nivel', ({ nivel }) => {
@@ -67,6 +72,7 @@ setInterval(() => {
 const hub = criarHub({
   progresso,
   audio,
+  preferencias,
   aoEscolher(id, origem) {
     origemTransicao = origem;
     location.hash = `#/x/${id}`;
@@ -223,7 +229,7 @@ addEventListener('hashchange', () => agendarNavegacao());
 
 addEventListener('keydown', (e) => {
   // Esc volta ao hub (em tela cheia, o próprio navegador usa o Esc para sair dela)
-  if (e.key === 'Escape' && atual && !document.fullscreenElement) location.hash = '#/';
+  if (e.key === 'Escape' && atual && !document.fullscreenElement && !configuracoes.aberta) location.hash = '#/';
 });
 
 if (lerRota().tipo === 'experiencia') hub.ocultar();

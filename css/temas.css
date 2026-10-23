@@ -1,0 +1,290 @@
+/* ==========================================================================
+   Temas da interface. O tema vive em <html data-tema="...">, aplicado antes da
+   primeira pintura por um script no <head>. A cor de destaque personalizada
+   sobrescreve --destaque e --destaque-texto direto no <html>.
+
+   Tokens de cada tema:
+     --fundo, --fundo-brilho      fundo da página e o brilho que desce do topo
+     --texto, --texto-suave       texto principal e secundário
+     --texto-inverso              texto sobre botões de cor forte
+     --tinta                      canal RGB das superfícies translúcidas (branco no escuro)
+     --superficie                 pílulas sólidas (título da barra, selos)
+     --painel-1, --painel-2       degradê dos painéis e janelas
+     --tema-1..3                  degradê de assinatura (nível, barra de XP)
+     --aurora-1..4                manchas de luz que flutuam no fundo do hub
+     --paleta-0..7                cores das letras do logo
+     --destaque                   cor de foco, filtros e controles ativos
+   ========================================================================== */
+
+:root,
+[data-tema='neon'] {
+  --fundo: #070718;
+  --fundo-brilho: #241063;
+  --texto: #fbf8ff;
+  --texto-suave: #d2c9ff;
+  --texto-inverso: #170a3a;
+  --tinta: 255 255 255;
+  --superficie: rgba(14, 6, 40, 0.6);
+  --painel-1: rgba(40, 10, 90, 0.9);
+  --painel-2: rgba(14, 6, 42, 0.94);
+  --tema-1: #ff2e97;
+  --tema-2: #8b5cff;
+  --tema-3: #22e4ff;
+  --aurora-1: rgba(255, 46, 151, 0.42);
+  --aurora-2: rgba(34, 228, 255, 0.32);
+  --aurora-3: rgba(139, 92, 255, 0.45);
+  --aurora-4: rgba(255, 214, 10, 0.2);
+  --paleta-0: #ff2e97;
+  --paleta-1: #ff7a18;
+  --paleta-2: #ffd60a;
+  --paleta-3: #a3ff12;
+  --paleta-4: #3cffb4;
+  --paleta-5: #22e4ff;
+  --paleta-6: #8b5cff;
+  --paleta-7: #ff5dc8;
+  --destaque: #ff2e97;
+  --destaque-texto: #170a3a;
+  color-scheme: dark;
+}
+
+[data-tema='aurora'] {
+  --fundo: #03131a;
+  --fundo-brilho: #0b4a4c;
+  --texto: #f2fffb;
+  --texto-suave: #b8eee2;
+  --texto-inverso: #032019;
+  --superficie: rgba(2, 30, 34, 0.62);
+  --painel-1: rgba(8, 60, 64, 0.9);
+  --painel-2: rgba(3, 22, 30, 0.94);
+  --tema-1: #3cffb4;
+  --tema-2: #22e4ff;
+  --tema-3: #a06bff;
+  --aurora-1: rgba(60, 255, 180, 0.36);
+  --aurora-2: rgba(34, 228, 255, 0.3);
+  --aurora-3: rgba(160, 107, 255, 0.4);
+  --aurora-4: rgba(140, 255, 120, 0.18);
+  --paleta-0: #3cffb4;
+  --paleta-1: #5effd8;
+  --paleta-2: #22e4ff;
+  --paleta-3: #5ab8ff;
+  --paleta-4: #8b8bff;
+  --paleta-5: #b07bff;
+  --paleta-6: #d68bff;
+  --paleta-7: #7bffa0;
+  --destaque: #3cffb4;
+  --destaque-texto: #032019;
+}
+
+[data-tema='tropical'] {
+  --fundo: #04201a;
+  --fundo-brilho: #0e5a3e;
+  --texto: #fffdf2;
+  --texto-suave: #d6f0d8;
+  --texto-inverso: #2a1400;
+  --superficie: rgba(3, 34, 26, 0.62);
+  --painel-1: rgba(10, 74, 52, 0.9);
+  --painel-2: rgba(4, 30, 24, 0.94);
+  --tema-1: #ffc93c;
+  --tema-2: #ff5e78;
+  --tema-3: #00dca8;
+  --aurora-1: rgba(255, 190, 40, 0.34);
+  --aurora-2: rgba(255, 90, 120, 0.3);
+  --aurora-3: rgba(0, 220, 170, 0.38);
+  --aurora-4: rgba(255, 240, 90, 0.2);
+  --paleta-0: #ff5e78;
+  --paleta-1: #ff8a3d;
+  --paleta-2: #ffc93c;
+  --paleta-3: #c6ff3d;
+  --paleta-4: #3cffa0;
+  --paleta-5: #00dca8;
+  --paleta-6: #3cd6ff;
+  --paleta-7: #ff7ab8;
+  --destaque: #ffc93c;
+  --destaque-texto: #2a1400;
+}
+
+[data-tema='por-do-sol'] {
+  --fundo: #1a0716;
+  --fundo-brilho: #5c1a3a;
+  --texto: #fff6ef;
+  --texto-suave: #f3cdd2;
+  --texto-inverso: #2b0a14;
+  --superficie: rgba(36, 8, 26, 0.62);
+  --painel-1: rgba(96, 24, 56, 0.9);
+  --painel-2: rgba(30, 8, 26, 0.94);
+  --tema-1: #ff7a18;
+  --tema-2: #ff3d7f;
+  --tema-3: #9b4dff;
+  --aurora-1: rgba(255, 120, 40, 0.42);
+  --aurora-2: rgba(255, 60, 120, 0.36);
+  --aurora-3: rgba(150, 60, 200, 0.36);
+  --aurora-4: rgba(255, 210, 80, 0.25);
+  --paleta-0: #ffd166;
+  --paleta-1: #ffb347;
+  --paleta-2: #ff8c42;
+  --paleta-3: #ff6b4a;
+  --paleta-4: #ff4d6d;
+  --paleta-5: #e8457f;
+  --paleta-6: #c44dff;
+  --paleta-7: #ff9f6b;
+  --destaque: #ff8c42;
+  --destaque-texto: #2b0a14;
+}
+
+[data-tema='galaxia'] {
+  --fundo: #04030d;
+  --fundo-brilho: #1c0c45;
+  --texto: #f7f4ff;
+  --texto-suave: #c7bdf0;
+  --texto-inverso: #120833;
+  --superficie: rgba(10, 6, 30, 0.64);
+  --painel-1: rgba(34, 18, 82, 0.9);
+  --painel-2: rgba(8, 5, 26, 0.95);
+  --tema-1: #8b5cff;
+  --tema-2: #ff5dc8;
+  --tema-3: #4d8bff;
+  --aurora-1: rgba(120, 80, 255, 0.4);
+  --aurora-2: rgba(255, 80, 200, 0.26);
+  --aurora-3: rgba(60, 120, 255, 0.32);
+  --aurora-4: rgba(220, 210, 255, 0.1);
+  --paleta-0: #c9b8ff;
+  --paleta-1: #a77bff;
+  --paleta-2: #8b5cff;
+  --paleta-3: #6f7bff;
+  --paleta-4: #4d8bff;
+  --paleta-5: #ff5dc8;
+  --paleta-6: #ff8be0;
+  --paleta-7: #e0d4ff;
+  --destaque: #a77bff;
+  --destaque-texto: #120833;
+}
+
+[data-tema='oceano'] {
+  --fundo: #021126;
+  --fundo-brilho: #06345f;
+  --texto: #f0fbff;
+  --texto-suave: #b4dcf0;
+  --texto-inverso: #021a2e;
+  --superficie: rgba(2, 20, 44, 0.62);
+  --painel-1: rgba(6, 50, 96, 0.9);
+  --painel-2: rgba(2, 18, 40, 0.94);
+  --tema-1: #00b4ff;
+  --tema-2: #00e0d0;
+  --tema-3: #3a6bff;
+  --aurora-1: rgba(0, 180, 255, 0.4);
+  --aurora-2: rgba(0, 255, 220, 0.26);
+  --aurora-3: rgba(30, 90, 255, 0.4);
+  --aurora-4: rgba(150, 240, 255, 0.15);
+  --paleta-0: #9ff3ff;
+  --paleta-1: #5ce1ff;
+  --paleta-2: #22c4ff;
+  --paleta-3: #00a8ff;
+  --paleta-4: #3a8bff;
+  --paleta-5: #00e0d0;
+  --paleta-6: #3cffd0;
+  --paleta-7: #b8fff4;
+  --destaque: #22d0ff;
+  --destaque-texto: #021a2e;
+}
+
+/* Doce: o único tema claro. Pastel vivo com texto escuro. */
+[data-tema='doce'] {
+  --fundo: #fff0f8;
+  --fundo-brilho: #ffd6ee;
+  --texto: #3b1f5e;
+  --texto-suave: #6e548f;
+  --texto-inverso: #ffffff;
+  --tinta: 96 44 150;
+  --superficie: rgba(255, 255, 255, 0.72);
+  --painel-1: rgba(255, 246, 252, 0.94);
+  --painel-2: rgba(244, 232, 255, 0.96);
+  --tema-1: #ff6fb5;
+  --tema-2: #a77bff;
+  --tema-3: #4fc8ff;
+  --aurora-1: rgba(255, 140, 205, 0.5);
+  --aurora-2: rgba(140, 215, 255, 0.5);
+  --aurora-3: rgba(195, 165, 255, 0.5);
+  --aurora-4: rgba(255, 228, 140, 0.48);
+  --paleta-0: #ff4fa3;
+  --paleta-1: #ff7f5c;
+  --paleta-2: #f5a800;
+  --paleta-3: #5cc23a;
+  --paleta-4: #1fb994;
+  --paleta-5: #2a9fff;
+  --paleta-6: #8466ff;
+  --paleta-7: #d84bff;
+  --destaque: #ff4fa3;
+  --destaque-texto: #ffffff;
+  --vidro-borda: rgba(110, 60, 170, 0.2);
+  --vidro-1: rgba(255, 255, 255, 0.8);
+  --vidro-2: rgba(255, 255, 255, 0.5);
+  --sombra-vidro: 0 12px 36px -14px rgba(120, 60, 170, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color-scheme: light;
+}
+
+[data-tema='escuro-vibrante'] {
+  --fundo: #000000;
+  --fundo-brilho: #15121f;
+  --texto: #ffffff;
+  --texto-suave: #c9c9d6;
+  --texto-inverso: #000000;
+  --superficie: rgba(0, 0, 0, 0.7);
+  --painel-1: rgba(22, 20, 30, 0.94);
+  --painel-2: rgba(4, 4, 8, 0.96);
+  --tema-1: #ff2e97;
+  --tema-2: #ffd60a;
+  --tema-3: #22e4ff;
+  --aurora-1: rgba(255, 46, 151, 0.22);
+  --aurora-2: rgba(34, 228, 255, 0.18);
+  --aurora-3: rgba(163, 255, 18, 0.13);
+  --aurora-4: rgba(255, 214, 10, 0.12);
+  --paleta-0: #ff2e97;
+  --paleta-1: #ff7a18;
+  --paleta-2: #ffd60a;
+  --paleta-3: #a3ff12;
+  --paleta-4: #3cffb4;
+  --paleta-5: #22e4ff;
+  --paleta-6: #8b5cff;
+  --paleta-7: #ff5dc8;
+  --destaque: #a3ff12;
+  --destaque-texto: #000000;
+}
+
+/* No fundo claro, as cores neon viram texto ilegível: escurece só os textos coloridos */
+[data-tema='doce'] .hub__saudacao { border-color: rgba(214, 120, 0, 0.35); background: rgba(255, 196, 70, 0.22); color: #a35400; }
+[data-tema='doce'] .missao__xp { color: #b05a00; }
+[data-tema='doce'] .missao__texto small,
+[data-tema='doce'] .missao__icone,
+[data-tema='doce'] .conquista,
+[data-tema='doce'] .card__tag { color: color-mix(in srgb, var(--cor, var(--c1)) 55%, #2a1048); }
+[data-tema='doce'] .card__rodape { color: color-mix(in srgb, var(--c1) 50%, #2a1048); }
+[data-tema='doce'] .card__titulo { text-shadow: 0 0 18px color-mix(in srgb, var(--c1) 40%, transparent); }
+[data-tema='doce'] .logo span { text-shadow: 0 0 22px color-mix(in srgb, var(--cor) 45%, transparent), 0 5px 0 color-mix(in srgb, var(--cor) 45%, #fff); }
+
+/*
+ * Dentro das experiências a arte é sempre escura. Os controles por cima dela
+ * (barra, docas, HUDs) voltam aos tokens escuros mesmo no tema claro.
+ */
+[data-tema='doce'] body[data-tela='experiencia'] .barra,
+[data-tema='doce'] .experiencia {
+  --texto: #fbf8ff;
+  --texto-suave: #e2d8ff;
+  --texto-inverso: #170a3a;
+  --tinta: 255 255 255;
+  --superficie: rgba(14, 6, 40, 0.6);
+  --painel-1: rgba(40, 10, 90, 0.9);
+  --painel-2: rgba(14, 6, 42, 0.94);
+  --vidro-borda: rgba(255, 255, 255, 0.17);
+  --vidro-1: rgba(255, 255, 255, 0.13);
+  --vidro-2: rgba(255, 255, 255, 0.04);
+  --sombra-vidro: 0 12px 40px -12px rgba(5, 0, 30, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color-scheme: dark;
+  color: var(--texto);
+}
+
+/* Troca de tema: um cruzamento suave da página inteira (View Transitions). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}

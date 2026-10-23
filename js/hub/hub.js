@@ -11,7 +11,6 @@ import { icone } from '../core/icones.js';
 import { formatarTempo, movimentoReduzido, semHover } from '../core/util.js';
 
 const CATEGORIAS = ['Todos', 'Relaxar', 'Ação', 'Criar', 'Fidget'];
-const CORES_LOGO = ['#ff2e97', '#ff7a18', '#ffd60a', '#a3ff12', '#3cffb4', '#22e4ff', '#8b5cff', '#ff5dc8'];
 const TITULOS_NIVEL = [
   [25, 'Lenda da Dopamina'],
   [18, 'Galáxia viva'],
@@ -73,7 +72,7 @@ export function criarHub({ progresso, audio, aoEscolher, aoSurpresa }) {
       <div class="hub__heroi">
         <p class="hub__saudacao">${icone('brilho')}<span>${saudacao()}! Bora de dopamina?</span></p>
         <h1 class="logo" aria-label="Dopamina">${[...'DOPAMINA'].map((letra, i) =>
-          `<span aria-hidden="true" style="--i:${i};--cor:${CORES_LOGO[i % CORES_LOGO.length]}">${letra}</span>`).join('')}</h1>
+          `<span aria-hidden="true" style="--i:${i};--cor:var(--paleta-${i % 8})">${letra}</span>`).join('')}</h1>
         <p class="hub__subtitulo">Pequenas doses de cor, som e movimento. Escolha uma, mergulhe e troque quando quiser.</p>
         <div class="hub__acoes">
           <button type="button" class="botao-surpresa" data-surpresa>${icone('dado')}<span>Surpresa!</span></button>

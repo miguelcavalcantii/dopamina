@@ -1,9 +1,12 @@
 /**
- * Motor de áudio: todos os sons são sintetizados com a Web Audio API.
+ * Motor de áudio: sons sintetizados com a Web Audio API e gravações reais (amostras).
  * O AudioContext só nasce no primeiro gesto do usuário (regra dos navegadores).
  *
- * Cadeia: fontes → barramento (efeitos | música) → ganho mestre → compressor → saída
+ * Cadeia: fontes → canal (efeitos | música | asmr) → ganho mestre → compressor → saída
  *                     └──────── envio de reverberação ────────┘
+ *
+ * Cada canal tem volume próprio (tela de Configurações). Os sons da interface
+ * (clique, hover, transições, nível, conquista, missão) mudam com o pacote escolhido.
  */
 import { ler, gravar } from './armazenamento.js';
 import { aleatorio, clamp, escolher } from './util.js';
@@ -19,14 +22,34 @@ const HUMORES = {
   neon: { acordes: [[45, 52, 57, 64], [41, 48, 57, 60], [48, 55, 60, 67], [43, 50, 55, 62]], escala: [69, 72, 74, 76, 79, 81] },
 };
 
+/** Pacotes de sons da interface. */
+export const PACOTES_SOM = [
+  { id: 'suave', nome: 'Suave', descricao: 'Plim macio e redondo' },
+  { id: 'arcade', nome: 'Arcade', descricao: 'Bipes de 8 bits' },
+  { id: 'bolhas', nome: 'Bolhas', descricao: 'Bloop, bloop' },
+  { id: 'cristal', nome: 'Cristal', descricao: 'Sininhos de vidro' },
+  { id: 'natureza', nome: 'Natureza', descricao: 'Madeira, folhas e passarinhos' },
+];
+
+const SONS_INTERFACE = new Set(['clique', 'hover', 'whoosh', 'nivel', 'conquista', 'missao', 'alternar']);
+
+/** Ganho máximo de cada canal (o controle vai de 0 a 1 em curva quadrática). */
+const GANHO_CANAL = { efeitos: 1, musica: 0.6, asmr: 1.1 };
+
+/** Decodificador fora da tela: prepara amostras antes mesmo do primeiro gesto. */
+let decodificador = null;
+const cacheAmostras = new Map();
+
 class MotorAudio {
   ctx = null;
   #mestre = null;
   #efeitos = null;
   #musica = null;
+  #asmr = null;
+  #canal = null;
   #reverb = null;
   #bufferRuido = null;
-  #config = { volume: 0.7, mudo: false, ...ler('audio', {}) };
+  #config = { volume: 0.7, mudo: false, efeitos: 1, musica: 1, asmr: 1, pacote: 'suave', ...ler('audio', {}) };
   #ouvintes = new Set();
   #ultimoPorSom = new Map();
   #ambiente = null;
@@ -34,6 +57,12 @@ class MotorAudio {
 
   get volume() { return this.#config.volume; }
   get mudo() { return this.#config.mudo; }
+  get pacote() { return this.#config.pacote; }
+
+  /** Volume de um canal: 'efeitos', 'musica' ou 'asmr' (0 a 1). */
+  volumeCanal(canal) {
+    return this.#config[canal] ?? 1;
+  }
   get ativo() { return Boolean(this.ctx) && this.ctx.state === 'running'; }
 
   /** Cria (ou retoma) o contexto de áudio. Chamar dentro de um gesto do usuário. */
@@ -61,8 +90,10 @@ class MotorAudio {
     this.#efeitos = c.createGain();
     this.#efeitos.connect(this.#mestre);
     this.#musica = c.createGain();
-    this.#musica.gain.value = 0.6;
     this.#musica.connect(this.#mestre);
+    this.#asmr = c.createGain();
+    this.#asmr.connect(this.#mestre);
+    this.#canal = this.#efeitos;
 
     this.#reverb = c.createConvolver();
     this.#reverb.buffer = this.#criarImpulso(2.8, 2.6);
@@ -98,6 +129,26 @@ class MotorAudio {
     this.definirMudo(!this.#config.mudo);
   }
 
+  definirVolumeCanal(canal, valor) {
+    if (!(canal in GANHO_CANAL)) return;
+    this.#config[canal] = clamp(valor, 0, 1);
+    this.#salvarConfig();
+  }
+
+  definirPacote(id) {
+    if (!PACOTES_SOM.some((p) => p.id === id)) return;
+    this.#config.pacote = id;
+    this.#salvarConfig();
+  }
+
+  /** Amostra do pacote atual: clique, um "ok" e a fanfarra de conquista. */
+  previaPacote() {
+    if (!this.ativo || this.#config.mudo) return;
+    this.#somInterface('clique', {});
+    setTimeout(() => this.#somInterface('missao', {}), 200);
+    setTimeout(() => this.#somInterface('conquista', {}), 700);
+  }
+
   /** Avisa sempre que volume ou mudo mudarem. */
   aoMudar(funcao) {
     this.#ouvintes.add(funcao);
@@ -114,13 +165,18 @@ class MotorAudio {
     if (!this.ctx) return;
     // Curva quadrática: o controle soa mais natural ao ouvido
     const alvo = this.#config.mudo ? 0 : this.#config.volume ** 2 * 0.9;
-    this.#mestre.gain.setTargetAtTime(alvo, this.ctx.currentTime, 0.03);
+    const t = this.ctx.currentTime;
+    this.#mestre.gain.setTargetAtTime(alvo, t, 0.03);
+    this.#efeitos.gain.setTargetAtTime(this.volumeCanal('efeitos') ** 2 * GANHO_CANAL.efeitos, t, 0.03);
+    this.#musica.gain.setTargetAtTime(this.volumeCanal('musica') ** 2 * GANHO_CANAL.musica, t, 0.03);
+    this.#asmr.gain.setTargetAtTime(this.volumeCanal('asmr') ** 2 * GANHO_CANAL.asmr, t, 0.03);
   }
 
   /* ---------- Efeitos sonoros ---------- */
 
   /**
    * Toca um efeito pelo nome. Opções comuns: pan (-1 a 1), tom, volume, intervaloMin.
+   * `canal: 'asmr'` manda o som para o canal de ASMR em vez do de efeitos.
    * Sons repetidos rápido demais são ignorados para não embolar.
    */
   tocar(nome, opcoes = {}) {
@@ -129,11 +185,76 @@ class MotorAudio {
     const ultimo = this.#ultimoPorSom.get(nome) ?? -1;
     if (agora - ultimo < (opcoes.intervaloMin ?? 0.025)) return;
     this.#ultimoPorSom.set(nome, agora);
-    this.#sintetizar(nome, opcoes);
+    this.#canal = opcoes.canal === 'asmr' ? this.#asmr : this.#efeitos;
+    if (SONS_INTERFACE.has(nome)) this.#somInterface(nome, opcoes);
+    else this.#sintetizar(nome, opcoes);
+    this.#canal = this.#efeitos;
   }
 
-  #sintetizar(nome, o) {
+  /* ---------- Sons da interface, por pacote ---------- */
+
+  #somInterface(nome, o) {
     const pan = o.pan ?? 0;
+    const pacote = this.#config.pacote;
+    const descendo = Boolean(o.descendo);
+
+    if (pacote === 'arcade') {
+      const quadrada = (notas, passo, volume = 0.045, duracao = passo * 0.9) =>
+        notas.forEach((nota, i) => this.#tom({ freq: midiParaHz(nota), tipo: 'square', inicio: i * passo, duracao, volume, pan, filtro: { freq: 3800 } }));
+      if (nome === 'clique') quadrada([81, 88], 0.035, 0.04);
+      else if (nome === 'hover') quadrada([93], 0.03, 0.014);
+      else if (nome === 'alternar') quadrada([76, 83], 0.04, 0.04);
+      else if (nome === 'whoosh') quadrada(descendo ? [84, 79, 76, 72, 67] : [67, 72, 76, 79, 84], 0.035, 0.03);
+      else if (nome === 'nivel') quadrada([60, 64, 67, 72, 76, 79, 84, 88], 0.06, 0.05, 0.08);
+      else if (nome === 'conquista') {
+        quadrada([72, 76, 79, 84], 0.07, 0.05);
+        this.#tom({ freq: midiParaHz(88), tipo: 'square', inicio: 0.3, duracao: 0.35, volume: 0.045, filtro: { freq: 3000 } });
+      } else if (nome === 'missao') quadrada([79, 84, 91], 0.06, 0.045);
+      return;
+    }
+
+    if (pacote === 'bolhas') {
+      if (nome === 'clique') this.#bloop(420, 0, 0.16, pan);
+      else if (nome === 'hover') this.#bloop(900, 0, 0.035, pan);
+      else if (nome === 'alternar') this.#bloop(560, 0, 0.14, pan);
+      else if (nome === 'whoosh') {
+        for (let i = 0; i < 6; i++) this.#bloop(aleatorio(300, 900) * (descendo ? 1 - i * 0.08 : 1 + i * 0.12), i * 0.05, 0.08, aleatorio(-0.6, 0.6));
+      } else if (nome === 'nivel') [300, 380, 480, 600, 760].forEach((f, i) => this.#bloop(f, i * 0.08, 0.15));
+      else if (nome === 'conquista') {
+        [500, 640, 820].forEach((f, i) => this.#bloop(f, i * 0.07, 0.14));
+        this.#sino(midiParaHz(91), 0.25, 1.2, 0.05, 0);
+      } else if (nome === 'missao') [440, 560, 700].forEach((f, i) => this.#bloop(f, i * 0.07, 0.13));
+      return;
+    }
+
+    if (pacote === 'cristal') {
+      if (nome === 'clique') this.#sino(2100, 0, 0.45, 0.05, pan);
+      else if (nome === 'hover') this.#sino(3300, 0, 0.25, 0.014, pan);
+      else if (nome === 'alternar') this.#sino(1760, 0, 0.5, 0.05, pan);
+      else if (nome === 'whoosh') {
+        this.#ruido({ duracao: 0.45, filtro: 'highpass', freq: descendo ? 7000 : 2500, freqFinal: descendo ? 2500 : 7000, q: 0.7, volume: 0.03 });
+        [96, 100, 103].forEach((n, i) => this.#sino(midiParaHz(descendo ? n - 12 : n), 0.08 + i * 0.06, 0.7, 0.025, aleatorio(-0.5, 0.5)));
+      } else if (nome === 'nivel') [84, 88, 91, 96, 100].forEach((n, i) => this.#sino(midiParaHz(n), i * 0.08, 1.6, 0.06, 0));
+      else if (nome === 'conquista') [96, 100, 103, 108, 103, 108].forEach((n, i) => this.#sino(midiParaHz(n), i * 0.06, 1.8, 0.045, aleatorio(-0.5, 0.5)));
+      else if (nome === 'missao') [91, 96, 100].forEach((n, i) => this.#sino(midiParaHz(n), i * 0.07, 1.2, 0.05, 0));
+      return;
+    }
+
+    if (pacote === 'natureza') {
+      if (nome === 'clique') this.#madeira(620, 0, 0.12, pan);
+      else if (nome === 'hover') this.#ruido({ duracao: 0.04, filtro: 'bandpass', freq: 3200, q: 2, volume: 0.025, pan, reverb: 0 });
+      else if (nome === 'alternar') this.#madeira(480, 0, 0.12, pan);
+      else if (nome === 'whoosh') this.#ruido({ duracao: 0.6, filtro: 'bandpass', freq: descendo ? 1400 : 500, freqFinal: descendo ? 500 : 1400, q: 0.6, volume: 0.09 });
+      else if (nome === 'nivel') [67, 69, 72, 74, 76, 79].forEach((n, i) => this.#madeira(midiParaHz(n), i * 0.08, 0.13));
+      else if (nome === 'conquista') {
+        this.#passarinho(0, 0.3);
+        this.#passarinho(0.22, -0.3);
+        this.#passarinho(0.46, 0.1);
+      } else if (nome === 'missao') [72, 76, 79].forEach((n, i) => this.#madeira(midiParaHz(n), i * 0.08, 0.13));
+      return;
+    }
+
+    // Suave (padrão)
     switch (nome) {
       case 'clique':
         this.#tom({ freq: 900, freqFinal: 1300, tipo: 'triangle', duracao: 0.07, volume: 0.08, pan });
@@ -141,6 +262,52 @@ class MotorAudio {
       case 'hover':
         this.#tom({ freq: 1700, freqFinal: 1950, duracao: 0.05, volume: 0.022, pan });
         break;
+      case 'alternar':
+        this.#tom({ freq: 700, freqFinal: 1050, tipo: 'triangle', duracao: 0.09, volume: 0.09, pan });
+        break;
+      case 'whoosh':
+        this.#ruido({ duracao: 0.5, filtro: 'bandpass', freq: descendo ? 2600 : 380, freqFinal: descendo ? 380 : 2600, q: 1.3, volume: 0.1 });
+        break;
+      case 'nivel':
+        [72, 76, 79, 84].forEach((nota, i) => {
+          const final = i === 3;
+          this.#tom({ freq: midiParaHz(nota), tipo: 'triangle', inicio: i * 0.09, duracao: final ? 0.7 : 0.18, volume: 0.12, reverb: 0.4 });
+          this.#tom({ freq: midiParaHz(nota + 12), inicio: i * 0.09, duracao: final ? 0.6 : 0.15, volume: 0.05, reverb: 0.4 });
+        });
+        break;
+      case 'conquista':
+        [84, 88, 91, 96].forEach((nota, i) => this.#sino(midiParaHz(nota), i * 0.07, 1.4, 0.08, 0));
+        break;
+      case 'missao':
+        [79, 84, 88].forEach((nota, i) => this.#tom({ freq: midiParaHz(nota), tipo: 'triangle', inicio: i * 0.07, duracao: 0.25, volume: 0.11, reverb: 0.35 }));
+        break;
+      default:
+        break;
+    }
+  }
+
+  /** Bolha: seno que sobe rápido de tom. */
+  #bloop(freq, inicio, volume, pan = 0) {
+    this.#tom({ freq, freqFinal: freq * 2.6, inicio, duracao: 0.09, ataque: 0.003, volume, pan, reverb: 0.15 });
+  }
+
+  /** Batida de madeira (marimba curta): triângulo + harmônico agudo que some logo. */
+  #madeira(freq, inicio, volume, pan = 0) {
+    this.#tom({ freq, tipo: 'triangle', inicio, duracao: 0.28, ataque: 0.002, volume, pan, reverb: 0.2 });
+    this.#tom({ freq: freq * 3.9, inicio, duracao: 0.05, ataque: 0.001, volume: volume * 0.35, pan });
+    this.#ruido({ inicio, duracao: 0.018, filtro: 'bandpass', freq: 2400, q: 1.5, volume: volume * 0.3, pan, reverb: 0 });
+  }
+
+  /** Piado curto de passarinho: duas varreduras rápidas. */
+  #passarinho(inicio, pan) {
+    const base = aleatorio(2600, 3300);
+    this.#tom({ freq: base, freqFinal: base * 1.45, inicio, duracao: 0.07, volume: 0.05, pan, reverb: 0.3 });
+    this.#tom({ freq: base * 1.3, freqFinal: base * 0.9, inicio: inicio + 0.08, duracao: 0.09, volume: 0.045, pan, reverb: 0.3 });
+  }
+
+  #sintetizar(nome, o) {
+    const pan = o.pan ?? 0;
+    switch (nome) {
       case 'gota': {
         // "plink" de gota: varredura rápida para cima
         const tom = o.tom ?? 1;
@@ -176,22 +343,6 @@ class MotorAudio {
         this.#tom({ freq: midiParaHz(nota + 12), tipo: 'triangle', inicio: 0.03, duracao: 0.15, volume: 0.05, pan });
         break;
       }
-      case 'nivel':
-        [72, 76, 79, 84].forEach((nota, i) => {
-          const final = i === 3;
-          this.#tom({ freq: midiParaHz(nota), tipo: 'triangle', inicio: i * 0.09, duracao: final ? 0.7 : 0.18, volume: 0.12, reverb: 0.4 });
-          this.#tom({ freq: midiParaHz(nota + 12), inicio: i * 0.09, duracao: final ? 0.6 : 0.15, volume: 0.05, reverb: 0.4 });
-        });
-        break;
-      case 'conquista':
-        [84, 88, 91, 96].forEach((nota, i) => this.#sino(midiParaHz(nota), i * 0.07, 1.4, 0.08, 0));
-        break;
-      case 'missao':
-        [79, 84, 88].forEach((nota, i) => this.#tom({ freq: midiParaHz(nota), tipo: 'triangle', inicio: i * 0.07, duracao: 0.25, volume: 0.11, reverb: 0.35 }));
-        break;
-      case 'whoosh':
-        this.#ruido({ duracao: 0.5, filtro: 'bandpass', freq: o.descendo ? 2600 : 380, freqFinal: o.descendo ? 380 : 2600, q: 1.3, volume: 0.1 });
-        break;
       case 'inicio':
         this.#tom({ freq: 660, tipo: 'triangle', duracao: 0.07, volume: 0.1 });
         this.#tom({ freq: 990, tipo: 'triangle', inicio: 0.07, duracao: 0.1, volume: 0.1 });
@@ -303,7 +454,7 @@ class MotorAudio {
   }
 
   /** Ruído filtrado contínuo (areia, respiração...). Devolve { atualizar(intensidade, freq), parar() }. */
-  iniciarTextura({ filtro = 'bandpass', freq = 1200, q = 1, volumeMaximo = 0.18 } = {}) {
+  iniciarTextura({ filtro = 'bandpass', freq = 1200, q = 1, volumeMaximo = 0.18, canal = 'efeitos' } = {}) {
     if (!this.ativo) return { atualizar() {}, parar() {} };
     const c = this.ctx;
     const fonte = this.#fonteRuido();
@@ -313,7 +464,7 @@ class MotorAudio {
     f.Q.value = q;
     const ganho = c.createGain();
     ganho.gain.value = 0;
-    fonte.connect(f).connect(ganho).connect(this.#efeitos);
+    fonte.connect(f).connect(ganho).connect(canal === 'asmr' ? this.#asmr : this.#efeitos);
     fonte.start();
     let parado = false;
     return {
@@ -332,6 +483,107 @@ class MotorAudio {
         fonte.stop(t + 0.6);
       },
     };
+  }
+
+  /* ---------- Amostras: gravações reais ---------- */
+
+  /**
+   * Baixa e decodifica um arquivo de som (com cache). Funciona antes do primeiro gesto.
+   * Resolve com o AudioBuffer, ou `null` se o arquivo não existir ou não decodificar.
+   */
+  carregarAmostra(url) {
+    const chave = String(url);
+    if (!cacheAmostras.has(chave)) {
+      cacheAmostras.set(chave, (async () => {
+        try {
+          const resposta = await fetch(chave);
+          if (!resposta.ok) return null;
+          const bytes = await resposta.arrayBuffer();
+          decodificador ??= new (window.OfflineAudioContext || window.webkitOfflineAudioContext)(2, 44100, 44100);
+          return await decodificador.decodeAudioData(bytes);
+        } catch (erro) {
+          console.warn('Não deu para carregar o som', chave, erro);
+          return null;
+        }
+      })());
+    }
+    return cacheAmostras.get(chave);
+  }
+
+  /**
+   * Toca um trecho de uma amostra. `inicio`/`duracao` em segundos dentro do arquivo;
+   * `tom` muda a velocidade (e a altura); `canal` padrão: 'asmr'.
+   */
+  tocarAmostra(buffer, { inicio = 0, duracao, tom = 1, volume = 1, pan = 0, reverb = 0, canal = 'asmr', ataque = 0.004, soltura = 0.03 } = {}) {
+    if (!buffer || !this.ativo || this.#config.mudo) return;
+    const c = this.ctx;
+    const fonte = c.createBufferSource();
+    fonte.buffer = buffer;
+    fonte.playbackRate.value = tom;
+    const trecho = Math.min(duracao ?? buffer.duration - inicio, buffer.duration - inicio);
+    const real = trecho / tom;
+    const t0 = c.currentTime;
+    const envelope = c.createGain();
+    envelope.gain.setValueAtTime(0, t0);
+    envelope.gain.linearRampToValueAtTime(volume, t0 + ataque);
+    envelope.gain.setValueAtTime(volume, t0 + Math.max(ataque, real - soltura));
+    envelope.gain.linearRampToValueAtTime(0, t0 + real);
+    fonte.connect(envelope);
+    this.#rotear(envelope, pan, reverb, this.#destinoCanal(canal));
+    fonte.start(t0, inicio, trecho + 0.01);
+  }
+
+  /**
+   * Toca uma amostra em laço contínuo (chuva, fogueira...). Devolve
+   * { volume(v, suavidade), parar() }. Começa em silêncio e sobe até `volume`.
+   */
+  iniciarLaco(buffer, { volume = 1, canal = 'asmr', tom = 1, filtro } = {}) {
+    if (!buffer || !this.ctx) return { volume() {}, parar() {}, tom() {} };
+    const c = this.ctx;
+    const fonte = c.createBufferSource();
+    fonte.buffer = buffer;
+    fonte.loop = true;
+    fonte.playbackRate.value = tom;
+    const ganho = c.createGain();
+    ganho.gain.value = 0;
+    let no = fonte;
+    let f = null;
+    if (filtro) {
+      f = c.createBiquadFilter();
+      f.type = filtro.tipo ?? 'lowpass';
+      f.frequency.value = filtro.freq;
+      no = no.connect(f);
+    }
+    no.connect(ganho).connect(this.#destinoCanal(canal));
+    // Começa num ponto aleatório para dois laços iguais não soarem em fase
+    fonte.start(c.currentTime, Math.random() * buffer.duration);
+    ganho.gain.setTargetAtTime(volume, c.currentTime, 0.4);
+    let parado = false;
+    return {
+      volume: (v, suavidade = 0.15) => {
+        if (!parado) ganho.gain.setTargetAtTime(Math.max(0, v), c.currentTime, suavidade);
+      },
+      tom: (v) => {
+        if (!parado) fonte.playbackRate.setTargetAtTime(v, c.currentTime, 0.2);
+      },
+      filtro: (freq) => {
+        if (!parado && f) f.frequency.setTargetAtTime(freq, c.currentTime, 0.15);
+      },
+      parar: (suavidade = 0.3) => {
+        if (parado) return;
+        parado = true;
+        const t = c.currentTime;
+        ganho.gain.cancelScheduledValues(t);
+        ganho.gain.setTargetAtTime(0, t, suavidade);
+        fonte.stop(t + suavidade * 6);
+      },
+    };
+  }
+
+  #destinoCanal(canal) {
+    if (canal === 'musica') return this.#musica;
+    if (canal === 'efeitos') return this.#efeitos;
+    return this.#asmr;
   }
 
   /* ---------- Som contínuo do redemoinho ---------- */
@@ -498,7 +750,7 @@ class MotorAudio {
       no = no.connect(f);
     }
     no.connect(envelope);
-    this.#rotear(envelope, pan, reverb, this.#efeitos);
+    this.#rotear(envelope, pan, reverb, this.#canal);
     osc.start(t0);
     osc.stop(t0 + duracao + 0.05);
   }
@@ -517,13 +769,13 @@ class MotorAudio {
     envelope.gain.exponentialRampToValueAtTime(volume, t0 + 0.008);
     envelope.gain.exponentialRampToValueAtTime(0.0001, t0 + duracao);
     fonte.connect(f).connect(envelope);
-    this.#rotear(envelope, pan, reverb, this.#efeitos);
+    this.#rotear(envelope, pan, reverb, this.#canal);
     fonte.start(t0, Math.random());
     fonte.stop(t0 + duracao + 0.05);
   }
 
   /** Sino: parcial fundamental + parcial inarmônico (soa metálico e brilhante). */
-  #sino(freq, inicio, duracao, volume, pan = 0, destino = this.#efeitos) {
+  #sino(freq, inicio, duracao, volume, pan = 0, destino = this.#canal) {
     const c = this.ctx;
     const t0 = c.currentTime + inicio;
     for (const [razao, peso] of [[1, 1], [2.76, 0.3], [5.4, 0.08]]) {
